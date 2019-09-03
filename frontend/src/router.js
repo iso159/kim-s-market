@@ -6,8 +6,12 @@ const PublicRoute = () => {
     return (
         <div>
             <Route 
-                exact path = "/Login" 
+                exact path = "/login" 
                 component = {asyncComponent(() => import('./pages/Login'))}
+            />
+            <Route 
+                exact path = "/signUp" 
+                component = {asyncComponent(() => import('./pages/SignUp'))}
             />
         </div>
     );

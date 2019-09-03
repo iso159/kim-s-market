@@ -1,4 +1,6 @@
 {
-    "page.loginLogo" : "Kim's Market",
-    "page.loginButton" : "Sign"
+    "project.name" : "Kim's Market",
+    "page.login" : "로그인",
+    "page.signUp" : "회원 가입",
+    "page.moveLogin" : "로그인 페이지"
 }

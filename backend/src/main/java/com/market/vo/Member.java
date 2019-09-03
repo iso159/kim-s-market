@@ -24,6 +24,10 @@ public class Member {
 	@NotBlank(message = "MemberId Field is empty")
 	String memberId;
 	
+	@Column(name = "PASSWORD", nullable = false, length = 30)
+	@NotBlank(message = "Password Field is empty")
+	String password;
+	
 	@Column(name = "NAME", nullable = false, length = 20)
 	@NotBlank(message = "Name Field is empty")
 	String name;
@@ -35,10 +39,6 @@ public class Member {
 	@Column(name = "MAIL", nullable = false, length = 50)
 	@NotBlank(message = "Mail Field is empty")
 	String mail;
-	
-	@Column(name = "PASSWORD", nullable = false, length = 30)
-	@NotBlank(message = "Password Field is empty")
-	String password;
 	
 	@Column(name = "ZIP_CODE", nullable = false, length = 10)
 	@NotBlank(message = "ZipCode Field is empty")
@@ -75,6 +75,14 @@ public class Member {
 		this.memberId = memberId;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -97,14 +105,6 @@ public class Member {
 
 	public void setMail(String mail) {
 		this.mail = mail;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getZipCode() {
@@ -165,8 +165,9 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [memberId=" + memberId + ", name=" + name + ", phone=" + phone + ", mail=" + mail + ", password="
-				+ password + ", zipCode=" + zipCode + ", address=" + address + ", authority=" + authority + ", status="
-				+ status + ", grantor=" + grantor + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
-	}	
+		return "Member [memberId=" + memberId + ", password=" + password + ", name=" + name + ", phone=" + phone
+				+ ", mail=" + mail + ", zipCode=" + zipCode + ", address=" + address + ", authority=" + authority
+				+ ", status=" + status + ", grantor=" + grantor + ", createdAt=" + createdAt + ", updatedAt="
+				+ updatedAt + "]";
+	}
 }

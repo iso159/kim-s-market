@@ -1,6 +1,5 @@
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
-import App from '../shared/App';
 import { IntlProvider } from 'react-intl';
 import AppLocale from '../language/index';
 import { ThemeProvider } from 'styled-components';
@@ -8,8 +7,13 @@ import { themeConfig } from '../settings';
 import themes from '../settings/themes';
 import RootHolder from './rootStyle';
 import GlobalStyles from '../static/style/globalStyle';
+import PublicRoute from '../router';
+import reducers from '../reducers';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
 const currentAppLocale = AppLocale['ko'];
+const store = createStore(reducers);
 
 const Root = () => (
     <IntlProvider 
@@ -19,9 +23,10 @@ const Root = () => (
         <ThemeProvider theme={themes[themeConfig.theme]}>
             <RootHolder>
                 <BrowserRouter>
-                    <App>
-                        <GlobalStyles />
-                    </App>
+                    <Provider store={store}>
+                        <PublicRoute />
+                            <GlobalStyles />
+                    </Provider>
                 </BrowserRouter>
             </RootHolder>
         </ThemeProvider>
