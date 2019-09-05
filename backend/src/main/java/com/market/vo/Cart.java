@@ -41,13 +41,11 @@ public class Cart {
 	@NotBlank(message = "memberId Field is empty")
 	String memberId;
 	
-	@Column(name = "IS_USING", nullable = false, columnDefinition = "CHAR")
-	@NotNull(message = "isUsing Field is empty")
-	char isUsing;
+	@Column(name = "IS_USING", nullable = false, columnDefinition = "CHAR DEFAULT 'N'", insertable = false)
+	String isUsing;
 	
-	@Column(name = "IS_RETURN", nullable = false, columnDefinition = "CHAR")
-	@NotNull(message = "isReturn Field is empty")
-	char isReturn;
+	@Column(name = "IS_RETURN", nullable = false, columnDefinition = "CHAR DEFAULT 'N'", insertable = false)
+	String isReturn;
 
 	@Column(name = "CREATED_AT", nullable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", insertable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -93,19 +91,19 @@ public class Cart {
 		this.memberId = memberId;
 	}
 
-	public char getIsUsing() {
+	public String getIsUsing() {
 		return isUsing;
 	}
 
-	public void setIsUsing(char isUsing) {
+	public void setIsUsing(String isUsing) {
 		this.isUsing = isUsing;
 	}
 
-	public char getIsReturn() {
+	public String getIsReturn() {
 		return isReturn;
 	}
 
-	public void setIsReturn(char isReturn) {
+	public void setIsReturn(String isReturn) {
 		this.isReturn = isReturn;
 	}
 
@@ -123,6 +121,6 @@ public class Cart {
 				+ ", memberId=" + memberId + ", isUsing=" + isUsing + ", isReturn=" + isReturn + ", createdAt="
 				+ createdAt + "]";
 	}
-	
+
 	
 }

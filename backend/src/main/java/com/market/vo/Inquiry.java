@@ -45,13 +45,15 @@ public class Inquiry {
 	@Temporal(TemporalType.TIMESTAMP)
 	Date createdAt;
 	
+	@Column(name = "IS_SECRET", nullable = false, columnDefinition = "CHAR DEFAULT 'N'", insertable = false)
+	String isSecret;
+	
 	@Column(name = "UPDATED_AT", nullable = true, columnDefinition = "DATETIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	Date updatedAt;
 	
-	@Column(name = "IS_DELETED", nullable = false, columnDefinition = "CHAR")
-	@NotNull(message = "isDeleted Field is empty")
-	char isDeleted;
+	@Column(name = "IS_DELETED", nullable = false, columnDefinition = "CHAR DEFAULT 'N'", insertable = false)
+	String isDeleted;
 
 	public int getInquiryNo() {
 		return inquiryNo;
@@ -101,6 +103,14 @@ public class Inquiry {
 		this.createdAt = createdAt;
 	}
 
+	public String getIsSecret() {
+		return isSecret;
+	}
+
+	public void setIsSecret(String isSecret) {
+		this.isSecret = isSecret;
+	}
+
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
@@ -109,11 +119,11 @@ public class Inquiry {
 		this.updatedAt = updatedAt;
 	}
 
-	public char getIsDeleted() {
+	public String getIsDeleted() {
 		return isDeleted;
 	}
 
-	public void setIsDeleted(char isDeleted) {
+	public void setIsDeleted(String isDeleted) {
 		this.isDeleted = isDeleted;
 	}
 
@@ -121,8 +131,10 @@ public class Inquiry {
 	public String toString() {
 		return "Inquiry [inquiryNo=" + inquiryNo + ", faqCategoryNo=" + faqCategoryNo + ", inquiryContent="
 				+ inquiryContent + ", inquiryTitle=" + inquiryTitle + ", inquirer=" + inquirer + ", createdAt="
-				+ createdAt + ", updatedAt=" + updatedAt + ", isDeleted=" + isDeleted + "]";
+				+ createdAt + ", isSecret=" + isSecret + ", updatedAt=" + updatedAt + ", isDeleted=" + isDeleted + "]";
 	}
+
+
 	
 }
 

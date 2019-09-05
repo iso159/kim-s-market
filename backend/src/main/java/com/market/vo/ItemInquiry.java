@@ -45,17 +45,15 @@ public class ItemInquiry {
 	@Temporal(TemporalType.TIMESTAMP)
 	Date createdAt;
 	
-	@Column(name = "IS_SECRET", nullable = false, columnDefinition = "CHAR")
-	@NotNull(message = "isSecret Field is empty")
-	char isSecret;
+	@Column(name = "IS_SECRET", nullable = false, columnDefinition = "CHAR DEFAULT 'N'", insertable = false)
+	String isSecret;
 	
 	@Column(name = "UPDATED_AT", nullable = true, columnDefinition = "DATETIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	Date updatedAt;
 	
-	@Column(name = "IS_DELETED", nullable = false, columnDefinition = "CHAR")
-	@NotNull(message = "isDeleted Field is empty")
-	char isDeleted;
+	@Column(name = "IS_DELETED", nullable = false, columnDefinition = "CHAR DEFAULT 'N'", insertable = false)
+	String isDeleted;
 
 	public int getItemInquiryNo() {
 		return itemInquiryNo;
@@ -105,11 +103,11 @@ public class ItemInquiry {
 		this.createdAt = createdAt;
 	}
 
-	public char getIsSecret() {
+	public String getIsSecret() {
 		return isSecret;
 	}
 
-	public void setIsSecret(char isSecret) {
+	public void setIsSecret(String isSecret) {
 		this.isSecret = isSecret;
 	}
 
@@ -121,11 +119,11 @@ public class ItemInquiry {
 		this.updatedAt = updatedAt;
 	}
 
-	public char getIsDeleted() {
+	public String getIsDeleted() {
 		return isDeleted;
 	}
 
-	public void setIsDeleted(char isDeleted) {
+	public void setIsDeleted(String isDeleted) {
 		this.isDeleted = isDeleted;
 	}
 

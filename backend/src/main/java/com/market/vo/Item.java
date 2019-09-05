@@ -45,9 +45,8 @@ public class Item {
 	@NotBlank(message = "stock Field is empty")
 	int stock;
 	
-	@Column(name = "IS_CANCELED", nullable = false, columnDefinition = "CHAR")
-	@NotNull(message = "isCanceled Field is empty")
-	char isCanceled;
+	@Column(name = "IS_CANCELED", nullable = false, columnDefinition = "CHAR DEFAULT 'N'", insertable = false)
+	String isCanceled;
 	
 	@Column(name = "REGISTRAR", nullable = false, length = 20)
 	@NotBlank(message = "registrar Field is empty")
@@ -117,11 +116,11 @@ public class Item {
 		this.stock = stock;
 	}
 
-	public char getIsCanceled() {
+	public String getIsCanceled() {
 		return isCanceled;
 	}
 
-	public void setIsCanceled(char isCanceled) {
+	public void setIsCanceled(String isCanceled) {
 		this.isCanceled = isCanceled;
 	}
 
