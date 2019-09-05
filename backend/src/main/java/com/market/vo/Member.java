@@ -24,7 +24,7 @@ public class Member {
 	@NotBlank(message = "MemberId Field is empty")
 	String memberId;
 	
-	@Column(name = "PASSWORD", nullable = false, length = 30)
+	@Column(name = "PASSWORD", nullable = false, length = 200)
 	@NotBlank(message = "Password Field is empty")
 	String password;
 	
@@ -48,13 +48,11 @@ public class Member {
 	@NotBlank(message = "Address Field is empty")
 	String address;
 	
-	@Column(name = "AUTHORITY", nullable = false, columnDefinition = "CHAR")
-	@NotNull(message = "Authority Field is empty")
-	char authority;
+	@Column(name = "AUTHORITY", nullable = false, columnDefinition = "CHAR DEFAULT 'U'", insertable = false)
+	String authority;
 	
-	@Column(name = "STATUS", nullable = false, columnDefinition = "CHAR")
-	@NotNull(message = "Status Field is empty")
-	char status;
+	@Column(name = "STATUS", nullable = false, columnDefinition = "CHAR DEFAULT 'Y'", insertable = false)
+	String status;
 	
 	@Column(name = "GRANTOR", nullable = true, length = 20)
 	String grantor;
@@ -123,19 +121,19 @@ public class Member {
 		this.address = address;
 	}
 
-	public char getAuthority() {
+	public String getAuthority() {
 		return authority;
 	}
 
-	public void setAuthority(char authority) {
+	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
 
-	public char getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(char status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
