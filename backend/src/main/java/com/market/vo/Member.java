@@ -48,7 +48,7 @@ public class Member {
 	@NotBlank(message = "Address Field is empty")
 	String address;
 	
-	@Column(name = "AUTHORITY", nullable = false, columnDefinition = "CHAR DEFAULT 'U'", insertable = false)
+	@Column(name = "AUTHORITY", nullable = false, columnDefinition = "varchar(10) DEFAULT 'USER'", insertable = false)
 	String authority;
 	
 	@Column(name = "STATUS", nullable = false, columnDefinition = "CHAR DEFAULT 'Y'", insertable = false)
