@@ -16,7 +16,7 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
-	@RequestMapping(value = "/member", method = RequestMethod.POST)
+	@RequestMapping(value = "/member/join", method = RequestMethod.POST)
 	public void create(@RequestBody GenericObject<Member> request) {
 		Member member = request.getRequestData();
 		memberService.save(member);

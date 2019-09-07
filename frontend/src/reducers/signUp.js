@@ -1,4 +1,4 @@
-import * as types from '../actions/SignUpActionTypes';
+import * as types from '../actions/actionTypes/SignUpActionTypes';
 
 const initialState = {
     member: {

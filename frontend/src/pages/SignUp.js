@@ -29,7 +29,7 @@ class SignUp extends Component {
 
   handleClick = () => {
     axios({
-      url: '/member',
+      url: '/member/join',
       method: 'post',
       data: {
         requestData: {

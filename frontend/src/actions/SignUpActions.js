@@ -1,4 +1,4 @@
-import * as types from './SignUpActionTypes'
+import * as types from './actionTypes/SignUpActionTypes'
 
 export function signUp(member) {
     return {

@@ -14,10 +14,19 @@ repositories {
 }
 
 dependencies {
+	// Spring boot
 	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-web'	
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	
+	// Hibernate
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	
+	// DB Connection Pool
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	
+	// Spring Security
+	implementation 'org.springframework.security:spring-security-web:4.2.2.RELEASE'
+	implementation 'org.springframework.security:spring-security-config:4.2.2.RELEASE'
 	
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.4.3'
 	
