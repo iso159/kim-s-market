@@ -1,0 +1,5 @@
+frontend 개발 환경 설정
+
+1. yarn 입력.
+2. babel-loader 에러날경우 -> npm uninstall babel-loader, npm uninstall -g babel-loader 입력
+3. yarn start로 실행 확인

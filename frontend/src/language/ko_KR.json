@@ -1,7 +1,0 @@
-{
-    "project.name" : "Kim's Market",
-    "page.login" : "로그인",
-    "page.signUp" : "회원 가입",
-    "page.moveLogin" : "로그인 페이지",
-    "message.login.fail" : "등록되지 않은 아이디이거나, 비밀번호를 잘못 입력하셨습니다."
-}
