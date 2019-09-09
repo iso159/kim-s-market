@@ -8,12 +8,12 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.market.repository.MemberRepository;
-import com.market.service.MemberService;
+import com.market.service.CrudService;
 import com.market.util.HashUtil;
 import com.market.vo.Member;
 
 @Service
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements CrudService<Member> {
 
 	@Autowired
 	MemberRepository memberRepository;

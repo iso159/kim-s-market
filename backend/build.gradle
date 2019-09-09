@@ -13,6 +13,13 @@ repositories {
 	mavenCentral()
 }
 
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
+
 dependencies {
 	// Spring boot
 	implementation 'org.springframework.boot:spring-boot-starter'
@@ -30,6 +37,7 @@ dependencies {
 	
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.4.3'
 	
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

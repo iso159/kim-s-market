@@ -6,19 +6,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.market.vo.Member;
-import com.market.service.MemberService;
+import com.market.serviceImpl.MemberServiceImpl;
 import com.market.vo.GenericObject;
+import com.market.vo.Member;
 
 @RestController
 public class MemberController {
 	
 	@Autowired
-	MemberService memberService;
+	MemberServiceImpl memberServiceImpl;
 	
 	@RequestMapping(value = "/member/join", method = RequestMethod.POST)
 	public void create(@RequestBody GenericObject<Member> request) {
 		Member member = request.getRequestData();
-		memberService.save(member);
+		memberServiceImpl.save(member);
 	}
 }

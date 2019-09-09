@@ -14,20 +14,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.market.service.MemberService;
+import com.market.serviceImpl.MemberServiceImpl;
 import com.market.util.JSONResult;
 import com.market.vo.Member;
 
 @Component
 public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 	@Autowired
-	MemberService memberService;
+	MemberServiceImpl memberServiceImpl;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws ServletException, IOException {
 		String id = authentication.getName();
-		Member memberFromDB = memberService.getById(id);
+		Member memberFromDB = memberServiceImpl.getById(id);
 		LoginMemberInfo loginMemberInfo = new LoginMemberInfo();
 		loginMemberInfo.setMemberId(memberFromDB.getMemberId());
 		loginMemberInfo.setAuthority(memberFromDB.getAuthority());

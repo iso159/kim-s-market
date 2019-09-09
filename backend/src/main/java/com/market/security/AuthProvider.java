@@ -13,7 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.market.constant.RoleType;
-import com.market.service.MemberService;
+import com.market.serviceImpl.MemberServiceImpl;
 import com.market.util.HashUtil;
 import com.market.vo.Member;
 
@@ -21,7 +21,7 @@ import com.market.vo.Member;
 public class AuthProvider implements AuthenticationProvider {
 	
 	@Autowired
-	MemberService memberService;
+	MemberServiceImpl memberServiceImpl;
 	
 	@Autowired
 	Member member;
@@ -31,7 +31,7 @@ public class AuthProvider implements AuthenticationProvider {
 		String id = authentication.getName();
 		String password = authentication.getCredentials().toString();
 		
-		Member memberFromDB = memberService.getById(id);
+		Member memberFromDB = memberServiceImpl.getById(id);
 		
 		if( memberFromDB == null || !HashUtil.passwordMatch(password, memberFromDB.getPassword())) {
 			return null;
