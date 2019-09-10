@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {Login} from 'components/Login';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {setLoginStatus} from 'actions/LoginAction';
-import {
-    Message
-} from 'semantic-ui-react';
+import '../style/Login.css';
+import logo from 'image/logo.png';
+import {Link} from 'react-router-dom';
+import {Button, Form, Grid, Header, Image, Message, Segment} from 'semantic-ui-react';
 
 class SignIn extends Component {
     constructor(props){
@@ -13,8 +13,14 @@ class SignIn extends Component {
         this.state = {
             id: "",
             password: "",
-            isLogin: ""
+            isLogin: "",
+            alertVisible: true
         };
+        
+        this.handleOnChange = this.handleOnChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.loginFailMessage = this.loginFailMessage.bind(this);
+        this.handleDismiss = this.handleDismiss.bind(this);
     }
 
     handleOnChange = (e) => {
@@ -49,7 +55,7 @@ class SignIn extends Component {
         .catch(error => {
             const userName = this.props.userName;
             const authority = this.props.authority;
-            const isLogin = false;
+            const isLogin = 'false';
             this.props.handleLoginStatus(userName, authority, isLogin);
             this.setState({
                 ...this.state,
@@ -58,20 +64,67 @@ class SignIn extends Component {
         })
     }
 
+    handleDismiss = () => {
+        this.setState({alertVisible: false});
+    }
+
     loginFailMessage = () => {
-        const marginBot = {
-            marginBottom: "10px"
-        };
-        
-        if(this.state.isLogin === 'false') {
-            return <div><Message positive>Login failed</Message> </div>;
+
+        if(this.state.isLogin === 'false' && this.state.alertVisible === true) {
+            return (
+                <div>
+                    <Message 
+                        negative 
+                        style={{margin: '1em 0 1em 0'}}
+                        onDismiss={this.handleDismiss}
+                        size='small'
+                    >
+                        아이디 또는 비밀번호가 올바르지 않습니다.
+                    </Message>
+                </div>
+            );
         }
     }
 
     render(){
         return(
             <div>
-                <Login handleClick={this.handleClick}/>
+                <Grid textAlign='center' style={{ height: '80vh' }} verticalAlign='middle'>
+                    <Grid.Column style={{ maxWidth: 350 }}>
+                    <Header as='h2' textAlign='center'>
+                        <Image src={logo} />
+                    </Header>
+                    <Header as='h2' textAlign='center'>
+                        Kim's Market에 로그인
+                    </Header>
+                    {this.loginFailMessage()}
+                    <Form size='large'>
+                        <Segment stacked>
+                            <Form.Field>
+                                <label htmlFor='id' style={{textAlign: 'left'}}>이메일</label>
+                                <input id='id' name='id' onChange={this.handleOnChange} autoFocus/>
+                            </Form.Field>
+                            <Form.Field>
+                                <label htmlFor='password' style={{textAlign: 'left'}}>비밀번호</label>
+                                <input type='password' id='password' name='password' onChange={this.handleOnChange}/>
+                            </Form.Field>
+
+                            
+                            <Button color='green' 
+                                fluid 
+                                size='large'
+                                onClick={this.handleClick}
+                            >
+                                로그인
+                            </Button>
+                            
+                        </Segment>
+                    </Form>
+                    <Message>
+                        Kim's Market에 처음이세요? <Link className='toSignUp' to='/signup'> 계정 만들기</Link>
+                    </Message>
+                    </Grid.Column>
+                </Grid>
             </div>
         );
     }

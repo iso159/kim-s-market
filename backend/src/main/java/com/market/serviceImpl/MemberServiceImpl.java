@@ -20,8 +20,8 @@ public class MemberServiceImpl implements CrudService<Member> {
 	
 	@Override
 	public Member getById(String id) {
-		Member findMember = memberRepository.findById(id).get();
-		return findMember;
+		
+		return memberRepository.findById(id).orElse(null);
 	}
 	
 	@Override
