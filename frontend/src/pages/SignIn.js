@@ -35,6 +35,8 @@ class SignIn extends Component {
         form.append('username', this.state.id);
         form.append('password', this.state.password);
 
+        this.setState({alertVisible: true});
+
         axios({
             url: '/login',
             method: 'post',
