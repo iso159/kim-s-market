@@ -1,0 +1,6 @@
+{
+    "loginTitle" : "Kim's Market에 로그인",
+    "loginButton" : "로그인",
+    "signUpButton" : "회원가입",
+    "message.login.fail" : "아이디 또는 비밀번호가 올바르지 않습니다."
+}

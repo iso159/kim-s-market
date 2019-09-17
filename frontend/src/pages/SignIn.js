@@ -6,6 +6,7 @@ import '../style/Login.css';
 import logo from 'image/logo.png';
 import {Link} from 'react-router-dom';
 import {Button, Form, Grid, Header, Image, Message, Segment} from 'semantic-ui-react';
+import IntlMessages from '../components/utility/intlMessages';
 
 class SignIn extends Component {
     constructor(props){
@@ -81,7 +82,7 @@ class SignIn extends Component {
                         onDismiss={this.handleDismiss}
                         size='small'
                     >
-                        아이디 또는 비밀번호가 올바르지 않습니다.
+                        <IntlMessages id="message.login.fail" />
                     </Message>
                 </div>
             );
@@ -97,7 +98,7 @@ class SignIn extends Component {
                         <Image src={logo} />
                     </Header>
                     <Header as='h2' textAlign='center'>
-                        Kim's Market에 로그인
+                        <IntlMessages id="loginTitle"/>
                     </Header>
                     {this.loginFailMessage()}
                     <Form size='large'>
@@ -117,7 +118,7 @@ class SignIn extends Component {
                                 size='large'
                                 onClick={this.handleClick}
                             >
-                                로그인
+                                <IntlMessages id="loginButton" />
                             </Button>
                             
                         </Segment>

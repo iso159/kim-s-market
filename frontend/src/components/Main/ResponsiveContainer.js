@@ -18,7 +18,7 @@ import {
     Input
 } from 'semantic-ui-react'
 import logo from 'image/logo.png'
-import logo2 from 'image/logo2.png'
+import IntlMessages from '../utility/intlMessages'
 
 // Heads up!
 // We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
@@ -116,10 +116,10 @@ class DesktopContainer extends Component {
                                     />
                                 </Menu.Item>
                                 <Menu.Item as='a' onClick={()=>{window.location.href='/login'}}>
-                                    로그인
+                                    <IntlMessages id="loginButton"/>
                                 </Menu.Item>
                                 <Menu.Item as='a' onClick={()=>{window.location.href='/signup'}}>
-                                    회원가입
+                                    <IntlMessages id="signUpButton"/>
                                 </Menu.Item>
                             </Menu.Menu>
                         </Menu>
