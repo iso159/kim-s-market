@@ -2,8 +2,6 @@ package com.market.service;
 
 import java.util.List;
 
-import com.market.vo.Member;
-
 public interface CrudService<T> {
 	
 	public abstract T getById(String id);
