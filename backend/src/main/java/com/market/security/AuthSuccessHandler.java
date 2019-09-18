@@ -14,7 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.market.serviceImpl.MemberServiceImpl;
+import com.market.service.MemberServiceImpl;
 import com.market.util.JSONResult;
 import com.market.vo.Member;
 

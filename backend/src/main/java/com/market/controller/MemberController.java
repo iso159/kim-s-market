@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.market.serviceImpl.MemberServiceImpl;
+import com.market.service.MemberServiceImpl;
 import com.market.vo.GenericObject;
 import com.market.vo.Member;
 

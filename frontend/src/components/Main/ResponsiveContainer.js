@@ -19,6 +19,7 @@ import {
 } from 'semantic-ui-react'
 import logo from 'image/logo.png'
 import IntlMessages from '../utility/intlMessages'
+import {axios} from 'axios';
 
 // Heads up!
 // We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
@@ -72,18 +73,42 @@ HomepageHeading.propTypes = {
  * It can be more complicated, but you can create really flexible markup.
  */
 class DesktopContainer extends Component {
-    state = {}
+    constructor(props){
+        super(props);
+        this.state = {
+            topCategories: []
+        };
+
+        this.renderCategories = this.renderCategories.bind(this);
+    }
 
     hideFixedMenu = () => this.setState({ fixed: false })
     showFixedMenu = () => this.setState({ fixed: true })
 
-    render() {
-        const { children } = this.props
-        const { fixed } = this.state
+    componentDidMount() {
+        const axios = require('axios');
+        const state = this;
 
-        let logoClickHandler = function(){
-            window.location.href='/';
-        };
+        axios.get('/categories')
+        .then(function (response) {
+            state.setState({topCategories: response.data});
+        })
+        .catch(function (error) {
+        });
+    }
+
+    renderCategories() {
+        return this.state.topCategories.map(function(category){
+            return (
+                <Dropdown.Item key={category.categoryName}>
+                    {category.categoryName}
+                </Dropdown.Item>
+            );
+        });
+    }
+
+    render() {
+        const { children } = this.props;
 
         return (
             <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
@@ -104,7 +129,7 @@ class DesktopContainer extends Component {
                                 item
                             >
                                 <Dropdown.Menu>
-                                    <Dropdown.Item text='도서'/>
+                                    {this.renderCategories()}
                                 </Dropdown.Menu>
                             </Dropdown>
                             

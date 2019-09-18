@@ -13,7 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.market.constant.RoleType;
-import com.market.serviceImpl.MemberServiceImpl;
+import com.market.service.MemberServiceImpl;
 import com.market.util.HashUtil;
 import com.market.vo.Member;
 

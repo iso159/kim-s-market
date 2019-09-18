@@ -1,3 +1,6 @@
+/**
+ * Author : KJW
+ */
 package com.market.vo;
 
 import java.util.Date;
@@ -15,21 +18,17 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Component
 @Table(name = "tb_category")
 public class Category {
 	@Id
+	@Column(name = "CATEGORY_NO")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "CATEGORY_NO", nullable = false)
-	@NotBlank(message = "CategoryNo Field is empty")
 	int categoryNo;
 	
-	@Column(name = "CREATOR_NO", nullable = false, length = 20)
-	@NotBlank(message = "creatorId Field is empty")
+	@Column(name = "CREATOR_ID", nullable = false, length = 20)
 	String creatorId;
 	
 	@Column(name = "CATEGORY_NAME", nullable = false, length = 45)
-	@NotBlank(message = "categoryName Field is empty")
 	String categoryName;
 	
 	@Column(name = "CREATED_AT", nullable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", insertable = false)
@@ -41,7 +40,6 @@ public class Category {
 	Date updatedAt;
 	
 	@Column(name = "CATEGORY_PARENTS", nullable = true)
-	@NotBlank(message = "categoryParents Field is empty")
 	int categoryParents;
 
 	public int getCategoryNo() {
@@ -98,7 +96,5 @@ public class Category {
 				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", categoryParents=" + categoryParents
 				+ "]";
 	}
-	
-	
 
 }
