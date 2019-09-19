@@ -19,7 +19,7 @@ import {
 } from 'semantic-ui-react'
 import logo from 'image/logo.png'
 import IntlMessages from '../utility/intlMessages'
-import {axios} from 'axios';
+import axios from 'axios';
 
 // Heads up!
 // We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
@@ -80,16 +80,20 @@ class DesktopContainer extends Component {
         };
 
         this.renderCategories = this.renderCategories.bind(this);
+        this.buttonFlag = this.buttonFlag.bind(this);
     }
 
     hideFixedMenu = () => this.setState({ fixed: false })
     showFixedMenu = () => this.setState({ fixed: true })
 
     componentDidMount() {
-        const axios = require('axios');
+
         const state = this;
 
-        axios.get('/categories')
+        axios({
+            url: '/categories',
+            method: 'get'
+        })
         .then(function (response) {
             state.setState({topCategories: response.data});
         })
@@ -105,6 +109,31 @@ class DesktopContainer extends Component {
                 </Dropdown.Item>
             );
         });
+    }
+
+    logout = () => {
+        axios({
+            url: '/logout',
+            method: 'post'
+        })
+        .then(response => {
+            sessionStorage.clear();
+            let userName = '';
+            let authority = '';
+            let isLogin = 'false';
+            this.props.children._self.props.handleLoginStatus(userName, authority, isLogin);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+
+    buttonFlag = () => {
+        if(this.props.children._self.props.isLogin === 'true'){
+            return <Menu.Item as='a' onClick={this.logout}><IntlMessages id="button.logout"/></Menu.Item>
+        } else {
+            return <Menu.Item as='a' onClick={() => this.props.children._self.props.history.push('/login')}><IntlMessages id="button.login"/></Menu.Item>
+        }
     }
 
     render() {
@@ -140,11 +169,9 @@ class DesktopContainer extends Component {
                                         placeholder='Search...' 
                                     />
                                 </Menu.Item>
-                                <Menu.Item as='a' onClick={()=>{window.location.href='/login'}}>
-                                    <IntlMessages id="loginButton"/>
-                                </Menu.Item>
+                                {this.buttonFlag()}
                                 <Menu.Item as='a' onClick={()=>{window.location.href='/signup'}}>
-                                    <IntlMessages id="signUpButton"/>
+                                    <IntlMessages id="button.signUp"/>
                                 </Menu.Item>
                             </Menu.Menu>
                         </Menu>
@@ -299,15 +326,17 @@ MobileContainer.propTypes = {
     children: PropTypes.node,
 }
 
-const ResponsiveContainer = ({ children }) => (
-    <div>
-        <DesktopContainer>{children}</DesktopContainer>
-        <MobileContainer>{children}</MobileContainer>
-    </div>
-)
+const ResponsiveContainer = ({ children }) => {
+    return (
+        <div>
+            <DesktopContainer>{children}</DesktopContainer>
+            <MobileContainer>{children}</MobileContainer>
+        </div>
+    );
+}
 
 ResponsiveContainer.propTypes = {
     children: PropTypes.node,
 }
 
-export {ResponsiveContainer};
+export default ResponsiveContainer;

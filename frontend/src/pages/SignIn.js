@@ -22,6 +22,7 @@ class SignIn extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.loginFailMessage = this.loginFailMessage.bind(this);
         this.handleDismiss = this.handleDismiss.bind(this);
+        this.initLoginStatus = this.initLoginStatus.bind(this);
     }
 
     handleOnChange = (e) => {
@@ -41,7 +42,6 @@ class SignIn extends Component {
         axios({
             url: '/login',
             method: 'post',
-            headers: { 'Content-type': 'application/x-www-form-urlencoded', },
             data: form
         })
         .then(response => {
@@ -54,6 +54,15 @@ class SignIn extends Component {
                 ...this.state,
                 isLogin: this.props.isLogin
             });
+
+            let userInfo = {
+                userName : this.props.userName,
+                authority : this.props.authority,
+                isLogin : this.props.isLogin
+            }
+
+            sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+            this.props.history.push('/');
         })
         .catch(error => {
             const userName = this.props.userName;
@@ -89,6 +98,24 @@ class SignIn extends Component {
         }
     }
 
+    initLoginStatus = () => {
+        let userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+
+        if( userInfo === null) {
+            return;    
+        }
+
+        let userName = userInfo.userName;
+        let authority = userInfo.authority;
+        let isLogin = userInfo.isLogin;
+
+        this.props.handleLoginStatus(userName, authority, isLogin);  
+    }
+
+    UNSAFE_componentWillMount() {
+        setTimeout(this.initLoginStatus(), 0);
+    }
+
     render(){
         return(
             <div>
@@ -98,7 +125,7 @@ class SignIn extends Component {
                         <Image src={logo} />
                     </Header>
                     <Header as='h2' textAlign='center'>
-                        <IntlMessages id="loginTitle"/>
+                        <IntlMessages id="title.login"/>
                     </Header>
                     {this.loginFailMessage()}
                     <Form size='large'>
@@ -118,7 +145,7 @@ class SignIn extends Component {
                                 size='large'
                                 onClick={this.handleClick}
                             >
-                                <IntlMessages id="loginButton" />
+                                <IntlMessages id="button.login" />
                             </Button>
                             
                         </Segment>
@@ -143,7 +170,7 @@ const mapStateToProps = (state) => {
   
 const mapDispatchToProps = (dispatch) => {
     return {
-        handleLoginStatus: (userName, authority, isLogin) => { dispatch(setLoginStatus(userName, authority, isLogin))},
+        handleLoginStatus: (userName, authority, isLogin) => {dispatch(setLoginStatus(userName, authority, isLogin))},
     };
 };
 

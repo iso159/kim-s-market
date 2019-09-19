@@ -14,6 +14,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.market.security.AuthFailureHandler;
+import com.market.security.AuthLogoutSuccessHandler;
 import com.market.security.AuthProvider;
 import com.market.security.AuthSuccessHandler;
 
@@ -28,6 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	AuthSuccessHandler authSuccessHandler;
+	
+	@Autowired
+	AuthLogoutSuccessHandler authLogoutSuccessHandler;
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception
@@ -51,12 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			 	.anyRequest().authenticated()
 		 .and()
 		 	.formLogin()
-		 	.defaultSuccessUrl("/login")
 		 	.failureHandler(authFailureHandler)
 		 	.successHandler(authSuccessHandler)
 		 .and() 
 			// 로그아웃 관련 설정
 			.logout()
+			.logoutSuccessHandler(authLogoutSuccessHandler)
 		.and()
 			.authenticationProvider(authProvicer);
 	 }
