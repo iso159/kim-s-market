@@ -1,3 +1,7 @@
+html {
+  min-height: 100%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -5,9 +9,38 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.slide .ui.text.container {
+  max-width: 100%;
+}
+
+.slick-dotted.slick-slider {
+  margin-bottom: 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .slick-prev.slick-arrow {
+    padding-left: 4rem;
+    padding-right: calc(4rem + 20px);
+  }
+
+  .slick-next.slick-arrow {
+    padding-left: 4rem;
+    padding-right: calc(4rem + 20px);
+  }
+}
+
+.slick-dots {
+  bottom: 15px;
+}
+
+.ui.container {
+  width: 80%;
 }

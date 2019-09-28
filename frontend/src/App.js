@@ -1,20 +1,37 @@
-import React, {Component} from 'react';
-import {Home, SignUp, SignIn} from './pages';
-import {Route, Switch} from 'react-router-dom';
+import React, { Component } from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import MainPage from './components/main/MainPage'
+import ResponsiveContainer from './components/layout/ResponsiveContainer'
+import SignIn from './components/auth/SignIn'
+import SignUp from './components/auth/SignUp'
+import { connect } from 'react-redux'
+import { signInCheck } from './store/actions/authActions'
+import Item from './components/item/Item'
 
 class App extends Component {
+  
   render() {
+    this.props.signInCheck();
+
     return (
-      <div>
-        <Route exact path="/" component={Home} />
+      <BrowserRouter>
         <Switch>
-          <Route path="/signup/:number" component={SignUp} />
-          <Route path="/signup" component={SignUp} />
+          <ResponsiveContainer>
+            <Route exact path='/' component={ MainPage } />
+            <Route path='/signin' component={ SignIn }/>
+            <Route path='/signup' component={ SignUp }/>
+            <Route exact path='/items' component={ Item } />
+          </ResponsiveContainer>
         </Switch>
-        <Route exact path="/login" component={SignIn} />
-      </div>
+      </BrowserRouter>
     );
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signInCheck: () => dispatch(signInCheck(window.sessionStorage))
+  };
+}
+
+export default connect(null, mapDispatchToProps)(App);
