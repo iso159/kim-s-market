@@ -61,7 +61,7 @@ p code {
   padding-right: calc(8rem + 20px);
   display: inline-block;
   height: 100%;
-  z-index: 32;
+  z-index: 1;
 }
 
 .slick-next.slick-arrow {
@@ -69,7 +69,7 @@ p code {
   padding-right: calc(8rem + 20px);
   display: inline-block;
   height: 100%;
-  z-index: 32;
+  z-index: 1;
 }
 
 @media only screen and (max-width: 767px) {

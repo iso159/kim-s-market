@@ -15,6 +15,7 @@
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
+    "react-simple-tree-menu": "^1.1.5",
     "react-slick": "^0.25.2",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",

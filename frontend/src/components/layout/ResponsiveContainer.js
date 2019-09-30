@@ -74,7 +74,12 @@ class DesktopContainer extends Component {
     componentDidMount = () => {
         axios.get('/categories')
         .then((res) => {
-            
+            console.log(res.data);
+
+            this.setState({
+                ...this.state,
+                categories: res.data
+            });
         })
         .catch((err) => {
             console.log(err);
@@ -84,7 +89,7 @@ class DesktopContainer extends Component {
     render() {
         const links = this.props.auth.authority ? <SignedInLinks /> : <SignedOutLinks/>;
         const categories = this.state.categories.map((category) => {
-            return <Dropdown.Item text={ category.category_name }/>
+            return <Dropdown.Item text={ category.categoryName } key={ category.categoryNo }/>
         });
 
         return (

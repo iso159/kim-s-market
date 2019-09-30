@@ -7,6 +7,7 @@ import SignUp from './components/auth/SignUp'
 import { connect } from 'react-redux'
 import { signInCheck } from './store/actions/authActions'
 import Item from './components/item/Item'
+import CategoryPage from './components/category/CategoryPage'
 
 class App extends Component {
   
@@ -21,6 +22,7 @@ class App extends Component {
             <Route path='/signin' component={ SignIn }/>
             <Route path='/signup' component={ SignUp }/>
             <Route exact path='/items' component={ Item } />
+            <Route exact path='/manage-categories' component={ CategoryPage } />
           </ResponsiveContainer>
         </Switch>
       </BrowserRouter>
