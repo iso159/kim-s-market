@@ -6,16 +6,13 @@ import {
     Container,
     Button,
     Divider,
-    Image
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Slider from 'react-slick'
-import image1 from '../../image/main/maxresdefault.jpg'
-import image2 from '../../image/main/bb.jpg'
 
-const MainPage = (props) => {
-    const settings = {
-        dots: true,
+const MainPage = () => {
+    const slickSettings = {
+        dots: false,
         infinite: true,
         lazyLoad: true,
         speed: 500,
@@ -25,16 +22,53 @@ const MainPage = (props) => {
 
     return (
         <Container>
-            <Slider {...settings} className='slide'>
-                <div>
-                    <Image src={image1} size='huge' centered/>
-                </div>
-                <div>
-                    <Image src={image2} size='huge' centered/>
-                </div>
-                <div>
-                    <Image src={image1} size='huge' centered/>
-                </div>
+            <Slider {...slickSettings} className="slide">
+                <Segment inverted vertical textAlign="center">
+                    <Container text className="active">
+                        <Header inverted as="h1">
+                            Example headline.
+                        </Header>
+                        <p>
+                            Note: If you're viewing this page via a <code>file://</code>
+                            URL, the "next" and "previous" Glyphicon buttons on the left and
+                            right might not load/display properly due to web browser
+                            security rules.
+                        </p>
+                        <Button primary size="huge">
+                            Sign up today
+                        </Button>
+                    </Container>
+                </Segment>
+                <Segment inverted vertical textAlign="center">
+                    <Container text className="active">
+                        <Header inverted as="h1">
+                            Another example headline.
+                        </Header>
+                        <p>
+                            Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+                            Donec id elit non mi porta gravida at eget metus. Nullam id
+                            dolor id nibh ultricies vehicula ut id elit.
+                        </p>
+                        <Button primary size="huge">
+                            Learn more
+                        </Button>
+                    </Container>
+                </Segment>
+                <Segment inverted vertical textAlign="center">
+                    <Container text className="active">
+                        <Header inverted as="h1">
+                            One more for good measure
+                        </Header>
+                        <p>
+                            Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+                            Donec id elit non mi porta gravida at eget metus. Nullam id
+                            dolor id nibh ultricies vehicula ut id elit.
+                        </p>
+                        <Button primary size="huge">
+                            Browse gallery
+                        </Button>
+                    </Container>
+                </Segment>
             </Slider>
             <Segment style={{ padding: '8em 0em' }} vertical>
                 <Grid container stackable verticalAlign='middle'>

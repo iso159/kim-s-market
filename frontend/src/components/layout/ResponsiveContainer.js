@@ -20,6 +20,7 @@ import logo from 'image/logo.png'
 import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 import { connect } from 'react-redux'
+import axios from 'axios'
 
 const getWidth = () => {
     const isSSR = typeof window === 'undefined'
@@ -63,14 +64,28 @@ HomepageHeading.propTypes = {
 
 class DesktopContainer extends Component {
     state = {
-        fixed: false
+        fixed: false,
+        categories: []
     };
 
     hideFixedMenu = () => this.setState({ fixed: false })
     showFixedMenu = () => this.setState({ fixed: true })
 
+    componentDidMount = () => {
+        axios.get('/categories')
+        .then((res) => {
+            
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
     render() {
-        const links = this.props.auth.authority ? <SignedInLinks /> : <SignedOutLinks/>
+        const links = this.props.auth.authority ? <SignedInLinks /> : <SignedOutLinks/>;
+        const categories = this.state.categories.map((category) => {
+            return <Dropdown.Item text={ category.category_name }/>
+        });
 
         return (
             <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
@@ -93,6 +108,7 @@ class DesktopContainer extends Component {
                                     item
                                 >
                                     <Dropdown.Menu>
+                                        { categories }
                                     </Dropdown.Menu>
                                 </Dropdown>
                                 <Menu.Item>
