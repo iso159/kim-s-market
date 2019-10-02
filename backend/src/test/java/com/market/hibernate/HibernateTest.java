@@ -28,11 +28,12 @@ public class HibernateTest {
 	public void hibernateInsertTest() {
 		String memberId = "test";
 		String address = "서울";
-		String name = "입력테스트";
+		String name = "테스트";
 		String mail = "test@testmail.com";
 		String password = "test1234";
 		String phone = "01012345678";
 		String zipCode = "57894";
+		String authority = "USER";
 				
 		member.setMemberId(memberId);
 		member.setName(name);
@@ -41,6 +42,7 @@ public class HibernateTest {
 		member.setPhone(phone);
 		member.setZipCode(zipCode);
 		member.setAddress(address);
+		member.setAuthority(authority);
 		
 		memberRepository.save(member);
 	}

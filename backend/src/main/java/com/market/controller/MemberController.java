@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.market.service.MemberServiceImpl;
+import com.market.service.MemberService;
 import com.market.vo.GenericObject;
 import com.market.vo.Member;
 
@@ -14,11 +14,11 @@ import com.market.vo.Member;
 public class MemberController {
 	
 	@Autowired
-	MemberServiceImpl memberServiceImpl;
+	MemberService memberService;
 	
 	@RequestMapping(value = "/member/join", method = RequestMethod.POST)
 	public void create(@RequestBody GenericObject<Member> request) {
 		Member member = request.getRequestData();
-		memberServiceImpl.save(member);
+		memberService.save(member);
 	}
 }

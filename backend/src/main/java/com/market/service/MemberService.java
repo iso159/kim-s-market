@@ -4,15 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import com.market.constant.RoleType;
 import com.market.repository.MemberRepository;
 import com.market.util.HashUtil;
 import com.market.vo.Member;
 
 @Service
-public class MemberServiceImpl {
+public class MemberService {
 
 	@Autowired
 	MemberRepository memberRepository;
@@ -23,6 +23,10 @@ public class MemberServiceImpl {
 	}
 	
 	public void save(Member member) {
+		if(member.getAuthority() == null || member.getAuthority().trim() == "") {
+			member.setAuthority(RoleType.DEFAULT_ROLE.getRoleUser());
+		}
+		
 		String encryptPassword = HashUtil.passwordEncryptor(member.getPassword());
 		member.setPassword(encryptPassword);
 		memberRepository.save(member);
