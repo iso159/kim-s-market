@@ -1,6 +1,3 @@
-/**
- * Author : KJW
- */
 package com.market.vo;
 
 import java.util.Date;
@@ -13,9 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
-
-import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name = "tb_category")

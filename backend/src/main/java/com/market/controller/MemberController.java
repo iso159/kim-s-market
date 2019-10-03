@@ -1,9 +1,8 @@
 package com.market.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.market.service.MemberService;
@@ -16,7 +15,7 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
-	@RequestMapping(value = "/member/join", method = RequestMethod.POST)
+	@PostMapping("/member/join")
 	public void create(@RequestBody GenericObject<Member> request) {
 		Member member = request.getRequestData();
 		memberService.save(member);
