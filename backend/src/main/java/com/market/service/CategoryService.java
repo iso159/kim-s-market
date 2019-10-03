@@ -14,8 +14,11 @@ import com.market.vo.Category;
 @Service
 public class CategoryService {
 
-	@Autowired
-	CategoryRepository categoryRepository;
+	private CategoryRepository categoryRepository;
+	
+	public CategoryService(CategoryRepository categoryRepository) {
+		this.categoryRepository = categoryRepository;
+	}
 	
 	public Category getById(int id) {
 		Category findCategory = categoryRepository.findById(id).orElse(null);
@@ -32,13 +35,9 @@ public class CategoryService {
 	public void modify(Category category) {
 	}
 	
-	public List<Category> getAllCategory(){
+	public List<Category> getAllCategories(){
 		List<Category> categoryList = categoryRepository.findAll();
 		
 		return categoryList;
-	}
-	
-	public List<Category> getTopCategory(){
-		return categoryRepository.findTopCategories(0);
 	}
 }

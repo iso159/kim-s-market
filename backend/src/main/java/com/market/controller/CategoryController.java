@@ -12,13 +12,16 @@ import com.market.vo.Category;
 @RestController
 public class CategoryController {
 	
-	@Autowired
-	CategoryService cs;
+	private CategoryService categoryService;
 	
-	@GetMapping("/categories")
+	public CategoryController(CategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
+	
+	@GetMapping("/category/all")
 	public List<Category> getCategoryList(){
-		List<Category> topCategory = cs.getTopCategory();
+		List<Category> allCategories = categoryService.getAllCategories();
 		
-		return topCategory;
+		return allCategories;
 	}
 }
