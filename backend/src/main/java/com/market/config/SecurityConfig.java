@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.market.security.AuthFailureHandler;
 import com.market.security.AuthLogoutSuccessHandler;
@@ -36,9 +38,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception
 	{
-		web.ignoring().antMatchers("/resources/**",
-								   "/member/join",
-									"/categories");
+		web.ignoring()
+			.antMatchers("/resources/**",
+						 "/member/join",
+						 "/categories");
 	}
 	
 	 @Override 
@@ -51,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			 	// 권한별 URL 설정
 		 		.antMatchers("/login").permitAll()
 			 	.antMatchers("/member").hasAuthority("USER")
+			 	.antMatchers(HttpMethod.POST, "/items").hasAuthority("SELLER")
 			 	.antMatchers("/admin").hasAuthority("ADMIN")
 			 	.anyRequest().authenticated()
 		 .and()

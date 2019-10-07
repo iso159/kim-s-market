@@ -11,6 +11,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.market.repository.MemberRepository;
+import com.market.util.HashUtil;
 import com.market.vo.Member;
 
 @SpringBootTest
@@ -38,7 +39,7 @@ public class HibernateTest {
 		member.setMemberId(memberId);
 		member.setName(name);
 		member.setMail(mail);
-		member.setPassword(password);
+		member.setPassword(HashUtil.passwordEncryptor(password));
 		member.setPhone(phone);
 		member.setZipCode(zipCode);
 		member.setAddress(address);

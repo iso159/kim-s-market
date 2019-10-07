@@ -34,7 +34,10 @@ dependencies {
 	// Spring Security
 	implementation 'org.springframework.security:spring-security-web:4.2.2.RELEASE'
 	implementation 'org.springframework.security:spring-security-config:4.2.2.RELEASE'
-	
+
+	// Apache Commons IO
+	implementation 'commons-io:commons-io:2.6'
+
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.4.3'
 	
 	developmentOnly("org.springframework.boot:spring-boot-devtools")

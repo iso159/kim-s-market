@@ -1,16 +1,16 @@
 import React from 'react'
 import { Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import IntlMessages from '../utility/intlMessages'
+import { FormattedMessage } from 'react-intl'
 
 const SignedOutLinks = () => {
     return (
         <Menu.Menu position='right'>
             <Menu.Item as={ Link } to='/signup'>
-                <IntlMessages id="button.signUp"/>
+                <FormattedMessage id="button.signUp"/>
             </Menu.Item>
             <Menu.Item as={ Link } to='/signin'>
-                <IntlMessages id="button.login"/>
+                <FormattedMessage id="button.login"/>
             </Menu.Item>
         </Menu.Menu>
     );

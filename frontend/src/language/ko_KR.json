@@ -1,9 +1,27 @@
 {
     "title.login" : "Kim's Market에 로그인",
+    "title.item.input" : "상품 등록",
+
     "button.login" : "로그인",
     "button.logout" : "로그아웃",
     "button.signUp" : "회원가입",
     "button.profile" : "내 정보",
-    "button.manageCategories" : "카테고리 관리",
-    "message.login.fail" : "아이디 또는 비밀번호가 올바르지 않습니다."
+    "button.manage.categories" : "카테고리 관리",
+    "button.item.input" : "상품 등록",
+
+    "item.name" : "상품 명",
+    "item.info" : "상품 정보",
+    "item.price" : "상품 가격",
+    "item.stock" : "상품 재고량",
+    "item.main.categories" : "1차 카테고리",
+    "item.sub.categories" : "2차 카테고리",
+
+    "message.login.fail" : "아이디 또는 비밀번호가 올바르지 않습니다.",
+
+    "message.category.nothing" : "카테고리가 존재하지 않습니다.",
+    "message.category.select.one" : "1차 카테고리를 선택해 주세요.",
+    "message.category.select" : "카테고리를 선택해 주세요.",
+
+    "message.item.input.success" : "상품 등록이 완료되었습니다.",
+    "message.item.input.fail" : "상품 등록에 실패하였습니다."
 }

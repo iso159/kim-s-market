@@ -18,14 +18,13 @@ import org.springframework.stereotype.Component;
 @Component
 @Table(name = "tb_item")
 public class Item {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ITEM_NO", nullable = false)
-	@NotBlank(message = "itemNo Field is empty")
+	@Column(name = "ITEM_NO", nullable = false, updatable = false)
 	int itemNo;
 	
 	@Column(name = "CATEGORY_NO", nullable = false)
-	@NotBlank(message = "categoryNo Field is empty")
 	int categoryNo;
 	
 	@Column(name = "ITEM_NAME", nullable = false, length = 45)
@@ -33,7 +32,6 @@ public class Item {
 	String itemName;
 	
 	@Column(name = "ITEM_PRICE", nullable = false)
-	@NotBlank(message = "itemPrice Field is empty")
 	int itemPrice;
 	
 	@Column(name = "ITEM_INFORMATION", nullable = false, length = 500)
@@ -41,8 +39,10 @@ public class Item {
 	String itemInformation;
 	
 	@Column(name = "STOCK", nullable = false)
-	@NotBlank(message = "stock Field is empty")
 	int stock;
+	
+	@Column(name = "IMAGE_PATH", nullable = true, length = 500)
+	String imagePath;
 	
 	@Column(name = "IS_CANCELED", nullable = false, columnDefinition = "CHAR DEFAULT 'N'", insertable = false)
 	String isCanceled;
@@ -56,7 +56,6 @@ public class Item {
 	Date createdAt;
 	
 	@Column(name = "ITEM_UPDATOR", nullable = true, length = 20)
-	@NotBlank(message = "itemUpdator Field is empty")
 	String itemUpdator;
 	
 	@Column(name = "UPDATED_AT", nullable = true, columnDefinition = "DATETIME")
@@ -113,6 +112,14 @@ public class Item {
 
 	public void setStock(int stock) {
 		this.stock = stock;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	public String getIsCanceled() {

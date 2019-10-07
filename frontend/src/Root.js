@@ -3,18 +3,18 @@ import App from './App'
 import { IntlProvider } from 'react-intl'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import AppLocale from './language/index'
 import rootReducer from './store/reducers/rootReducer'
+import locale from './language/ko_KR'
 
-const currentAppLocale = AppLocale['ko'];
+const defaultLang = 'ko'
 const store = createStore(rootReducer);
 
-class Root extends Component {
+class Root extends Component {    
     render(){
         return (
             <IntlProvider
-                locale={currentAppLocale.locale}
-                messages={currentAppLocale.messages}
+                locale='ko'
+                messages={locale[defaultLang]}
             >
                 <Provider store={store}>
                     <App/>

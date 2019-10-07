@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import logo from 'image/logo.png';
 import { Link, Redirect } from 'react-router-dom';
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
-import IntlMessages from '../utility/intlMessages';
 import { signIn, signInFailed } from '../../store/actions/authActions'
+import { FormattedMessage } from 'react-intl'
 
 class SignIn extends Component {
     state = {
@@ -30,10 +30,6 @@ class SignIn extends Component {
         axios.post('/login', form)
         .then(res => {
             this.props.signIn(res.data.data);
-            
-            const { memberId, authority } = this.props.auth;
-            window.sessionStorage.setItem('memberId', memberId);
-            window.sessionStorage.setItem('authority', authority);
         })
         .catch(err => {
             this.props.signInFailed();
@@ -62,7 +58,7 @@ class SignIn extends Component {
                             <Image src={logo} />
                         </Header>
                         <Header as='h2' textAlign='center'>
-                            <IntlMessages id="title.login"/>
+                            <FormattedMessage id="title.login"/>
                         </Header>
                         { signInFailedMessage }
                         <Form onSubmit={this.handleOnSubmit} size='large'>
@@ -79,7 +75,7 @@ class SignIn extends Component {
                                     fluid 
                                     size='large'
                                 >
-                                    <IntlMessages id="button.login" />
+                                    <FormattedMessage id="button.login" />
                                 </Button>
                             </Segment>
                         </Form>
