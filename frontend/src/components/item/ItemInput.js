@@ -27,6 +27,10 @@ const initialState = {
 };
 
 class ItemInput extends Component {
+    constructor(props) {
+        super(props);
+        const {intl} = this.props;
+    }
     fileInputRef = React.createRef();
 
     state = {
@@ -88,6 +92,7 @@ class ItemInput extends Component {
             this.setState({
                 ...this.state,
                 selectMainCategory: data.options[key],
+                selectSubCategory: {},
                 subCategoriesDisplay: true
             })
         } else if(categoryFlag === 'select_sub_category') {
@@ -99,12 +104,20 @@ class ItemInput extends Component {
     }
 
     fileChange = e => {
-        if(e.target.files.length != 0){
+        console.log(e.target.files[0]);
+        if(e.target.files.length !== 0){
             this.setState({ 
                 ...this.state,
                 file: e.target.files[0] 
             });
         }
+    };
+
+    fileClick = e => {
+        this.setState({ 
+            ...this.state,
+            file: null
+        });
     };
 
     handleOnSubmit = e => {
@@ -146,6 +159,41 @@ class ItemInput extends Component {
         this.setState({ messageVisible: false })
     }
 
+    mainCategories = () => {
+        let {intl} = this.props;
+        let mainCategories = [];
+        this.state.mainCategories.some( (category, index) => {
+            if(this.state.mainCategories.length === 0){
+                mainCategories.push({ key: index, text: intl.formatMessage({ id: 'message.category.nothing' }), value: 'n' });
+                return true;
+            }
+            mainCategories.push({ key: index, text: category.categoryName, value: category.categoryNo });
+            return false;
+        })
+
+        return mainCategories;
+    }
+
+    subCategories = () => {
+        let {intl} = this.props;
+        let subCategories = [];
+        this.state.subCategories.some( (category, index) => {
+            if(this.state.subCategoriesDisplay && this.state.selectMainCategory.value === category.categoryParents){
+                subCategories.push({ key: index, text: category.categoryName, value: category.categoryNo });
+                return false;
+            } else if( Object.keys(this.state.selectMainCategory).length === 0 ) {
+                subCategories.push({ key: index, text: intl.formatMessage({ id: 'message.category.select.one' }), value: 'n' });
+                return true;
+            }
+        })
+
+        if( subCategories.length === 0) {
+            subCategories.push({ key: 0, text: intl.formatMessage({ id: 'message.category.nothing' }), value: 'n' });
+        }
+        
+        return subCategories;
+    }
+
     render (){
         const {intl} = this.props;
 
@@ -168,22 +216,6 @@ class ItemInput extends Component {
                 marginTop: '5em'
             }
         }
-
-        const mainCategories = this.state.mainCategories.map( (category, index) => {
-            if(this.state.mainCategories.length === 0){
-                return { key: index, text: intl.formatMessage({ id: 'message.category.nothing' }), value: 'n' };
-            }
-            return { key: index, text: category.categoryName, value: category.categoryNo };
-        })
-
-        const subCategories = this.state.subCategories.map( (category, index) => {
-            if(this.state.subCategoriesDisplay && this.state.selectMainCategory.value === category.categoryParents){
-                return { key: index, text: category.categoryName, value: category.categoryNo };
-            } else if(Object.values(this.state.selectMainCategory).length === 0){
-                return { key: index, text: intl.formatMessage({ id: 'message.category.select.one' }), value: 'n' };
-            }
-            return { key: index, text: intl.formatMessage({ id: 'message.category.nothing' }), value: 'n' };
-        })
 
         const ItemInputMessage = () => {
             if(this.state.itemInputSuccessFlag === true && this.state.messageVisible === true){
@@ -308,6 +340,7 @@ class ItemInput extends Component {
                                         ref={this.fileInputRef}
                                         type="file"
                                         hidden
+                                        onClick={this.fileClick}
                                         onChange={this.fileChange}
                                     />
                                 </Form.Field>
@@ -330,7 +363,7 @@ class ItemInput extends Component {
                                 <Form.Field>
                                     <label style={style.label}><FormattedMessage id="item.main.categories" /></label>
                                     <Select 
-                                        options={mainCategories} 
+                                        options={this.mainCategories()} 
                                         placeholder={
                                             intl.formatMessage({ 
                                                 id: 'message.category.select' 
@@ -349,7 +382,7 @@ class ItemInput extends Component {
                                 <Form.Field>
                                     <label style={style.label}><FormattedMessage id="item.sub.categories" /></label>
                                     <Select 
-                                    options={subCategories} 
+                                    options={this.subCategories()} 
                                     placeholder={
                                         intl.formatMessage({ 
                                             id: 'message.category.select' 
