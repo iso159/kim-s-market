@@ -21,6 +21,7 @@ import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 import { connect } from 'react-redux'
 import axios from 'axios'
+import { getCategories } from '../../store/actions/categoryActions'
 
 const getWidth = () => {
     const isSSR = typeof window === 'undefined'
@@ -62,10 +63,35 @@ HomepageHeading.propTypes = {
     mobile: PropTypes.bool,
 }
 
+const SubCategories = ({ mainCategory, subCategories }) => {
+    return subCategories.map((subCategory) => {
+        return subCategory.categoryParents === mainCategory.categoryNo ? (
+            <Dropdown.Item key={ subCategory.categoryNo }>
+                { subCategory.categoryName }
+            </Dropdown.Item>
+        ) : null;
+    });
+}
+
+const MainCategories = ({ mainCategories, subCategories }) => {
+    return mainCategories.length !== 0 ? (
+        mainCategories.map((mainCategory) => {
+            return (
+                <Dropdown.Item key={ mainCategory.categoryNo }>
+                    <Dropdown text={ mainCategory.categoryName } key={ mainCategory.categoryNo } fluid>
+                        <Dropdown.Menu>
+                            <SubCategories mainCategory={ mainCategory } subCategories={ subCategories }/>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Dropdown.Item>
+            );
+        })
+    ) : null;
+}
+
 class DesktopContainer extends Component {
     state = {
         fixed: false,
-        categories: []
     };
 
     hideFixedMenu = () => this.setState({ fixed: false })
@@ -74,12 +100,8 @@ class DesktopContainer extends Component {
     componentDidMount = () => {
         axios.get('/categories')
         .then((res) => {
-            console.log(res.data);
-
-            this.setState({
-                ...this.state,
-                categories: res.data
-            });
+            const categories = res.data;
+            this.props.getCategories(categories);
         })
         .catch((err) => {
             console.log(err);
@@ -88,9 +110,10 @@ class DesktopContainer extends Component {
 
     render() {
         const links = this.props.auth.authority ? <SignedInLinks /> : <SignedOutLinks/>;
-        const categories = this.state.categories.map((category) => {
-            return <Dropdown.Item text={ category.categoryName } key={ category.categoryNo }/>
-        });
+        
+        const categories = this.props.category.categories;
+        const mainCategories = categories.filter(category => (category.categoryParents === 0));
+        const subCategories = categories.filter(category => (category.categoryParents !== 0));
 
         return (
             <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
@@ -105,15 +128,9 @@ class DesktopContainer extends Component {
                                 <Menu.Item as={ Link } to='/'>
                                     <img src={ logo } alt='logo'/>
                                 </Menu.Item>    
-                                <Dropdown
-                                    as={ Link }
-                                    to='/items'
-                                    text='전체 카테고리'
-                                    simple
-                                    item
-                                >
+                                <Dropdown text='전체 카테고리' pointing item>
                                     <Dropdown.Menu>
-                                        { categories }
+                                        <MainCategories mainCategories={ mainCategories } subCategories = { subCategories }/>
                                     </Dropdown.Menu>
                                 </Dropdown>
                                 <Menu.Item>
@@ -236,7 +253,7 @@ class MobileContainer extends Component {
                         <HomepageHeading mobile />
                     </Segment>
 
-                    {children}
+                    { children }
                     <Segment inverted vertical style={{ padding: '5em 0em' }}>
                         <Container>
                             <Grid divided inverted stackable>
@@ -281,11 +298,11 @@ MobileContainer.propTypes = {
     children: PropTypes.node,
 }
 
-const ResponsiveContainer = ({ children, auth}) => {
+const ResponsiveContainer = (props) => {
     return (
         <div>
-            <DesktopContainer auth={ auth }>{children}</DesktopContainer>
-            <MobileContainer>{children}</MobileContainer>
+            <DesktopContainer {...props}/>
+            <MobileContainer {...props}/>
         </div>
     );
 }
@@ -296,8 +313,15 @@ ResponsiveContainer.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        category: state.category
     }
 }
 
-export default connect(mapStateToProps)(ResponsiveContainer);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getCategories: (categories) => dispatch(getCategories(categories))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResponsiveContainer);

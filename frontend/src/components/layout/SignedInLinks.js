@@ -8,7 +8,7 @@ import testAvatar from '../../image/logo.png'
 
 const ManageCaregories = (props) => {
     const { authority } = props;
-
+    
     return authority === 'ADMIN' ? (
         <Menu.Item as={ Link } to='/manage-categories'>
             <FormattedMessage id="button.manage.categories"/>
@@ -29,7 +29,7 @@ const ItemInput = (props) => {
 const SignedInLinks = (props) => {
     return (
         <Menu.Menu position='right'>
-            <ManageCaregories authority={props.auth}/>
+            <ManageCaregories authority={props.auth.authority}/>
             <ItemInput authority={props.auth.authority}/>
             <Menu.Item as={ Link } to='/'>
                 <Image src={ testAvatar } avatar />
