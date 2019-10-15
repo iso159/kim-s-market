@@ -5,18 +5,13 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GenericObject<T> {
-	T requestData;
-	List<T> result;
-	Pagination pagination;
+public class ResponseEntity<T> {
 	
-	public T getRequestData() {
-		return requestData;
-	}
+	private List<T> result;
 	
-	public void setRequestData(T requestData) {
-		this.requestData = requestData;
-	}
+	private Pagination pagination;
+	
+	private long count;
 	
 	public List<T> getResult() {
 		return result;
@@ -34,8 +29,16 @@ public class GenericObject<T> {
 		this.pagination = pagination;
 	}
 
+	public long getCount() {
+		return count;
+	}
+
+	public void setCount(long count) {
+		this.count = count;
+	}
+
 	@Override
 	public String toString() {
-		return "GenericVo [requestData=" + requestData + ", result=" + result + ", pagination=" + pagination + "]";
+		return "ResponseEntity [result=" + result + ", pagination=" + pagination + ", count=" + count + "]";
 	}
 }
