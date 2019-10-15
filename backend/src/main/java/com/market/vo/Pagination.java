@@ -25,7 +25,7 @@ public class Pagination {
     private int rangeCnt;
     
     /** 시작 페이지 **/
-    private int startPage;
+    private int startPage = PaginationType.DEFAULT_PAGE.getStartPage();
     
     /** 끝 페이지 **/
     private int endPage;

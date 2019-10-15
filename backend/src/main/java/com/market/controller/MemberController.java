@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.market.service.MemberService;
-import com.market.vo.GenericObject;
 import com.market.vo.Member;
+import com.market.vo.RequestEntity;
 
 @RestController
 public class MemberController {
@@ -16,7 +16,7 @@ public class MemberController {
 	MemberService memberService;
 	
 	@PostMapping("/member/join")
-	public void create(@RequestBody GenericObject<Member> request) {
+	public void create(@RequestBody RequestEntity<Member> request) {
 		Member member = request.getRequestData();
 		memberService.save(member);
 	}
