@@ -8,10 +8,14 @@ public enum PaginationType {
     
     /** 한 블럭(range)당 페이지 수 **/
     private int rangeSize;
+    
+    /** 시작 페이지 **/
+    private int startPage;
 
 	PaginationType() {
 		pageSize = 10;
 		rangeSize = 5;
+		startPage = 0;
 	}
 
 	public int getPageSize() {
@@ -20,5 +24,9 @@ public enum PaginationType {
 
 	public int getRangeSize() {
 		return rangeSize;
+	}
+
+	public int getStartPage() {
+		return startPage;
 	}
 }
