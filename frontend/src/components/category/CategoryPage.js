@@ -183,8 +183,6 @@ const CategoryTable = (props) => {
         </Table.Row>
     );
 
-    console.log(categoryRows.length)
-
     return (
         <Table celled>
             <CategoryTableHeader />

@@ -6,6 +6,18 @@ import { signOut } from '../../store/actions/authActions'
 import { Link } from 'react-router-dom'
 import testAvatar from '../../image/logo.png'
 
+// 회원 관리 (관리자)
+const ManageMembers = (props) => {
+    const { authority } = props;
+
+    return authority === 'ADMIN' ? (
+        <Menu.Item as={ Link } to='/manage-members'>
+            <FormattedMessage id='button.manage.members' />
+        </Menu.Item>
+    ) : null;
+}
+
+// 상품 카테고리 관리 (관리자)
 const ManageCaregories = (props) => {
     const { authority } = props;
     
@@ -29,8 +41,9 @@ const ItemInput = (props) => {
 const SignedInLinks = (props) => {
     return (
         <Menu.Menu position='right'>
-            <ManageCaregories authority={props.auth.authority}/>
-            <ItemInput authority={props.auth.authority}/>
+            <ManageMembers authority={ props.auth.authority } />
+            <ManageCaregories authority={ props.auth.authority }/>
+            <ItemInput authority={ props.auth.authority }/>
             <Menu.Item as={ Link } to='/'>
                 <Image src={ testAvatar } avatar />
                 <span>{ props.auth.memberId }</span>

@@ -3,8 +3,9 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import logo from 'image/logo.png';
 import { Link, Redirect } from 'react-router-dom';
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Image, Message, Segment, Dimmer, Loader } from 'semantic-ui-react';
 import { signIn, signInFailed } from '../../store/actions/authActions'
+import { loadingDatas, loadedDatas } from '../../store/actions/loaderActions'
 import { FormattedMessage } from 'react-intl'
 
 class SignIn extends Component {
@@ -27,6 +28,8 @@ class SignIn extends Component {
         form.append('username', this.state.username);
         form.append('password', this.state.password);
 
+        this.props.loadingDatas();
+
         axios.post('/login', form)
         .then(res => {
             this.props.signIn(res.data.data);
@@ -38,6 +41,9 @@ class SignIn extends Component {
                 ...this.state,
                 authError: this.props.auth.authError
             });
+        })
+        .finally(() => {
+            this.props.loadedDatas();
         })
     }
 
@@ -52,6 +58,9 @@ class SignIn extends Component {
 
         return(
             <div>
+                <Dimmer active={ this.props.loader.isLoading } page>
+                    <Loader size='massive'>Loading...</Loader>
+                </Dimmer>
                 <Grid textAlign='center' style={{ height: '70vh', marginTop: '1%'}} verticalAlign='top'>
                     <Grid.Column style={{ maxWidth: 350 }}>
                         <Header as='h2' textAlign='center'>
@@ -92,13 +101,16 @@ class SignIn extends Component {
 const mapStateToProps = (state) => {
     return {
         auth: state.auth,
+        loader: state.loader
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         signIn: (credentials) => dispatch(signIn(credentials)),
-        signInFailed: () => dispatch(signInFailed())
+        signInFailed: () => dispatch(signInFailed()),
+        loadingDatas: () => ( dispatch(loadingDatas()) ),
+        loadedDatas: () => ( dispatch(loadedDatas()) ),
     }
 };
 
