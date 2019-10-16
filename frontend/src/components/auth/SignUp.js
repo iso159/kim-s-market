@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import PersonalInput from '../Register/PersonalInput/PersonalInput'
 
 class SignUp extends Component {
 
@@ -9,7 +10,7 @@ class SignUp extends Component {
 
         return (
             <div>
-                Sign Up Page
+                <PersonalInput/>
             </div>
         );
     }
