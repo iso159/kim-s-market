@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.market.service.MemberService;
 import com.market.vo.Member;
-import com.market.vo.RequestEntity;
+import com.market.vo.PageWrapper;
 
 @RestController
 public class MemberController {
@@ -16,7 +16,7 @@ public class MemberController {
 	MemberService memberService;
 	
 	@PostMapping("/member/join")
-	public void create(@RequestBody RequestEntity<Member> request) {
+	public void create(@RequestBody PageWrapper<Member> request) {
 		Member member = request.getRequestData();
 		memberService.save(member);
 	}

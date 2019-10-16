@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.market.service.ItemService;
 import com.market.vo.Item;
 import com.market.vo.Pagination;
-import com.market.vo.RequestEntity;
 import com.market.vo.PageWrapper;
 
 @RestController
@@ -50,14 +50,15 @@ public class ItemController {
 					   throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		Item itemVo = null;
-		itemVo = objectMapper.readValue(item, Item.class);		
-		itemService.save(itemVo, file);		
+		itemVo = objectMapper.readValue(item, Item.class);
+		itemService.save(itemVo, file);
 	}
 	
 	@PostMapping("/items/search")
-	public PageWrapper<Item> search(@RequestBody RequestEntity<Item> request) {
+	public PageWrapper<Item> search(@RequestBody PageWrapper<Item> request) {
 		Item item = request.getRequestData();
 		Pagination pagination = request.getPagination();
+		Page<Item> itemList = itemService.search(item, pagination);
 		return null;
 	}
 }

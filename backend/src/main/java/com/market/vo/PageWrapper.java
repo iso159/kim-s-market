@@ -7,12 +7,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class PageWrapper<T> {
 	
+	private T requestData;
+	
 	private List<T> result;
 	
 	private Pagination pagination;
 	
 	private long count;
 	
+	
+	public T getRequestData() {
+		return requestData;
+	}
+
+	public void setRequestData(T requestData) {
+		this.requestData = requestData;
+	}
+
 	public List<T> getResult() {
 		return result;
 	}
@@ -39,6 +50,7 @@ public class PageWrapper<T> {
 
 	@Override
 	public String toString() {
-		return "ResponseEntity [result=" + result + ", pagination=" + pagination + ", count=" + count + "]";
+		return "PageWrapper [requestData=" + requestData + ", result=" + result + ", pagination=" + pagination
+				+ ", count=" + count + "]";
 	}
 }
