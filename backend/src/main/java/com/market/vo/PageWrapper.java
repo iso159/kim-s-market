@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ResponseEntity<T> {
+public class PageWrapper<T> {
 	
 	private List<T> result;
 	

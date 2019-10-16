@@ -1,9 +1,12 @@
 package com.market.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +21,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.market.service.ItemService;
 import com.market.vo.Item;
+import com.market.vo.Pagination;
 import com.market.vo.RequestEntity;
-import com.market.vo.ResponseEntity;
+import com.market.vo.PageWrapper;
 
 @RestController
 public class ItemController {
@@ -28,10 +32,15 @@ public class ItemController {
 	ItemService itemService;
 	
 	@GetMapping("/items")
-	public ResponseEntity<Item> getItems(@RequestParam int categoryNo, @RequestParam int startPage, @RequestParam int pageSize) {
+	public ResponseEntity<PageWrapper<Item>> getItems(@RequestParam int categoryNo, @RequestParam int startPage, @RequestParam int pageSize) {
 		
-		ResponseEntity<Item> itemList = itemService.getByCategoryNo(categoryNo, startPage, pageSize);
-		return itemList;
+		List<Item> itemList = itemService.getByCategoryNo(categoryNo, startPage, pageSize);
+		long count = itemService.getTotalCount();
+		PageWrapper<Item> item = new PageWrapper<Item>();
+		item.setResult(itemList);
+		item.setCount(count);
+		
+		return new ResponseEntity<PageWrapper<Item>>(item ,HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/items", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -46,7 +55,9 @@ public class ItemController {
 	}
 	
 	@PostMapping("/items/search")
-	public ResponseEntity<Item> search(@RequestBody RequestEntity<Item> request) {
+	public PageWrapper<Item> search(@RequestBody RequestEntity<Item> request) {
+		Item item = request.getRequestData();
+		Pagination pagination = request.getPagination();
 		return null;
 	}
 }

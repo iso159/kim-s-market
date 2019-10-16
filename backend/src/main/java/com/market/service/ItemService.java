@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.market.repository.ItemRepository;
-import com.market.vo.ResponseEntity;
 import com.market.vo.Item;
+import com.market.vo.Pagination;
 
 @Service
 public class ItemService {
@@ -23,17 +25,12 @@ public class ItemService {
 	@Autowired
 	FileService fileService;
 	
-	public ResponseEntity<Item> getByCategoryNo(int categoryNo, int startPage, int pageSize) {
+	public List<Item> getByCategoryNo(int categoryNo, int startPage, int pageSize) {
 		List<Item> itemList = null;
 		Pageable pageable = PageRequest.of(startPage -1, pageSize);
 		itemList = itemRepository.findAllByCategoryNo(categoryNo, pageable);
-		long count = itemRepository.count();
 		
-		ResponseEntity<Item> item = new ResponseEntity<Item>();
-		item.setResult(itemList);
-		item.setCount(count);
-		
-		return item;
+		return itemList;
 	}
 	
 	@Transactional
@@ -48,6 +45,18 @@ public class ItemService {
 		}
 		
 		itemRepository.save(item);
+	}
+	
+	public Page<Item> search(Item item, Pagination pagination) {
+		Pageable pageable = PageRequest.of(pagination.getCurPage() - 1, pagination.getPageSize());
+		Example<Item> example = Example.of(item);
+		Page<Item> itemList = itemRepository.findAll(example, pageable);
+		return itemList;
+	}
+	
+	public long getTotalCount() {
+		long count = itemRepository.count();
+		return count;
 	}
 	
 }
