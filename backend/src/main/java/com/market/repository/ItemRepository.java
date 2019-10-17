@@ -11,4 +11,6 @@ import com.market.vo.Item;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, String>{
 	List<Item> findAllByCategoryNo(int categoryNo, Pageable pageable);
+	
+	long countByCategoryNo(int categoryNo);
 }

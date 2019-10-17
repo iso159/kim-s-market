@@ -15,7 +15,7 @@ import {
     Dropdown,
     Input
 } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import logo from 'image/logo.png'
 import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
@@ -63,10 +63,11 @@ HomepageHeading.propTypes = {
     mobile: PropTypes.bool,
 }
 
+
 const SubCategories = ({ mainCategory, subCategories }) => {
-    return subCategories.map((subCategory) => {
+    return subCategories.map((subCategory, index) => {
         return subCategory.categoryParents === mainCategory.categoryNo ? (
-            <Dropdown.Item key={ subCategory.categoryNo }>
+            <Dropdown.Item as = { Link } to={ '/items/' + subCategory.categoryNo } key={ subCategory.categoryNo }>
                 { subCategory.categoryName }
             </Dropdown.Item>
         ) : null;

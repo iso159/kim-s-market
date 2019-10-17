@@ -32,13 +32,20 @@ public class ItemController {
 	ItemService itemService;
 	
 	@GetMapping("/items")
-	public ResponseEntity<PageWrapper<Item>> getItems(@RequestParam int categoryNo, @RequestParam int startPage, @RequestParam int pageSize) {
+	public ResponseEntity<PageWrapper<Item>> getItems(@RequestParam int categoryNo, @RequestParam int pageNum, 
+													  @RequestParam int pageSize) {
+		Pagination pagination = new Pagination();
+		pagination.setCurPage(pageNum);
+		pagination.setPageSize(pageSize);
 		
-		List<Item> itemList = itemService.getByCategoryNo(categoryNo, startPage, pageSize);
-		long count = itemService.getTotalCount();
+		List<Item> itemList = itemService.getByCategoryNo(categoryNo, pagination);
+		
+		long count = itemService.getCount(categoryNo);
+		
 		PageWrapper<Item> item = new PageWrapper<Item>();
 		item.setResult(itemList);
 		item.setCount(count);
+		item.setPagination(pagination);
 		
 		return new ResponseEntity<PageWrapper<Item>>(item ,HttpStatus.OK);
 	}

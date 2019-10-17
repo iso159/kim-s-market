@@ -25,10 +25,9 @@ public class ItemService {
 	@Autowired
 	FileService fileService;
 	
-	public List<Item> getByCategoryNo(int categoryNo, int startPage, int pageSize) {
-		List<Item> itemList = null;
-		Pageable pageable = PageRequest.of(startPage -1, pageSize);
-		itemList = itemRepository.findAllByCategoryNo(categoryNo, pageable);
+	public List<Item> getByCategoryNo(int categoryNo, Pagination pagination) {
+		Pageable pageable = PageRequest.of(pagination.getCurPage() -1, pagination.getPageSize());
+		List<Item> itemList = itemRepository.findAllByCategoryNo(categoryNo, pageable);
 		
 		return itemList;
 	}
@@ -54,8 +53,8 @@ public class ItemService {
 		return itemList;
 	}
 	
-	public long getTotalCount() {
-		long count = itemRepository.count();
+	public long getCount(int categoryNo) {
+		long count = itemRepository.countByCategoryNo(categoryNo);
 		return count;
 	}
 	

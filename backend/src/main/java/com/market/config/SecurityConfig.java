@@ -41,7 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring()
 			.antMatchers("/resources/**",
 						 "/member/join",
-						 "/categories");
+						 "/categories")
+			.antMatchers(HttpMethod.GET, 
+					     "/items");
 	}
 	
 	 @Override 
