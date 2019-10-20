@@ -16,6 +16,7 @@
     "item.stock" : "상품 재고량",
     "item.main.categories" : "1차 카테고리",
     "item.sub.categories" : "2차 카테고리",
+    "item.search" : "상품 검색",
 
     "message.login.fail" : "아이디 또는 비밀번호가 올바르지 않습니다.",
 
@@ -24,5 +25,6 @@
     "message.category.select" : "카테고리를 선택해 주세요.",
 
     "message.item.input.success" : "상품 등록이 완료되었습니다.",
-    "message.item.input.fail" : "상품 등록에 실패하였습니다."
+    "message.item.input.fail" : "상품 등록에 실패하였습니다.",
+    "message.item.search.blank" : "검색어를 입력해 주세요."
 }

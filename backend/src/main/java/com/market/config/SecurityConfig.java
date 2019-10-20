@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						 "/member/join",
 						 "/categories")
 			.antMatchers(HttpMethod.GET, 
-					     "/items");
+					     "/items/**");
 	}
 	
 	 @Override 

@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -46,15 +44,59 @@ public class ItemService {
 		itemRepository.save(item);
 	}
 	
-	public Page<Item> search(Item item, Pagination pagination) {
+	public List<Item> search(String keyWord, Pagination pagination) {
+		String keyWord1 = "";
+		String keyWord2 = "";
+		String keyWord3 = "";
+		
+		if(keyWord != null && keyWord.trim() != "") {
+			// 중복된 공백 제거 및 단어 분할
+			String[] keyWordArray = keyWord.replaceAll("\\s+", " ").split("\\s");
+			int wordArrayNum = 0;
+			
+			for(String word : keyWordArray ) {
+				if(wordArrayNum == 0) {
+					keyWord1 = "%" + word + "%";
+				} else if(wordArrayNum == 1) {
+					keyWord2 = "%" + word + "%";
+				} else if(wordArrayNum == 2) {
+					keyWord3 = "%" + word + "%";
+				}
+			}
+		}
+		
 		Pageable pageable = PageRequest.of(pagination.getCurPage() - 1, pagination.getPageSize());
-		Example<Item> example = Example.of(item);
-		Page<Item> itemList = itemRepository.findAll(example, pageable);
+		List<Item> itemList = itemRepository.findAllByItemNameContainsOrItemNameContainsOrItemNameContains(keyWord1, 
+								keyWord2, keyWord3, pageable);
 		return itemList;
 	}
 	
 	public long getCount(int categoryNo) {
 		long count = itemRepository.countByCategoryNo(categoryNo);
+		return count;
+	}
+	
+	public long getSearchCountByItemName(String keyWord) {
+		String keyWord1 = "";
+		String keyWord2 = "";
+		String keyWord3 = "";
+		
+		if(keyWord != null && keyWord.trim() != "") {
+			String[] keyWordArray = keyWord.split("\\s");
+			int wordArrayNum = 0;
+			
+			for(String word : keyWordArray ) {
+				if(wordArrayNum == 0) {
+					keyWord1 = "%" + word + "%";
+				} else if(wordArrayNum == 1) {
+					keyWord2 = "%" + word + "%";
+				} else if(wordArrayNum == 2) {
+					keyWord3 = "%" + word + "%";
+				}
+			}
+		}
+		
+		long count = itemRepository.countByItemNameContainsOrItemNameContainsOrItemNameContains(keyWord1, keyWord2, keyWord3);
 		return count;
 	}
 	

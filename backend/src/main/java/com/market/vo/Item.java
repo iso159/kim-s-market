@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Entity
 @Component
-@Table(name = "tb_item")
+@Table(name = "tb_item", indexes = {@Index(columnList = "CATEGORY_NO")})
 public class Item {
 	
 	@Id

@@ -61,11 +61,20 @@ public class ItemController {
 		itemService.save(itemVo, file);
 	}
 	
-	@PostMapping("/items/search")
-	public PageWrapper<Item> search(@RequestBody PageWrapper<Item> request) {
-		Item item = request.getRequestData();
-		Pagination pagination = request.getPagination();
-		Page<Item> itemList = itemService.search(item, pagination);
-		return null;
+	@GetMapping("/items/search")
+	public ResponseEntity<PageWrapper<Item>> search(@RequestParam String keyWord, @RequestParam int pageNum, 
+			  										@RequestParam int pageSize) {
+		Pagination pagination = new Pagination();
+		pagination.setCurPage(pageNum);
+		pagination.setPageSize(pageSize);
+		
+		List<Item> itemList = itemService.search(keyWord, pagination);
+		long count = itemService.getSearchCountByItemName(keyWord);
+		
+		PageWrapper<Item> response = new PageWrapper<Item>();
+		response.setPagination(pagination);
+		response.setResult(itemList);
+		response.setCount(count);
+		return new ResponseEntity<PageWrapper<Item>>(response, HttpStatus.OK);
 	}
 }

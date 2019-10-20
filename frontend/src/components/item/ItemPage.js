@@ -29,25 +29,69 @@ class ItemPage extends Component {
     }
 
     // 상품 리스트 요청
-    getItems = (categoryNoProp, num) => {
-        let categoryNo = categoryNoProp === undefined ? this.props.match.params.categoryNo :  categoryNoProp
-        let pageNum = num === undefined ? this.state.startPage : num;
-        axios.get('/items', {
-            params: {
-                categoryNo: categoryNo,
-                pageNum: pageNum,
-                pageSize: this.state.pageSize
+    getItems = (nextProps, num) => {
+        let searchRequest = false;
+        if(nextProps === undefined){
+            if(this.props.match.params.categoryNo === 'search') {
+                searchRequest = true;
             }
-        })
-        .then(response => {
-            this.setState({
-                ...this.state,
-                itemList: response.data.result,
-                itemSeparate: this.separateItemList(response.data.result),
-                itemCount: response.data.count,
-                currentPage: response.data.pagination.curPage
-            });
-        })
+            
+        } else {
+            if(nextProps.match.params.categoryNo === 'search') {
+                searchRequest = true
+            }
+        }
+        var pageNum = num === undefined ? this.state.startPage : num;
+
+        if(searchRequest) {
+            let search = nextProps === undefined ? this.props.location.search : nextProps.location.search;
+            let params = new URLSearchParams(search);
+            let keyWord = params.get('keyWord');
+
+            axios.get('/items/search', {
+                params: {
+                    keyWord: keyWord,
+                    pageNum: pageNum,
+                    pageSize: this.state.pageSize
+                }
+            })
+            .then(response => {
+                console.log(response);
+                this.setState({
+                    ...this.state,
+                    itemList: response.data.result,
+                    itemSeparate: this.separateItemList(response.data.result),
+                    itemCount: response.data.count,
+                    currentPage: response.data.pagination.curPage
+                });
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+        } else {
+            let categoryNo = nextProps === undefined ? this.props.match.params.categoryNo : nextProps.match.params.categoryNo
+
+            axios.get('/items', {
+                params: {
+                    categoryNo: categoryNo,
+                    pageNum: pageNum,
+                    pageSize: this.state.pageSize
+                }
+            })
+            .then(response => {
+                this.setState({
+                    ...this.state,
+                    itemList: response.data.result,
+                    itemSeparate: this.separateItemList(response.data.result),
+                    itemCount: response.data.count,
+                    currentPage: response.data.pagination.curPage
+                });
+            })
+            .catch(err => {
+                console.log(err) 
+            })
+        }
     }
 
     // Grid.Row 태그별로 상품 분리
@@ -55,6 +99,7 @@ class ItemPage extends Component {
         let itemListOne = [];
         let itemListTwo = [];
         let itemListThree = [];
+
 
         itemList.forEach( (item, index) => {
             if(Math.floor(index / 3) === 0) {
@@ -65,6 +110,7 @@ class ItemPage extends Component {
                 itemListThree.push(item);
             }
         })
+
 
         let itemSeparate = {
             itemListOne: itemListOne,
@@ -84,12 +130,19 @@ class ItemPage extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps){
+        console.log(this.props);
+        console.log(nextProps);
         const { match } = this.props;
+        const { location } = this.props;
+
         const prevCategoryNo = match.params.categoryNo;
         const nextCategoryNo = nextProps.match.params.categoryNo;
 
-        if(prevCategoryNo !== nextCategoryNo){
-            this.getItems(nextCategoryNo);
+        const prevKeyWord = location.search;
+        const nextKeyWord = nextProps.location.search;
+
+        if(prevKeyWord !== nextKeyWord || prevCategoryNo !== nextCategoryNo) {
+            this.getItems(nextProps);
         }
     }
 

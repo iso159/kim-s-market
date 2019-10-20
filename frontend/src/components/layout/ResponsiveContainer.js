@@ -13,7 +13,9 @@ import {
     Sidebar,
     Visibility,
     Dropdown,
-    Input
+    Input,
+    Label,
+    Search
 } from 'semantic-ui-react'
 import { Link, Redirect } from 'react-router-dom'
 import logo from 'image/logo.png'
@@ -22,6 +24,8 @@ import SignedOutLinks from './SignedOutLinks'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { getCategories } from '../../store/actions/categoryActions'
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 
 const getWidth = () => {
     const isSSR = typeof window === 'undefined'
@@ -90,9 +94,40 @@ const MainCategories = ({ mainCategories, subCategories }) => {
     ) : null;
 }
 
+const SearchButton = (props) => {
+    const {searchOnClick} = props;
+    const {alertFlag} = props;
+    const {keyWord} = props;
+
+    if(alertFlag) {
+        return (
+            <Label 
+                style={{height: '36px', textAlign: 'center'}} 
+                color='red'
+                pointing='left'
+            >
+                <FormattedMessage id='message.item.search.blank'></FormattedMessage>
+            </Label>
+        )
+    } else {
+        return (
+            <Button 
+                style={{height: '36px', textAlign: 'center'}} 
+                color='orange'
+                onClick={searchOnClick}
+            >
+                Search
+            </Button>
+        )
+    }
+}
+
 class DesktopContainer extends Component {
+
     state = {
         fixed: false,
+        keyWord: '',
+        alertFlag: false
     };
 
     hideFixedMenu = () => this.setState({ fixed: false })
@@ -109,7 +144,34 @@ class DesktopContainer extends Component {
         })
     }
 
+    searchOnClick = () => {
+        let keyWord = this.state.keyWord.trim();
+        if(keyWord === '') {
+            this.setState({
+                ...this.state,
+                alertFlag: true,
+                keyWord: ''
+            })
+        } else {
+            this.props.history.push('/items/search?keyWord=' + this.state.keyWord);
+            this.setState({
+                ...this.state,
+                keyWord: ''
+            })
+        }
+    }
+
+    handleOnChange = e => {
+        this.setState({
+            ...this.state,
+            alertFlag: false,
+            [e.target.id]: e.target.value
+        });
+    }
+
     render() {
+        const {intl} = this.props;
+
         const links = this.props.auth.authority ? <SignedInLinks /> : <SignedOutLinks/>;
         
         const categories = this.props.category.categories;
@@ -123,22 +185,42 @@ class DesktopContainer extends Component {
                     onBottomPassed={this.showFixedMenu}
                     onBottomPassedReverse={this.hideFixedMenu}
                 >
-                    <Segment size='huge' style={{backgroundColor: '#2f4f6f'}} inverted basic>
+                    <Segment size='mini' style={{backgroundColor: '#2f4f6f'}} inverted basic>
                         <Container>
                             <Menu size='large' style={{backgroundColor: '#2f4f6f'}} inverted borderless>
                                 <Menu.Item as={ Link } to='/'>
                                     <img src={ logo } alt='logo'/>
-                                </Menu.Item>    
+                                </Menu.Item>
+
                                 <Dropdown text='전체 카테고리' pointing item>
                                     <Dropdown.Menu>
                                         <MainCategories mainCategories={ mainCategories } subCategories = { subCategories }/>
                                     </Dropdown.Menu>
                                 </Dropdown>
+
                                 <Menu.Item>
                                     <Input 
-                                        action={{icon: 'search', color: 'orange'}} 
-                                        placeholder='Search...'
-                                    />
+                                        style={{width: '800px', height: '35px'}}
+                                        id='keyWord'
+                                        value={this.state.keyWord}
+                                        placeholder={intl.formatMessage({ 
+                                            id: 'item.search' 
+                                        })}
+                                        label={
+                                            <SearchButton 
+                                                searchOnClick={this.searchOnClick} 
+                                                alertFlag={this.state.alertFlag}
+                                            />
+                                        }
+                                        labelPosition='right'
+                                        onChange={this.handleOnChange}
+                                        onKeyPress={event => {
+                                            if (event.key === 'Enter') {
+                                              this.searchOnClick()
+                                            }
+                                        }}
+                                    >
+                                    </Input>
                                 </Menu.Item>
                                 
                                 { links }
@@ -325,4 +407,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ResponsiveContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(injectIntl(ResponsiveContainer)));

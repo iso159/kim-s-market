@@ -50,6 +50,7 @@ class ItemInput extends Component {
 
     handleOnChange = e => {
         this.setState({
+            ...this.state,
             [e.target.id]: e.target.value
         });
     }
@@ -104,7 +105,6 @@ class ItemInput extends Component {
     }
 
     fileChange = e => {
-        console.log(e.target.files[0]);
         if(e.target.files.length !== 0){
             this.setState({ 
                 ...this.state,

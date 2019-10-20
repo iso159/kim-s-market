@@ -33,6 +33,7 @@ public class FileService {
 	public String storeFile(MultipartFile file, String changFileName) {
         String fileName = StringUtils.cleanPath(changFileName + "." + FilenameUtils.getExtension(file.getOriginalFilename()));
         String imagePath = null;
+        String resourcePath = "/product/";
         
         try {
             if(fileName.contains(".."))
@@ -41,7 +42,7 @@ public class FileService {
             Path targetLocation = this.fileLocation.resolve(fileName);
             
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            imagePath = this.fileLocation + "\\" + fileName;
+            imagePath = resourcePath + fileName;
             
             return imagePath;
         }catch(Exception e) {
