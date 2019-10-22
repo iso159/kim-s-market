@@ -66,7 +66,7 @@ public class ItemService {
 		}
 		
 		Pageable pageable = PageRequest.of(pagination.getCurPage() - 1, pagination.getPageSize());
-		List<Item> itemList = itemRepository.findAllByItemNameContainsOrItemNameContainsOrItemNameContains(keyWord1, 
+		List<Item> itemList = itemRepository.findAllByItemNameContainsAndItemNameContainsAndItemNameContains(keyWord1, 
 								keyWord2, keyWord3, pageable);
 		return itemList;
 	}
@@ -96,7 +96,7 @@ public class ItemService {
 			}
 		}
 		
-		long count = itemRepository.countByItemNameContainsOrItemNameContainsOrItemNameContains(keyWord1, keyWord2, keyWord3);
+		long count = itemRepository.countByItemNameContainsAndItemNameContainsAndItemNameContains(keyWord1, keyWord2, keyWord3);
 		return count;
 	}
 	

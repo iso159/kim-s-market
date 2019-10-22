@@ -18,7 +18,7 @@ public interface ItemRepository extends JpaRepository<Item, String>{
 			+ "(:itemName1 is null OR i.itemName LIKE %:itemName1%) and "
 			+ "(:itemName2 is null OR i.itemName LIKE %:itemName2%) and"
 			+ "(:itemName3 is null OR i.itemName LIKE %:itemName3%)")
-	List<Item> findAllByItemNameContainsOrItemNameContainsOrItemNameContains(@Param("itemName1") String itemName1, 
+	List<Item> findAllByItemNameContainsAndItemNameContainsAndItemNameContains(@Param("itemName1") String itemName1, 
 																			 @Param("itemName2") String itemName2, 
 																			 @Param("itemName3") String itemName3, 
 																			 Pageable pageable);
@@ -29,7 +29,7 @@ public interface ItemRepository extends JpaRepository<Item, String>{
 			+ "(:itemName1 is null OR i.itemName LIKE %:itemName1%) and"
 			+ "(:itemName2 is null OR i.itemName LIKE %:itemName2%) and"
 			+ "(:itemName3 is null OR i.itemName LIKE %:itemName3%)")
-	long countByItemNameContainsOrItemNameContainsOrItemNameContains(@Param("itemName1") String itemName1, 
+	long countByItemNameContainsAndItemNameContainsAndItemNameContains(@Param("itemName1") String itemName1, 
 																	 @Param("itemName2") String itemName2, 
 																	 @Param("itemName3") String itemName3);
 }
