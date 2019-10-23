@@ -15,7 +15,6 @@ public class PageWrapper<T> {
 	
 	private long count;
 	
-	
 	public T getRequestData() {
 		return requestData;
 	}

@@ -1,6 +1,3 @@
-/**
- * Author : KJW
- **/
 package com.market.service;
 
 import java.util.List;

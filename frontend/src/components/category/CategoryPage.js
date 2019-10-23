@@ -10,7 +10,7 @@ import axios from 'axios'
 
 const style = {
     container: {
-        marginTop: '5em',
+        marginTop: '3em',
         marginBottom: '2em',
         minHeight: '800px'
     },
@@ -337,7 +337,7 @@ class CategoryPage extends Component {
 
         return (
             <Container style={ style.container }>
-                <Dimmer active={ this.props.loader.isLoading } page>
+                <Dimmer active={ this.props.loader.isLoading } inverted page>
                     <Loader size='massive'>Loading...</Loader>
                 </Dimmer>
                 <PageHeader />

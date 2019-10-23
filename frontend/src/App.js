@@ -9,6 +9,7 @@ import { signInCheck } from './store/actions/authActions'
 import ItemPage from './components/item/ItemPage'
 import ItemInput from './components/item/ItemInput'
 import CategoryPage from './components/category/CategoryPage'
+import MemberPage from './components/member/MemberPage'
 
 class App extends Component {
   
@@ -27,6 +28,7 @@ class App extends Component {
               <Route path={'/items/:categoryNo'} component={ ItemPage } key={window.location.pathname}/>
             </Switch>
             <Route exact path='/manage-categories' component={ CategoryPage } />
+            <Route exact path='/manage-members' component={ MemberPage } />
           </ResponsiveContainer>
         </Switch>
       </BrowserRouter>

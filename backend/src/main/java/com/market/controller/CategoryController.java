@@ -30,7 +30,7 @@ public class CategoryController {
 	// 카테고리 추가
 	@PostMapping("/categories")
 	public Category addCategory(@RequestBody Category category) {
-		System.out.println(category);
+		
 		return categoryService.save(category);
 	}
 	

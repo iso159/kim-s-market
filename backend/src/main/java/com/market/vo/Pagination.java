@@ -10,7 +10,7 @@ public class Pagination {
     private int rangeSize = PaginationType.DEFAULT_PAGE.getRangeSize();
     
     /** 총 게시글 수 **/
-    private int listCnt;
+    private long listCnt;
     
     /** 현재 페이지 **/
     private int curPage;
@@ -46,11 +46,11 @@ public class Pagination {
 		this.rangeSize = rangeSize;
 	}
 
-	public int getListCnt() {
+	public long getListCnt() {
 		return listCnt;
 	}
 
-	public void setListCnt(int listCnt) {
+	public void setListCnt(long listCnt) {
 		this.listCnt = listCnt;
 	}
 

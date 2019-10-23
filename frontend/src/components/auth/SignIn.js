@@ -58,7 +58,7 @@ class SignIn extends Component {
 
         return(
             <div>
-                <Dimmer active={ this.props.loader.isLoading } page>
+                <Dimmer active={ this.props.loader.isLoading } inverted page>
                     <Loader size='massive'>Loading...</Loader>
                 </Dimmer>
                 <Grid textAlign='center' style={{ height: '70vh', marginTop: '1%'}} verticalAlign='top'>
