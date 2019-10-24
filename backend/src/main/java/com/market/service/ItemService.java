@@ -71,7 +71,7 @@ public class ItemService {
 		return itemList;
 	}
 	
-	public long getCount(int categoryNo) {
+	public long getCountByCategoryNo(int categoryNo) {
 		long count = itemRepository.countByCategoryNo(categoryNo);
 		return count;
 	}
@@ -100,4 +100,15 @@ public class ItemService {
 		return count;
 	}
 	
+	public List<Item> getByRegistrar(String registrar, Pagination pagination) {
+		Pageable pageable = PageRequest.of(pagination.getCurPage() -1, pagination.getPageSize());
+		List<Item> itemList = itemRepository.findAllByRegistrar(registrar, pageable);
+		
+		return itemList;
+	}
+	
+	public long getCountByRegistrar(String registrar) {
+		long count = itemRepository.countByRegistrar(registrar);
+		return count;
+	}
 }

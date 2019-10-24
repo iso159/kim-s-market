@@ -10,6 +10,7 @@ import ItemPage from './components/item/ItemPage'
 import ItemInput from './components/item/ItemInput'
 import CategoryPage from './components/category/CategoryPage'
 import MemberPage from './components/member/MemberPage'
+import ItemManage from './components/item/ItemManage'
 
 class App extends Component {
   
@@ -24,6 +25,7 @@ class App extends Component {
             <Route path='/signin' component={ SignIn }/>
             <Route path='/signup' component={ SignUp }/>
             <Switch>
+              <Route exact path='/items/manage' component={ ItemManage } />
               <Route exact path='/items/input' component={ ItemInput } />
               <Route path={'/items/:categoryNo'} component={ ItemPage } key={window.location.pathname}/>
             </Switch>

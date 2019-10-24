@@ -23,6 +23,8 @@ public interface ItemRepository extends JpaRepository<Item, String>{
 																			 @Param("itemName3") String itemName3, 
 																			 Pageable pageable);
 	
+	List<Item> findAllByRegistrar(String registrar, Pageable pageable);
+	
 	long countByCategoryNo(int categoryNo);
 	
 	@Query("SELECT count(i) FROM Item i WHERE "
@@ -32,4 +34,7 @@ public interface ItemRepository extends JpaRepository<Item, String>{
 	long countByItemNameContainsAndItemNameContainsAndItemNameContains(@Param("itemName1") String itemName1, 
 																	 @Param("itemName2") String itemName2, 
 																	 @Param("itemName3") String itemName3);
+	
+	long countByRegistrar(String registrar);
+	
 }

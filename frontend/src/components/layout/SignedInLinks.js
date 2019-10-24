@@ -38,11 +38,22 @@ const ItemInput = (props) => {
     ) : null;
 }
 
+const ManageItem = (props) => {
+    const { authority } = props;
+
+    return authority === 'SELLER' ? (
+        <Menu.Item as={ Link } to='/items/manage'>
+            <FormattedMessage id="button.manage.item"/>
+        </Menu.Item>
+    ) : null;
+}
+
 const SignedInLinks = (props) => {
     return (
         <Menu.Menu position='right'>
             <ManageMembers authority={ props.auth.authority } />
             <ManageCaregories authority={ props.auth.authority }/>
+            <ManageItem authority={ props.auth.authority} />
             <ItemInput authority={ props.auth.authority }/>
             <Menu.Item as={ Link } to='/'>
                 <Image src={ testAvatar } avatar />

@@ -4,14 +4,13 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +39,7 @@ public class ItemController {
 		
 		List<Item> itemList = itemService.getByCategoryNo(categoryNo, pagination);
 		
-		long count = itemService.getCount(categoryNo);
+		long count = itemService.getCountByCategoryNo(categoryNo);
 		
 		PageWrapper<Item> item = new PageWrapper<Item>();
 		item.setResult(itemList);
@@ -75,6 +74,24 @@ public class ItemController {
 		response.setPagination(pagination);
 		response.setResult(itemList);
 		response.setCount(count);
+		return new ResponseEntity<PageWrapper<Item>>(response, HttpStatus.OK);
+	}
+	
+	@GetMapping("/items/{registrar}")
+	public ResponseEntity<PageWrapper<Item>> getItemsByRegistrar(@PathVariable String registrar, @RequestParam int pageNum, 
+														  @RequestParam int pageSize) {
+		Pagination pagination = new Pagination();
+		pagination.setCurPage(pageNum);
+		pagination.setPageSize(pageSize);
+		
+		List<Item> itemList = itemService.getByRegistrar(registrar, pagination);
+		long count = itemService.getCountByRegistrar(registrar);
+		
+		PageWrapper<Item> response = new PageWrapper<Item>();
+		response.setResult(itemList);
+		response.setCount(count);
+		response.setPagination(pagination);
+		
 		return new ResponseEntity<PageWrapper<Item>>(response, HttpStatus.OK);
 	}
 }

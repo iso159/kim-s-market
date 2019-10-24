@@ -56,7 +56,6 @@ class ItemPage extends Component {
                 }
             })
             .then(response => {
-                console.log(response);
                 this.setState({
                     ...this.state,
                     itemList: response.data.result,
@@ -130,8 +129,6 @@ class ItemPage extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps){
-        console.log(this.props);
-        console.log(nextProps);
         const { match } = this.props;
         const { location } = this.props;
 

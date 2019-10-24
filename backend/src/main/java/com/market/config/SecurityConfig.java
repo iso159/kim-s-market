@@ -13,12 +13,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.market.security.AuthFailureHandler;
 import com.market.security.AuthLogoutSuccessHandler;
 import com.market.security.AuthProvider;
 import com.market.security.AuthSuccessHandler;
+import com.market.security.MyBasicAuthenticationEntryPoint;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -35,6 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	AuthLogoutSuccessHandler authLogoutSuccessHandler;
 	
+	@Autowired
+    MyBasicAuthenticationEntryPoint authenticationEntryPoint;
+	
 	@Override
 	public void configure(WebSecurity web) throws Exception
 	{
@@ -42,8 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/resources/**",
 						 "/member/join",
 						 "/categories")
-			.antMatchers(HttpMethod.GET, 
-					     "/items/**");
+			.antMatchers(HttpMethod.GET, "/items")
+			.antMatchers(HttpMethod.GET, "/items/search");
 	}
 	
 	 @Override 
@@ -57,8 +60,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		 		.antMatchers("/login").permitAll()
 			 	.antMatchers("/member").hasAuthority("USER")
 			 	.antMatchers(HttpMethod.POST, "/items").hasAuthority("SELLER")
+			 	.antMatchers(HttpMethod.GET, "/items/**").hasAuthority("SELLER")
 			 	.antMatchers("/admin").hasAuthority("ADMIN")
 			 	.anyRequest().authenticated()
+		 .and()
+		 	.exceptionHandling()
+		 		.authenticationEntryPoint(authenticationEntryPoint)
 		 .and()
 		 	.formLogin()
 		 	.failureHandler(authFailureHandler)
@@ -67,6 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			// 로그아웃 관련 설정
 			.logout()
 			.logoutSuccessHandler(authLogoutSuccessHandler)
+			.invalidateHttpSession(true)
+			.deleteCookies("JSESSIONID")
 		.and()
 			.authenticationProvider(authProvicer);
 	 }

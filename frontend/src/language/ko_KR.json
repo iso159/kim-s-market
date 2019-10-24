@@ -1,6 +1,8 @@
 {
     "title.login" : "Kim's Market에 로그인",
     "title.item.input" : "상품 등록",
+    "title.item" : "상품",
+    "title.item.manage" : "상품 관리",
 
     "button.login" : "로그인",
     "button.logout" : "로그아웃",
@@ -9,6 +11,9 @@
     "button.manage.categories" : "카테고리 관리",
     "button.manage.members" : "회원 관리",
     "button.item.input" : "상품 등록",
+    "button.manage.item" : "상품 관리",
+    "button.update" : "수정",
+    "button.remove" : "삭제",
 
     "item.name" : "상품 명",
     "item.info" : "상품 정보",
