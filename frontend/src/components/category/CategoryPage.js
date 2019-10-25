@@ -7,6 +7,7 @@ import { getCategories } from '../../store/actions/categoryActions'
 import { loadingDatas, loadedDatas } from '../../store/actions/loaderActions'
 import 'react-simple-tree-menu/dist/main.css'
 import axios from 'axios'
+import SimpleReactValidator from 'simple-react-validator';
 
 const style = {
     container: {
@@ -198,8 +199,42 @@ const CategoryTable = (props) => {
     );
 }
 
+// validator 확인후 오류 메시지 출력부분
+const Checkmessage = (props) =>{
+    console.log(props)
+    if(props.message === undefined){
+
+    }else{
+        return(
+            <div style={ style.formField } className="ui red pointing basic label">{props.message}</div>
+        );
+    }
+    return(
+        <div></div>
+    );
+}
+
 // 카테고리 페이지 컴포넌트
 class CategoryPage extends Component {
+
+    constructor(props){
+        super(props);
+        this.validator = new SimpleReactValidator({
+            validators: {
+                //카테고리 
+                krString: {
+                message: '한글 또는 문자,숫자만 입력가능합니다.',
+                rule: (val, params, validator) => {
+                    return validator.helpers.testRegex(val,/^[ㄱ-ㅎㅏ-ㅣ가-힣A-Z0-9]*$/i)
+                },
+                required: true
+                },
+            },
+            messages: {
+                required: '필수입력란 입니다.',
+            },
+        })
+    }
 
     state = {
         categoryName: '',
@@ -213,6 +248,7 @@ class CategoryPage extends Component {
             searchValue: ''
         }
     }
+    
 
     // 카테고리 리스트 - 검색 이벤트
     handleSearch = () => {
@@ -306,6 +342,16 @@ class CategoryPage extends Component {
         })
     }
 
+    // validator 작업 
+    submitForm = (e) => {
+        if (this.validator.allValid()) {
+            this.handleOnSubmit(e)
+        } else {
+            this.validator.showMessages();
+            this.forceUpdate();
+        }
+    }
+
     render() {
         const { auth } = this.props;
 
@@ -346,15 +392,16 @@ class CategoryPage extends Component {
                             <Header size='medium' color='grey' style={ {marginBottom: '2em'} }>
                                 카테고리 추가
                             </Header>
-                            <Form size='small' onSubmit={ this.handleOnSubmit }>
+                            <Form size='small' onSubmit={ this.submitForm }>
                                 <Form.Field 
                                     id='categoryName'
                                     label='카테고리 명'
                                     control={ Input }
-                                    style={ style.formField }
                                     onChange={ this.handleCategoryNameChange }
                                     value={ this.state.categoryName }
+                                    onBlur={() => this.validator.showMessageFor('categoryName')}
                                 />
+                                <Checkmessage message={this.validator.message('categoryName', this.state.categoryName, 'required|krString')}/>
                                 <Form.Field
                                     label='부모 카테고리'
                                     control={ Dropdown }
