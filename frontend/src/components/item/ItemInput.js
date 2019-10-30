@@ -15,6 +15,7 @@ import {
 import axios from 'axios';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
+import SimpleReactValidator from 'simple-react-validator';
 
 const initialState = {
     selectMainCategory: {},
@@ -26,10 +27,40 @@ const initialState = {
     file: null
 };
 
+// validator 확인후 오류 메시지 출력부분
+const Checkmessage = (props) =>{
+    if(props.message === undefined){
+    }else{
+        return(
+            <div className="ui red pointing basic label">{props.message}</div>
+        );
+    }
+    return(
+        <div></div>
+    );
+}
+
 class ItemInput extends Component {
     constructor(props) {
         super(props);
         const {intl} = this.props;
+        this.validator = new SimpleReactValidator({
+            validators: { 
+                krString: {
+                message: '한글 또는 영문,숫자만 입력가능합니다.',
+                rule: (val, params, validator) => {
+                    return validator.helpers.testRegex(val,/^[ㄱ-ㅎㅏ-ㅣ가-힣A-Z0-9\s]*$/i)
+                },
+                required: true
+                },
+            },
+            messages: {
+                required: '필수입력란 입니다.',
+                string: '문자 이어야 합니다.',
+                integer: '정수 이어야 합니다.',
+                not_in: ':values',
+            },
+        })
     }
     fileInputRef = React.createRef();
 
@@ -113,7 +144,6 @@ class ItemInput extends Component {
                 selectSubCategory: changeCategory
             })
         }
-
     }
 
     fileChange = e => {
@@ -133,38 +163,47 @@ class ItemInput extends Component {
     };
 
     handleOnSubmit = e => {
-        e.preventDefault();
-        let data = {
-            categoryNo: this.state.selectSubCategory.value,
-            itemName: this.state.itemName,
-            itemPrice: this.state.itemPrice,
-            stock: this.state.stock,
-            itemInformation: this.state.itemInfo,
-            registrar: this.props.auth.memberId
+        if(this.validator.allValid()){
+            e.preventDefault();
+            let data = {
+                categoryNo: this.state.selectSubCategory.value,
+                itemName: this.state.itemName,
+                itemPrice: this.state.itemPrice,
+                stock: this.state.stock,
+                itemInformation: this.state.itemInfo,
+                registrar: this.props.auth.memberId
+            }
+
+            let test = new FormData();
+            test.append('file', this.state.file);
+            test.append('item', JSON.stringify(data));
+
+            axios({
+                method: 'post',
+                url: '/items',
+                data: test
+            })
+            .then(res => {
+                this.setState({
+                    ...initialState,
+                    itemInputSuccessFlag: true,
+                    messageVisible: true
+                })
+            })
+            .catch(err => {
+                this.setState({
+                    itemInputSuccessFlag: false,
+                    messageVisible: true
+                })
+            })
+            this.validator.hideMessageFor('itemName');
+            this.validator.hideMessageFor('itemInfo');
+            this.validator.hideMessageFor('itemPrice');
+            this.validator.hideMessageFor('stock');
+        } else {
+            this.validator.showMessages();
+            this.forceUpdate();
         }
-
-        let test = new FormData();
-        test.append('file', this.state.file);
-        test.append('item', JSON.stringify(data));
-
-        axios({
-            method: 'post',
-            url: '/items',
-            data: test
-        })
-        .then(res => {
-            this.setState({
-                ...initialState,
-                itemInputSuccessFlag: true,
-                messageVisible: true
-            })
-        })
-        .catch(err => {
-            this.setState({
-                itemInputSuccessFlag: false,
-                messageVisible: true
-            })
-        })
     }
 
     handleDismiss = () => {
@@ -205,6 +244,8 @@ class ItemInput extends Component {
         
         return subCategories;
     }
+
+
 
     render (){
         const {intl} = this.props;
@@ -276,8 +317,10 @@ class ItemInput extends Component {
                                                 id: 'item.name' 
                                             })
                                         }
-                                        value={this.state.itemName} 
+                                        value={this.state.itemName}
+                                        onBlur={() => this.validator.showMessageFor('itemName')}
                                     />
+                                    <Checkmessage message={this.validator.message('itemName', this.state.itemName, 'required|krString')}/>
                                 </Form.Field>
 
                                 <Form.Field>
@@ -292,7 +335,9 @@ class ItemInput extends Component {
                                             })
                                         } 
                                         value={this.state.itemInfo}
+                                        onBlur={() => this.validator.showMessageFor('itemInfo')}
                                     />
+                                    <Checkmessage message={this.validator.message('itemInfo', this.state.itemInfo, 'required|string')}/>
                                 </Form.Field>
 
                                 <Form.Field>
@@ -308,11 +353,13 @@ class ItemInput extends Component {
                                         }
                                         type='text'
                                         value={this.state.stock}
+                                        onBlur={() => this.validator.showMessageFor('stock')}
                                     >
                                         <Label basic><Icon name='box' />️</Label>
                                         <input />
                                         <Label></Label>
                                     </Input>
+                                    <Checkmessage message={this.validator.message('stock', this.state.stock, 'required|integer')}/>
                                 </Form.Field>
 
                                 <Form.Field>
@@ -328,11 +375,13 @@ class ItemInput extends Component {
                                         }
                                         type='text'
                                         value={this.state.itemPrice}
+                                        onBlur={() => this.validator.showMessageFor('itemPrice')}
                                     >
                                         <Label basic><Icon name='won' />️</Label>
                                         <input />
                                         <Label></Label>
                                     </Input>
+                                    <Checkmessage message={this.validator.message('itemPrice', this.state.itemPrice, 'required|integer')}/>
                                 </Form.Field>
 
                                 <Form.Field>
@@ -385,6 +434,7 @@ class ItemInput extends Component {
                                         id='select_main_category'
                                         value={Object.keys(this.state.selectMainCategory).length === 0 ? null : this.state.selectMainCategory.value}
                                     />
+                                    <Checkmessage message={this.validator.message('selectMainCategory', this.state.selectMainCategory.text , 'required|string')}/>
                                 </Form.Field>
                             </Form>
                         </Grid.Column>
@@ -394,16 +444,17 @@ class ItemInput extends Component {
                                 <Form.Field>
                                     <label style={style.label}><FormattedMessage id="item.sub.categories" /></label>
                                     <Select 
-                                    options={this.subCategories()} 
-                                    placeholder={
-                                        intl.formatMessage({ 
-                                            id: 'message.category.select' 
-                                        })
-                                    }
-                                    onChange={ this.categoryOnChange }
-                                    id="select_sub_category"
-                                    value={Object.keys(this.state.selectSubCategory).length === 0 ? null : this.state.selectSubCategory.value}
-                                />
+                                        options={this.subCategories()} 
+                                        placeholder={
+                                            intl.formatMessage({ 
+                                                id: 'message.category.select' 
+                                            })
+                                        }
+                                        onChange={ this.categoryOnChange }
+                                        id="select_sub_category"
+                                        value={Object.keys(this.state.selectSubCategory).length === 0 ? null : this.state.selectSubCategory.value}
+                                    />
+                                    <Checkmessage message={this.validator.message('selectSubCategory', this.state.selectSubCategory.text , 'required|not_in:1차 카테고리를 선택해 주세요.|not_in:카테고리가 존재하지 않습니다.')}/>
                                 </Form.Field>
                             </Form>
                         </Grid.Column>
