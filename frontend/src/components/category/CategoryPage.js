@@ -201,7 +201,6 @@ const CategoryTable = (props) => {
 
 // validator 확인후 오류 메시지 출력부분
 const Checkmessage = (props) =>{
-    console.log(props)
     if(props.message === undefined){
 
     }else{
@@ -223,9 +222,9 @@ class CategoryPage extends Component {
             validators: {
                 //카테고리 
                 krString: {
-                message: '한글 또는 문자,숫자만 입력가능합니다.',
+                message: '한글 또는 영문,숫자만 입력가능합니다.',
                 rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val,/^[ㄱ-ㅎㅏ-ㅣ가-힣A-Z0-9]*$/i)
+                    return validator.helpers.testRegex(val,/^[ㄱ-ㅎㅏ-ㅣ가-힣A-Z0-9\s]*$/i)
                 },
                 required: true
                 },
@@ -346,6 +345,7 @@ class CategoryPage extends Component {
     submitForm = (e) => {
         if (this.validator.allValid()) {
             this.handleOnSubmit(e)
+            this.validator.hideMessageFor('categoryName');
         } else {
             this.validator.showMessages();
             this.forceUpdate();
