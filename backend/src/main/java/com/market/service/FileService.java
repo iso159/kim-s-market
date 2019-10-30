@@ -30,8 +30,8 @@ public class FileService {
         }
     }
 	
-	public String storeFile(MultipartFile file, String changFileName) {
-        String fileName = StringUtils.cleanPath(changFileName + "." + FilenameUtils.getExtension(file.getOriginalFilename()));
+	public String storeFile(MultipartFile file, String changeFileName) {
+        String fileName = StringUtils.cleanPath(changeFileName + "." + FilenameUtils.getExtension(file.getOriginalFilename()));
         String imagePath = null;
         String resourcePath = "/product/";
         
