@@ -1,5 +1,7 @@
 package com.market.service;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,6 +44,43 @@ public class ItemService {
 		}
 		
 		itemRepository.save(item);
+	}
+	
+	@Transactional
+	public void update(Item item, MultipartFile file) {
+		Item itemFromDb = itemRepository.findById(item.getItemNo()).orElse(null);
+		
+		if(itemFromDb != null && item != null) {			
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date(System.currentTimeMillis());
+			
+			if(item.getIsCanceled() != null) {
+				itemFromDb.setIsCanceled(item.getIsCanceled());
+				itemFromDb.setDeletedAt(dateFormat.format(date));
+			} else {				
+				if(file != null) {
+					String changeFileName = UUID.randomUUID().toString();
+					String imagePath = fileService.storeFile(file, changeFileName);
+					itemFromDb.setImagePath(imagePath);
+				}
+				
+				if(item.getItemName() != null) {
+					itemFromDb.setItemName(item.getItemName());
+				}
+				
+				if(item.getItemInformation() != null) {
+					itemFromDb.setItemInformation(item.getItemInformation());
+				}
+				
+				itemFromDb.setCategoryNo(item.getCategoryNo());
+				itemFromDb.setUpdatedAt(dateFormat.format(date));
+				itemFromDb.setStock(item.getStock());			
+				itemFromDb.setItemPrice(item.getItemPrice());
+				itemFromDb.setItemUpdator(item.getItemUpdator());
+			}
+			
+			itemRepository.save(itemFromDb);
+		}
 	}
 	
 	public List<Item> search(String keyWord, Pagination pagination) {

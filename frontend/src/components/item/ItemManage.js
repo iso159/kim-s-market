@@ -8,12 +8,18 @@ import {
     Button,
     Grid,
     Image,
-    Pagination
+    Pagination,
+    Modal,
+    Form,
+    Input,
+    TextArea,
+    Select
  } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import axios from 'axios';
 import { signOut } from '../../store/actions/authActions'
+import ItemModifyModal from './ItemModifyModal'
 
 const style = {
     container: {
@@ -32,8 +38,7 @@ const style = {
 // 상품에 따른 Grid.Column 컴포넌트
 const GridColumn = ( props ) => {
     var itemCategory = '';
-    const { item } = props;
-    const { categories } = props;
+    const { item, categories, clickModifyBtn } = props;
 
     categories.forEach( category => {
         if(category.categoryNo === item.categoryNo) {
@@ -65,7 +70,13 @@ const GridColumn = ( props ) => {
             <Grid columns='equal'>
                 <Grid.Row>
                     <Grid.Column>
-                        <Button color='teal' fluid>
+                        <Button 
+                            color='teal' 
+                            fluid
+                            onClick={ () => {
+                                clickModifyBtn(item)
+                            }}
+                        >
                             <FormattedMessage id='button.update' />
                             <Icon name='right chevron' />
                         </Button>
@@ -87,6 +98,8 @@ const GridColumn = ( props ) => {
 class ItemManage extends Component {
 
     state = {
+        mainCategories: [],
+        subCategories: [],
         itemList: [],
         itemSeparate: {
             itemListOne: [],
@@ -96,7 +109,9 @@ class ItemManage extends Component {
         startPage: 1,
         currentPage: 1,
         pageSize: 9,
-        itemCount: 0
+        itemCount: 0,
+        modalFlag: false,
+        selectModifyItem: {}
     }
 
     getMyItems = (num) => {
@@ -109,7 +124,6 @@ class ItemManage extends Component {
             }
         })
         .then(response => {
-            console.log(response);
             this.setState({
                 ...this.state,
                 itemList: response.data.result,
@@ -119,7 +133,6 @@ class ItemManage extends Component {
             })
         })
         .catch( error => {
-            console.log(error.response);
             if(error.response.status === 401) {
                 alert(error.response.data.body);
                 this.props.signOut();
@@ -163,6 +176,26 @@ class ItemManage extends Component {
         this.getMyItems(data.activePage);
     }
 
+    clickModifyBtn = (item) => {
+        if(this.state.modalFlag) {
+            this.setState({
+                ...this.state,
+                selectModifyItem: {},
+                modalFlag: false
+            }, this.getMyItems())
+        } else {
+            this.setState({
+                ...this.state,
+                selectModifyItem: item,
+                itemName: item.itemName,
+                itemInfo: item.itemInformation,
+                itemPrice: item.itemPrice,
+                stock: item.stock,
+                modalFlag: true
+            })
+        }
+    }
+
     render() {
         return (
             <Container style={style.container}>
@@ -175,15 +208,42 @@ class ItemManage extends Component {
 
                 <Grid columns={3} divided='vertically' celled='internally'>
                     <Grid.Row stretched>
-                        {this.state.itemSeparate.itemListOne.map( (item, index) => { return <GridColumn item={item} key={index} categories={this.props.category.categories}/> })}
+                        {this.state.itemSeparate.itemListOne.map( (item, index) => { 
+                            return (
+                                <GridColumn 
+                                    item={item} 
+                                    key={index} 
+                                    categories={this.props.category.categories}
+                                    clickModifyBtn={this.clickModifyBtn}
+                                /> 
+                            )
+                        })}
                     </Grid.Row>
 
                     <Grid.Row stretched>
-                        {this.state.itemSeparate.itemListTwo.map( (item, index) => { return <GridColumn item={item} key={index} categories={this.props.category.categories}/> })}
+                        {this.state.itemSeparate.itemListTwo.map( (item, index) => { 
+                            return (
+                                <GridColumn 
+                                    item={item} 
+                                    key={index} 
+                                    categories={this.props.category.categories}
+                                    clickModifyBtn={this.clickModifyBtn}
+                                /> 
+                            )
+                        })}
                     </Grid.Row>
 
                     <Grid.Row stretched>
-                        {this.state.itemSeparate.itemListThree.map( (item, index) => { return <GridColumn item={item} key={index} categories={this.props.category.categories}/> })}
+                        {this.state.itemSeparate.itemListThree.map( (item, index) => { 
+                            return (
+                                <GridColumn 
+                                    item={item} 
+                                    key={index} 
+                                    categories={this.props.category.categories}
+                                    clickModifyBtn={this.clickModifyBtn}
+                                /> 
+                            )
+                        })}
                     </Grid.Row>
                 </Grid>
 
@@ -194,6 +254,11 @@ class ItemManage extends Component {
                         onPageChange={this.handlePage}
                     />
                 </Grid>
+                <ItemModifyModal 
+                    handle={this.state.modalFlag} 
+                    close={this.clickModifyBtn} 
+                    item={this.state.selectModifyItem}
+                />
             </Container>
         )
     }
@@ -212,4 +277,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItemManage);
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(ItemManage));

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,6 +59,18 @@ public class ItemController {
 		Item itemVo = null;
 		itemVo = objectMapper.readValue(item, Item.class);
 		itemService.save(itemVo, file);
+	}
+	
+	@PutMapping(path = "/items/{itemNo}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = { MediaType.APPLICATION_JSON_VALUE })
+	@Transactional
+	public void modify(@PathVariable int itemNo, @RequestPart("item") String item, 
+					   @RequestPart(value = "file", required = false) MultipartFile file) 
+					   throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		Item itemVo = null;
+		itemVo = objectMapper.readValue(item, Item.class);
+		itemVo.setItemNo(itemNo);
+		itemService.update(itemVo, file);
 	}
 	
 	@GetMapping("/items/search")

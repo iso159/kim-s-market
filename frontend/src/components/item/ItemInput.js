@@ -89,19 +89,31 @@ class ItemInput extends Component {
         const { key } = data.options.find(options => options.value === value);
 
         let categoryFlag = data.id;
+        let changeCategory = {}
+
+        data.options.some( data => {
+            if(data.key === key) {
+                changeCategory = data;
+                return true;
+            } else {
+                return false;
+            }
+        })
+
         if(categoryFlag === 'select_main_category') {
             this.setState({
                 ...this.state,
-                selectMainCategory: data.options[key],
+                selectMainCategory: changeCategory,
                 selectSubCategory: {},
                 subCategoriesDisplay: true
             })
         } else if(categoryFlag === 'select_sub_category') {
             this.setState({
                 ...this.state,
-                selectSubCategory: data.options[key]
+                selectSubCategory: changeCategory
             })
         }
+
     }
 
     fileChange = e => {

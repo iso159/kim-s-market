@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.market.vo.Item;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, String>{
+public interface ItemRepository extends JpaRepository<Item, Integer>{
 	List<Item> findAllByCategoryNo(int categoryNo, Pageable pageable);
 	
 	@Query("SELECT i FROM Item i WHERE "

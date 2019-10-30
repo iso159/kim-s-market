@@ -60,12 +60,10 @@ public class Item {
 	String itemUpdator;
 	
 	@Column(name = "UPDATED_AT", nullable = true, columnDefinition = "DATETIME")
-	@Temporal(TemporalType.TIMESTAMP)
-	Date updatedAt;
+	String updatedAt;
 	
 	@Column(name = "DELETED_AT", nullable = true, columnDefinition = "DATETIME")
-	@Temporal(TemporalType.TIMESTAMP)
-	Date deletedAt;
+	String deletedAt;
 
 	public int getItemNo() {
 		return itemNo;
@@ -155,19 +153,19 @@ public class Item {
 		this.itemUpdator = itemUpdator;
 	}
 
-	public Date getUpdatedAt() {
+	public String getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 
-	public Date getDeletedAt() {
+	public String getDeletedAt() {
 		return deletedAt;
 	}
 
-	public void setDeletedAt(Date deletedAt) {
+	public void setDeletedAt(String deletedAt) {
 		this.deletedAt = deletedAt;
 	}
 
