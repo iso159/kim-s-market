@@ -9,7 +9,6 @@ import com.market.property.FileUploadProperties;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.market")
 @EnableConfigurationProperties({
     FileUploadProperties.class
 })

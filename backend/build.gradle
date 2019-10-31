@@ -25,7 +25,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	
-	// Hibernate
+	// Spring Data JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	
 	// DB Connection Pool
@@ -40,10 +40,13 @@ dependencies {
 	
 	// Gson
 	implementation 'com.google.code.gson:gson:2.8.6'
-
+	
+	// Maria DB Connector
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.4.3'
 	
+	// Spring boot Dev tools
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	
+	// Spring boot Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

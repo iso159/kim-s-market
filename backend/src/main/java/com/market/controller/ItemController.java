@@ -39,12 +39,12 @@ public class ItemController {
 		pagination.setPageSize(pageSize);
 		
 		List<Item> itemList = itemService.getByCategoryNo(categoryNo, pagination);
-		
 		long count = itemService.getCountByCategoryNo(categoryNo);
+		
+		pagination.setListCnt(count);
 		
 		PageWrapper<Item> item = new PageWrapper<Item>();
 		item.setResult(itemList);
-		item.setCount(count);
 		item.setPagination(pagination);
 		
 		return new ResponseEntity<PageWrapper<Item>>(item ,HttpStatus.OK);
@@ -83,10 +83,12 @@ public class ItemController {
 		List<Item> itemList = itemService.search(keyWord, pagination);
 		long count = itemService.getSearchCountByItemName(keyWord);
 		
+		pagination.setListCnt(count);
+		
 		PageWrapper<Item> response = new PageWrapper<Item>();
 		response.setPagination(pagination);
 		response.setResult(itemList);
-		response.setCount(count);
+		
 		return new ResponseEntity<PageWrapper<Item>>(response, HttpStatus.OK);
 	}
 	
@@ -100,9 +102,10 @@ public class ItemController {
 		List<Item> itemList = itemService.getByRegistrar(registrar, pagination);
 		long count = itemService.getCountByRegistrar(registrar);
 		
+		pagination.setListCnt(count);
+		
 		PageWrapper<Item> response = new PageWrapper<Item>();
 		response.setResult(itemList);
-		response.setCount(count);
 		response.setPagination(pagination);
 		
 		return new ResponseEntity<PageWrapper<Item>>(response, HttpStatus.OK);

@@ -461,9 +461,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getCategories: (categories) => ( dispatch(getCategories(categories)) ),
-        loadingDatas: () => ( dispatch(loadingDatas()) ),
-        loadedDatas: () => ( dispatch(loadedDatas()) ),
+        getCategories: (categories) => dispatch(getCategories(categories)),
+        loadingDatas: () => dispatch(loadingDatas()),
+        loadedDatas: () => dispatch(loadedDatas()),
     };
 }
 

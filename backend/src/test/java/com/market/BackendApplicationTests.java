@@ -1,5 +1,4 @@
 /**
- * Author : KJW
  */
 package com.market;
 
@@ -10,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.market.service.CategoryService;
+import com.market.service.MemberService;
 import com.market.vo.Category;
 
 @RunWith(SpringRunner.class)
@@ -18,6 +18,9 @@ public class BackendApplicationTests {
 	
 	@Autowired
 	CategoryService cs;
+	
+	@Autowired
+	MemberService ms;
 	
 	@Test
 	public void categoryServiceTest() {
@@ -28,5 +31,11 @@ public class BackendApplicationTests {
 		
 		cs.save(category);
 	}
-
+	
+	@Test
+	public void parsingTest() {
+		String cp = "t";
+		
+		System.out.println(Integer.parseInt(cp));
+	}
 }

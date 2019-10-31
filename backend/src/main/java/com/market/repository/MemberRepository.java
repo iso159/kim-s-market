@@ -10,15 +10,28 @@ import com.market.vo.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, String> {
-	// 상태 값이 null이 아닌 모든 회원 조회
-	List<Member> findByStatusIsNotNull(Pageable pageable);
 	
-	// 상태 값이 null이 아닌 모든 회원 수 카운트
-	Long countByStatusIsNotNull();
-	
-	// 상태 값에 따른 회원 조회
+	// 계정상태 값 그리고 페이징에 따른 회원 목록 및 총 회원 수 조회
 	List<Member> findByStatus(String status, Pageable pageable);
+	int countByStatus(String status);
 	
-	// 상태 값에 따른 회원 수 카운트
-	Long countByStatus(String status);
+	// 회원 아이디, 계정상태 값 그리고 페이징에 따른 회원 목록 및 총 회원 수 조회
+	List<Member> findByStatusAndMemberIdContainingIgnoreCase(String status, String memberId, Pageable pageable);
+	int countByStatusAndMemberIdContainingIgnoreCase(String status, String memberId);
+	
+	// 회원 주소, 계정상태 값 그리고 페이징에 따른 회원 목록 조회
+	List<Member> findByStatusAndAddressContainingIgnoreCase(String status, String address, Pageable pageable);
+	int countByStatusAndAddressContainingIgnoreCase(String status, String address);
+	
+	// 회원 권한, 계정상태 값 그리고 페이징에 따른 회원 목록 조회
+	List<Member> findByStatusAndAuthorityContainingIgnoreCase(String status, String authority, Pageable pageable);
+	int countByStatusAndAuthorityContainingIgnoreCase(String status, String authority);
+	
+	// 회원 이름, 계정상태 값 그리고 페이징에 따른 회원 목록 조회
+	List<Member> findByStatusAndNameContainingIgnoreCase(String status, String name, Pageable pageable);
+	int countByStatusAndNameContainingIgnoreCase(String status, String name);
+	
+	// 회원 휴대폰 번호, 계정상태 값 그리고 페이징에 따른 회원 목록 조회
+	List<Member> findByStatusAndPhoneContainingIgnoreCase(String status, String Phone, Pageable pageable);
+	int countByStatusAndPhoneContainingIgnoreCase(String status, String Phone);
 }

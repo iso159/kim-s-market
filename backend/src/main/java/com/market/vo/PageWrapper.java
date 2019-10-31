@@ -13,8 +13,6 @@ public class PageWrapper<T> {
 	
 	private Pagination pagination;
 	
-	private long count;
-	
 	public T getRequestData() {
 		return requestData;
 	}
@@ -39,17 +37,8 @@ public class PageWrapper<T> {
 		this.pagination = pagination;
 	}
 
-	public long getCount() {
-		return count;
-	}
-
-	public void setCount(long count) {
-		this.count = count;
-	}
-
 	@Override
 	public String toString() {
-		return "PageWrapper [requestData=" + requestData + ", result=" + result + ", pagination=" + pagination
-				+ ", count=" + count + "]";
+		return "PageWrapper [requestData=" + requestData + ", result=" + result + ", pagination=" + pagination + "]";
 	}
 }
