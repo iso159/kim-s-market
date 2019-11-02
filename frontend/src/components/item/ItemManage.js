@@ -9,11 +9,7 @@ import {
     Grid,
     Image,
     Pagination,
-    Modal,
-    Form,
-    Input,
-    TextArea,
-    Select
+    Confirm
  } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -35,10 +31,32 @@ const style = {
     }
 }
 
+// 상품 상태에 따른 버튼 컴포넌트
+const DeleteButton = (props) => {
+    const { item, handleConfirm } = props;
+    console.log(item);
+
+    if(item.isCanceled === 'N') {
+        return (
+            <Button color='red' fluid onClick={ () => {handleConfirm(item)}} >
+                <FormattedMessage id='button.remove' />
+                <Icon name='right chevron' />
+            </Button>
+        );
+    } else {
+        return (
+            <Button color='yellow' fluid onClick={ () => {handleConfirm(item)}} >
+                <FormattedMessage id='button.reRegistration' />
+                <Icon name='right chevron' />
+            </Button>
+        );
+    }
+}
+
 // 상품에 따른 Grid.Column 컴포넌트
 const GridColumn = ( props ) => {
     var itemCategory = '';
-    const { item, categories, clickModifyBtn } = props;
+    const { item, categories, clickModifyBtn, handleConfirm } = props;
 
     categories.forEach( category => {
         if(category.categoryNo === item.categoryNo) {
@@ -83,10 +101,7 @@ const GridColumn = ( props ) => {
                     </Grid.Column>
 
                     <Grid.Column>
-                        <Button color='red' fluid>
-                            <FormattedMessage id='button.remove' />
-                            <Icon name='right chevron' />
-                        </Button>
+                        <DeleteButton handleConfirm={ handleConfirm } item={ item }/>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
@@ -111,7 +126,9 @@ class ItemManage extends Component {
         pageSize: 9,
         itemCount: 0,
         modalFlag: false,
-        selectModifyItem: {}
+        selectModifyItem: {},
+        selectRemoveItem: {},
+        removeConfirmOpen: false
     }
 
     getMyItems = (num) => {
@@ -168,10 +185,6 @@ class ItemManage extends Component {
         return itemSeparate;
     }
 
-    componentDidMount() {
-        this.getMyItems();
-    }
-
     handlePage = (e, data) => {
         this.getMyItems(data.activePage);
     }
@@ -196,7 +209,61 @@ class ItemManage extends Component {
         }
     }
 
+    handleConfirm = (item) => {
+        if(this.state.removeConfirmOpen) {
+            this.setState({
+                selectRemoveItem: {},
+                removeConfirmOpen: false
+            })
+        } else {
+            this.setState({
+                selectRemoveItem: item,
+                removeConfirmOpen: true
+            })
+        }
+    }
+    
+    handleCancel = () => {
+        this.setState({
+            selectRemoveItem: {},
+            removeConfirmOpen: false
+        })
+    }
+
+    itemRemove = () => {
+        let isCanceled = this.state.selectRemoveItem.isCanceled === 'Y' ? 'N' : 'Y';
+        let itemDeletor = this.props.auth.memberId;
+        let itemUpdator = isCanceled === 'N' ? this.props.auth.memberId : null;
+
+        axios.put("/items/delete", {
+            requestData: {
+                itemNo: this.state.selectRemoveItem.itemNo,
+                isCanceled: isCanceled,
+                itemDeletor: itemDeletor,
+                itemUpdator: itemUpdator
+            }
+        })
+        .then( response => {
+            this.setState({
+                selectRemoveItem: {},
+                removeConfirmOpen: false
+            }, this.getMyItems())
+        })
+        .catch( error => {
+            if(error.response.status === 401) {
+                alert(error.response.data.body);
+                this.props.signOut();
+                this.props.history.push('/signin')
+            }
+        })
+    }
+
+    componentDidMount() {
+        this.getMyItems();
+    }
+
     render() {
+        const { intl } = this.props;
         return (
             <Container style={style.container}>
                 <Header as='h1' style={style.header} >
@@ -215,6 +282,7 @@ class ItemManage extends Component {
                                     key={index} 
                                     categories={this.props.category.categories}
                                     clickModifyBtn={this.clickModifyBtn}
+                                    handleConfirm={this.handleConfirm}
                                 /> 
                             )
                         })}
@@ -228,6 +296,7 @@ class ItemManage extends Component {
                                     key={index} 
                                     categories={this.props.category.categories}
                                     clickModifyBtn={this.clickModifyBtn}
+                                    handleConfirm={this.handleConfirm}
                                 /> 
                             )
                         })}
@@ -241,6 +310,7 @@ class ItemManage extends Component {
                                     key={index} 
                                     categories={this.props.category.categories}
                                     clickModifyBtn={this.clickModifyBtn}
+                                    handleConfirm={this.handleConfirm}
                                 /> 
                             )
                         })}
@@ -254,10 +324,20 @@ class ItemManage extends Component {
                         onPageChange={this.handlePage}
                     />
                 </Grid>
+
                 <ItemModifyModal 
                     handle={this.state.modalFlag} 
                     close={this.clickModifyBtn} 
                     item={this.state.selectModifyItem}
+                />
+
+                <Confirm
+                    header={this.state.selectRemoveItem.itemName}
+                    open={this.state.removeConfirmOpen}
+                    content={intl.formatMessage({ id: 'message.item.remove.confirm' })}
+                    onCancel={this.handleCancel}
+                    onConfirm={this.itemRemove}
+                    size='large'
                 />
             </Container>
         )

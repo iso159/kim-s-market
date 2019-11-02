@@ -14,8 +14,8 @@ import com.market.vo.Item;
 public interface ItemRepository extends JpaRepository<Item, Integer>{
 	List<Item> findAllByCategoryNo(int categoryNo, Pageable pageable);
 	
-	@Query("SELECT i FROM Item i WHERE "
-			+ "(:itemName1 is null OR i.itemName LIKE %:itemName1%) and "
+	@Query("SELECT i FROM Item i WHERE isCanceled = 'N' and"
+			+ "(:itemName1 is null OR i.itemName LIKE %:itemName1%) and"
 			+ "(:itemName2 is null OR i.itemName LIKE %:itemName2%) and"
 			+ "(:itemName3 is null OR i.itemName LIKE %:itemName3%)")
 	List<Item> findAllByItemNameContainsAndItemNameContainsAndItemNameContains(@Param("itemName1") String itemName1, 
@@ -25,9 +25,11 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
 	
 	List<Item> findAllByRegistrar(String registrar, Pageable pageable);
 	
-	long countByCategoryNo(int categoryNo);
+	List<Item> findAllByCategoryNoAndIsCanceled(int categoryNo, String isCanceled, Pageable pageable);
 	
-	@Query("SELECT count(i) FROM Item i WHERE "
+	long countByCategoryNoAndIsCanceled(int categoryNo, String isCanceled);
+	
+	@Query("SELECT count(i) FROM Item i WHERE isCanceled = 'N' and"
 			+ "(:itemName1 is null OR i.itemName LIKE %:itemName1%) and"
 			+ "(:itemName2 is null OR i.itemName LIKE %:itemName2%) and"
 			+ "(:itemName3 is null OR i.itemName LIKE %:itemName3%)")

@@ -27,7 +27,7 @@ public class ItemService {
 	
 	public List<Item> getByCategoryNo(int categoryNo, Pagination pagination) {
 		Pageable pageable = PageRequest.of(pagination.getCurPage() -1, pagination.getPageSize());
-		List<Item> itemList = itemRepository.findAllByCategoryNo(categoryNo, pageable);
+		List<Item> itemList = itemRepository.findAllByCategoryNoAndIsCanceled(categoryNo, "N", pageable);
 		
 		return itemList;
 	}
@@ -56,7 +56,15 @@ public class ItemService {
 			
 			if(item.getIsCanceled() != null) {
 				itemFromDb.setIsCanceled(item.getIsCanceled());
-				itemFromDb.setDeletedAt(dateFormat.format(date));
+				
+				if(item.getIsCanceled().equals("Y")) {
+					itemFromDb.setDeletedAt(dateFormat.format(date));
+					itemFromDb.setItemDeletor(item.getItemDeletor());
+				} else {
+					itemFromDb.setUpdatedAt(dateFormat.format(date));
+					itemFromDb.setItemUpdator(item.getItemUpdator());
+				}
+				
 			} else {				
 				if(file != null) {
 					String changeFileName = UUID.randomUUID().toString();
@@ -111,7 +119,7 @@ public class ItemService {
 	}
 	
 	public long getCountByCategoryNo(int categoryNo) {
-		long count = itemRepository.countByCategoryNo(categoryNo);
+		long count = itemRepository.countByCategoryNoAndIsCanceled(categoryNo, "N");
 		return count;
 	}
 	

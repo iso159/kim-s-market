@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,6 +72,13 @@ public class ItemController {
 		itemVo = objectMapper.readValue(item, Item.class);
 		itemVo.setItemNo(itemNo);
 		itemService.update(itemVo, file);
+	}
+	
+	@PutMapping(path = "/items/delete")
+	@Transactional
+	public void remove(@RequestBody PageWrapper<Item> pageWrapper) {
+		Item item = pageWrapper.getRequestData();
+		itemService.update(item, null);
 	}
 	
 	@GetMapping("/items/search")

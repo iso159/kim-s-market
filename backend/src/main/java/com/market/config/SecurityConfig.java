@@ -42,7 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception
 	{
 		web.ignoring()
-			.antMatchers("/resources/**",
+			.antMatchers("/",
+						 "/**.json",
+						 "/static/**",
+						 "/resources/**",
 						 "/member/join",
 						 "/categories")
 			.antMatchers(HttpMethod.GET, "/items")
@@ -62,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			 	.antMatchers("/member").hasAuthority("USER")
 			 	.antMatchers(HttpMethod.POST, "/items").hasAuthority("SELLER")
 			 	.antMatchers(HttpMethod.GET, "/items/**").hasAuthority("SELLER")
+			 	.antMatchers(HttpMethod.DELETE, "/items/**").hasAuthority("SELLER")
 			 	.antMatchers("/admin").hasAuthority("ADMIN")
 			 	.anyRequest().authenticated()
 		 .and()

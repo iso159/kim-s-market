@@ -62,6 +62,9 @@ public class Item {
 	@Column(name = "UPDATED_AT", nullable = true, columnDefinition = "DATETIME")
 	String updatedAt;
 	
+	@Column(name = "ITEM_DELETOR", nullable = true, length = 20)
+	String itemDeletor;
+	
 	@Column(name = "DELETED_AT", nullable = true, columnDefinition = "DATETIME")
 	String deletedAt;
 
@@ -157,6 +160,14 @@ public class Item {
 		return updatedAt;
 	}
 
+	public String getItemDeletor() {
+		return itemDeletor;
+	}
+
+	public void setItemDeletor(String itemDeletor) {
+		this.itemDeletor = itemDeletor;
+	}
+
 	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
 	}
@@ -172,10 +183,9 @@ public class Item {
 	@Override
 	public String toString() {
 		return "Item [itemNo=" + itemNo + ", categoryNo=" + categoryNo + ", itemName=" + itemName + ", itemPrice="
-				+ itemPrice + ", itemInformation=" + itemInformation + ", stock=" + stock + ", isCanceled=" + isCanceled
-				+ ", registrar=" + registrar + ", createdAt=" + createdAt + ", itemUpdator=" + itemUpdator
-				+ ", updatedAt=" + updatedAt + ", deletedAt=" + deletedAt + "]";
+				+ itemPrice + ", itemInformation=" + itemInformation + ", stock=" + stock + ", imagePath=" + imagePath
+				+ ", isCanceled=" + isCanceled + ", registrar=" + registrar + ", createdAt=" + createdAt
+				+ ", itemUpdator=" + itemUpdator + ", updatedAt=" + updatedAt + ", itemDeletor=" + itemDeletor
+				+ ", deletedAt=" + deletedAt + "]";
 	}
-	
-	
 }
