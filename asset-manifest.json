@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/kim-s-market/static/css/main.067000ca.chunk.css",
+    "main.js": "/kim-s-market/static/js/main.4b1d562f.chunk.js",
+    "main.js.map": "/kim-s-market/static/js/main.4b1d562f.chunk.js.map",
+    "runtime~main.js": "/kim-s-market/static/js/runtime~main.7cfafb1c.js",
+    "runtime~main.js.map": "/kim-s-market/static/js/runtime~main.7cfafb1c.js.map",
+    "static/css/2.7d3900f2.chunk.css": "/kim-s-market/static/css/2.7d3900f2.chunk.css",
+    "static/js/2.eca8b2c3.chunk.js": "/kim-s-market/static/js/2.eca8b2c3.chunk.js",
+    "static/js/2.eca8b2c3.chunk.js.map": "/kim-s-market/static/js/2.eca8b2c3.chunk.js.map",
+    "index.html": "/kim-s-market/index.html",
+    "precache-manifest.226b3ae89e90be4aaa31c928dc7a83ad.js": "/kim-s-market/precache-manifest.226b3ae89e90be4aaa31c928dc7a83ad.js",
+    "service-worker.js": "/kim-s-market/service-worker.js",
+    "static/css/2.7d3900f2.chunk.css.map": "/kim-s-market/static/css/2.7d3900f2.chunk.css.map",
+    "static/css/main.067000ca.chunk.css.map": "/kim-s-market/static/css/main.067000ca.chunk.css.map",
+    "static/media/banana.jpg": "/kim-s-market/static/media/banana.0bb3426b.jpg",
+    "static/media/bananaMain.png": "/kim-s-market/static/media/bananaMain.50a30857.png",
+    "static/media/semantic.min.css": "/kim-s-market/static/media/outline-icons.ef60a4f6.woff",
+    "static/media/fcbar.jpg": "/kim-s-market/static/media/fcbar.e17707b3.jpg",
+    "static/media/logo.png": "/kim-s-market/static/media/logo.88ad8070.png",
+    "static/media/sellerLogo.png": "/kim-s-market/static/media/sellerLogo.5a24ff5c.png",
+    "static/media/slick-theme.css": "/kim-s-market/static/media/slick.f97e3bbf.svg"
+  }
+}
