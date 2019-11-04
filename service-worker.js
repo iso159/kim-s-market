@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/kim-s-market/precache-manifest.226b3ae89e90be4aaa31c928dc7a83ad.js"
+  "/kim-s-market/precache-manifest.9ed923777b84badc36f720d35ff7b23e.js"
 );
 
 self.addEventListener('message', (event) => {

@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c98287c616b4cc531aaa1a1d8673b4ce",
+    "revision": "4a786de7dd76ceb03802b7894b7ac595",
     "url": "/kim-s-market/index.html"
   },
   {
-    "revision": "2ac369b3ad95f888358e",
+    "revision": "4ee4042f163a8966cd2d",
     "url": "/kim-s-market/static/css/2.7d3900f2.chunk.css"
   },
   {
-    "revision": "a28babbb00219a5748b4",
+    "revision": "71c91448363ce321a08e",
     "url": "/kim-s-market/static/css/main.067000ca.chunk.css"
   },
   {
-    "revision": "2ac369b3ad95f888358e",
-    "url": "/kim-s-market/static/js/2.eca8b2c3.chunk.js"
+    "revision": "4ee4042f163a8966cd2d",
+    "url": "/kim-s-market/static/js/2.3a602d76.chunk.js"
   },
   {
-    "revision": "a28babbb00219a5748b4",
-    "url": "/kim-s-market/static/js/main.4b1d562f.chunk.js"
+    "revision": "71c91448363ce321a08e",
+    "url": "/kim-s-market/static/js/main.ec2082d2.chunk.js"
   },
   {
     "revision": "f526d70f212fe7f1a7e3",
