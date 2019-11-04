@@ -1,5 +1,7 @@
 {
-    "title.login" : "Kim's Market에 로그인",
+    "title.admin.login" : "관리자 로그인",
+    "title.seller.login" : "판매자 로그인",
+    "title.user.login" : "사용자 로그인",
     "title.item.input" : "상품 등록",
     "title.item" : "상품",
     "title.item.manage" : "상품 관리",
