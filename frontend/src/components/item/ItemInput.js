@@ -43,7 +43,6 @@ const Checkmessage = (props) =>{
 class ItemInput extends Component {
     constructor(props) {
         super(props);
-        const {intl} = this.props;
         this.validator = new SimpleReactValidator({
             validators: { 
                 krString: {
@@ -235,6 +234,8 @@ class ItemInput extends Component {
             } else if( Object.keys(this.state.selectMainCategory).length === 0 ) {
                 subCategories.push({ key: index, text: intl.formatMessage({ id: 'message.category.select.one' }), value: 'n' });
                 return true;
+            } else {
+                return false;
             }
         })
 

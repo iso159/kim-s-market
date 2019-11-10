@@ -34,7 +34,6 @@ const style = {
 // 상품 상태에 따른 버튼 컴포넌트
 const DeleteButton = (props) => {
     const { item, handleConfirm } = props;
-    console.log(item);
 
     if(item.isCanceled === 'N') {
         return (
@@ -145,7 +144,7 @@ class ItemManage extends Component {
                 ...this.state,
                 itemList: response.data.result,
                 itemSeparate: this.separateItemList(response.data.result),
-                itemCount: response.data.count,
+                itemCount: response.data.pagination.listCnt,
                 currentPage: response.data.pagination.curPage
             })
         })

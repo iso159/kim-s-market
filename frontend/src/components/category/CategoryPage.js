@@ -5,7 +5,6 @@ import { Container, Header, Icon, Grid, Input, Form, Dropdown, Pagination, Butto
 import { formatDate } from '../../customLibrary'
 import { getCategories } from '../../store/actions/categoryActions'
 import { loadingDatas, loadedDatas } from '../../store/actions/loaderActions'
-import 'react-simple-tree-menu/dist/main.css'
 import axios from 'axios'
 import SimpleReactValidator from 'simple-react-validator';
 

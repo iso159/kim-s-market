@@ -19,8 +19,6 @@ import axios from 'axios';
 const initialState = {
     selectMainCategory: {},
     selectSubCategory: {},
-    selectMainCategory: {},
-    selectSubCategory: {},
     itemNo: '',
     itemName: '',
     itemInfo: '',
@@ -108,6 +106,8 @@ class ItemModifyModal extends Component {
                       subCategories.length === 0 && this.props.category.categories.length === index+1) {
                 subCategories.push({ key: index, text: intl.formatMessage({ id: 'message.category.select.one' }), value: 'n' });
                 return true;
+            } else {
+                return false;
             }
         })
 

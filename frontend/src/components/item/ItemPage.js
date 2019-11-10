@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Slider from 'react-slick'
 import {
     Header,
     Container,
@@ -9,7 +8,7 @@ import {
     Image,
     Pagination
   } from 'semantic-ui-react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -60,12 +59,12 @@ class ItemPage extends Component {
                     ...this.state,
                     itemList: response.data.result,
                     itemSeparate: this.separateItemList(response.data.result),
-                    itemCount: response.data.count,
+                    itemCount: response.data.pagination.listCnt,
                     currentPage: response.data.pagination.curPage
                 });
             })
             .catch(err => {
-                console.log(err)
+                alert(err);
             })
 
         } else {
@@ -83,12 +82,12 @@ class ItemPage extends Component {
                     ...this.state,
                     itemList: response.data.result,
                     itemSeparate: this.separateItemList(response.data.result),
-                    itemCount: response.data.count,
+                    itemCount: response.data.pagination.listCnt,
                     currentPage: response.data.pagination.curPage
                 });
             })
             .catch(err => {
-                console.log(err) 
+                alert(err);
             })
         }
     }

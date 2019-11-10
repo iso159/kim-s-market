@@ -14,10 +14,9 @@ import {
     Visibility,
     Dropdown,
     Input,
-    Label,
-    Search
+    Label
 } from 'semantic-ui-react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import logo from 'image/logo.png'
 import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
@@ -97,7 +96,6 @@ const MainCategories = ({ mainCategories, subCategories }) => {
 const SearchButton = (props) => {
     const {searchOnClick} = props;
     const {alertFlag} = props;
-    const {keyWord} = props;
 
     if(alertFlag) {
         return (
