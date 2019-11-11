@@ -71,8 +71,8 @@ public class Member {
 	@Temporal(TemporalType.TIMESTAMP)
 	Date updatedAt;
 	
-	@OneToOne
-	Ban ban;
+	@Column(name = "REASON_TO_BAN", nullable = true)
+	String reasonToBan;
 	
 	public String getMemberId() {
 		return memberId;
@@ -168,5 +168,21 @@ public class Member {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public String getReasonToBan() {
+		return reasonToBan;
+	}
+
+	public void setReasonToBan(String reasonToBan) {
+		this.reasonToBan = reasonToBan;
+	}
+
+	@Override
+	public String toString() {
+		return "Member [memberId=" + memberId + ", password=" + password + ", name=" + name + ", phone=" + phone
+				+ ", mail=" + mail + ", zipCode=" + zipCode + ", address=" + address + ", authority=" + authority
+				+ ", status=" + status + ", grantor=" + grantor + ", createdAt=" + createdAt + ", updatedAt="
+				+ updatedAt + ", reasonToBan=" + reasonToBan + "]";
 	}
 }

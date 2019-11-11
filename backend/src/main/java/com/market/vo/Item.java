@@ -4,10 +4,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,9 +27,6 @@ public class Item {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ITEM_NO", nullable = false, updatable = false)
 	int itemNo;
-	
-	@Column(name = "CATEGORY_NO", nullable = false)
-	int categoryNo;
 	
 	@Column(name = "ITEM_NAME", nullable = false, length = 45)
 	@NotBlank(message = "itemName Field is empty")
@@ -67,21 +67,17 @@ public class Item {
 	
 	@Column(name = "DELETED_AT", nullable = true, columnDefinition = "DATETIME")
 	String deletedAt;
-
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "CATEGORY_NO")
+	Category category;
+	
 	public int getItemNo() {
 		return itemNo;
 	}
 
 	public void setItemNo(int itemNo) {
 		this.itemNo = itemNo;
-	}
-
-	public int getCategoryNo() {
-		return categoryNo;
-	}
-
-	public void setCategoryNo(int categoryNo) {
-		this.categoryNo = categoryNo;
 	}
 
 	public String getItemName() {
@@ -180,12 +176,20 @@ public class Item {
 		this.deletedAt = deletedAt;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
-		return "Item [itemNo=" + itemNo + ", categoryNo=" + categoryNo + ", itemName=" + itemName + ", itemPrice="
-				+ itemPrice + ", itemInformation=" + itemInformation + ", stock=" + stock + ", imagePath=" + imagePath
-				+ ", isCanceled=" + isCanceled + ", registrar=" + registrar + ", createdAt=" + createdAt
-				+ ", itemUpdator=" + itemUpdator + ", updatedAt=" + updatedAt + ", itemDeletor=" + itemDeletor
-				+ ", deletedAt=" + deletedAt + "]";
+		return "Item [itemNo=" + itemNo + ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", itemInformation="
+				+ itemInformation + ", stock=" + stock + ", imagePath=" + imagePath + ", isCanceled=" + isCanceled
+				+ ", registrar=" + registrar + ", createdAt=" + createdAt + ", itemUpdator=" + itemUpdator
+				+ ", updatedAt=" + updatedAt + ", itemDeletor=" + itemDeletor + ", deletedAt=" + deletedAt
+				+ ", category=" + category + "]";
 	}
 }

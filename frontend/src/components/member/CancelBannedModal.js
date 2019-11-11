@@ -56,7 +56,7 @@ class CancelBanned extends Component {
     render() {
         return (
             <div>
-                <Button onClick={ this.openCancelBannedModal } size='small' color='red' labelPosition='left' icon><Icon name='ban'/>밴</Button>
+                <Button onClick={ this.openCancelBannedModal } size='small' color='orange' labelPosition='left' icon><Icon name='ban'/>밴 해제</Button>
                 <Modal 
                     open={ this.state.cancelBannedModalOpen }
                     size='mini'

@@ -21,10 +21,8 @@ class BanModal extends Component {
 
         // 회원 밴 api 요청
         axios.put('/members/ban/' + banTargetMemberId, {
-            member: {
-                memberId: banTargetMemberId
-            },
-            reason: this.state.reasonsToBan
+                memberId: banTargetMemberId,
+                reasonToBan: this.state.reasonsToBan
         })
         .then((res) => {
             console.log(res.data);

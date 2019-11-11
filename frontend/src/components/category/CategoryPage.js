@@ -382,7 +382,7 @@ class CategoryPage extends Component {
         ]
 
         return (
-            <Container style={ style.container }>
+            <Container>
                 <Dimmer active={ this.props.loader.isLoading } inverted page>
                     <Loader size='massive'>Loading...</Loader>
                 </Dimmer>

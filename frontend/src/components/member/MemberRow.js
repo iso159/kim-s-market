@@ -11,11 +11,10 @@ const MemberRow = (props) => {
 
     // redux store의 member state를 전달받은 객체
     const reduxMember = props.reduxMember;
+    const status = reduxMember.status;
 
     // member table에서 속성으로 전달받은 member 객체
     const member = props.member;
-
-    const status = reduxMember.status;
 
     if(status === 'Y') {
         // 정상 회원 조회 시
@@ -35,6 +34,7 @@ const MemberRow = (props) => {
             <Table.Cell>{ member.address }</Table.Cell>
             <Table.Cell>{ member.phone }</Table.Cell>
             <Table.Cell>{ formatDate(member.createdAt) }</Table.Cell>
+            { status === 'B' && <Table.Cell>{ member.reasonToBan } </Table.Cell> }
             <Table.Cell>{ interactionButton }</Table.Cell>
         </Table.Row>
     );

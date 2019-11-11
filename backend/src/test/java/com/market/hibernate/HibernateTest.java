@@ -27,14 +27,14 @@ public class HibernateTest {
 	
 	@Test
 	public void hibernateInsertTest() {
-		String memberId = "test";
-		String address = "서울";
-		String name = "테스트";
-		String mail = "test@testmail.com";
-		String password = "test1234";
-		String phone = "01012345678";
+		String memberId = "seller";
+		String address = "서울 강남구 언주로";
+		String name = "판매자";
+		String mail = "seller@seller.com";
+		String password = "1111";
+		String phone = "01077491123";
 		String zipCode = "57894";
-		String authority = "USER";
+		String authority = "SELLER";
 				
 		member.setMemberId(memberId);
 		member.setName(name);

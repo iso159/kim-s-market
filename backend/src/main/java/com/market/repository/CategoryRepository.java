@@ -11,4 +11,6 @@ import com.market.vo.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	public List<Category> findAllByOrderByCreatedAtDesc();
+	
+	public List<Category> findAllByCategoryParents(int categoryNo);
 }

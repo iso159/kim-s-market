@@ -36,7 +36,12 @@ public class CategoryService {
 		categoryRepository.save(category);
 	}
 	
-	public void removeById(int id) {
+	// 카테고리 삭제 서비스
+	@Transactional
+	public void removeCategory(int id) {
+		List<Category> categories = categoryRepository.findAllByCategoryParents(id);
+		
+		categoryRepository.deleteAll(categories);
 		categoryRepository.deleteById(id);
 	}
 	

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.market.service.CategoryService;
+import com.market.service.ItemService;
 import com.market.vo.Category;
 
 @RestController
@@ -20,6 +21,9 @@ public class CategoryController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private ItemService itemService;
 	
 	// 카테고리 전체 목록 조회
 	@GetMapping("/categories")
@@ -40,6 +44,8 @@ public class CategoryController {
 	// 카테고리 삭제
 	@DeleteMapping("/categories/{id}")
 	public void removeCategory(@PathVariable int id) {
-		categoryService.removeById(id);
+		
+		
+		categoryService.removeCategory(id);
 	}
 }

@@ -56,10 +56,9 @@ public class MemberController {
 	// 회원 밴
 	@Transactional
 	@PutMapping("/members/ban/{memberId}")
-	public ResponseEntity<String> banMember(@RequestBody Ban ban, @PathVariable String memberId) {
+	public ResponseEntity<String> banMember(@RequestBody Member member) {
 		
-		memberService.banMember(memberId);
-		banService.banMember(ban);
+		memberService.banMember(member);
 		
 		return new ResponseEntity<String>("Successfully Banned !", HttpStatus.OK);
 	}

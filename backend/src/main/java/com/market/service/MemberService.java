@@ -59,16 +59,21 @@ public class MemberService {
 		
 		if(resultMember != null) {
 			resultMember.setStatus("Y");
+			resultMember.setReasonToBan(null);
 			memberRepository.save(resultMember);
 		}
 	}
 	
 	// 회원 밴 메서드
-	public void banMember(String memberId) {
+	public void banMember(Member member) {
+		String memberId = member.getMemberId();
+		String reasonToBan = member.getReasonToBan();
+		
 		Member resultMember = memberRepository.findById(memberId).orElse(null);
 		
 		if(resultMember != null) {
 			resultMember.setStatus("B");
+			resultMember.setReasonToBan(reasonToBan);
 			memberRepository.save(resultMember);
 		}
 	}

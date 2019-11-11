@@ -76,6 +76,8 @@ const SignedInLinks = (props) => {
                     as={ Link }
                     to='/'
                 />
+                <ItemInput authority={ props.auth.authority } />
+                <ManageItem authority={ props.auth.authority } />
                 <ManageMembers authority={ props.auth.authority } />
                 <ManageCaregories authority={ props.auth.authority } />
                 <Menu.Menu position='right'>

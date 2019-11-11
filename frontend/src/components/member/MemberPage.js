@@ -60,7 +60,7 @@ class MemberPage extends Component {
         if(auth.authority !== 'ADMIN') return <Redirect to='/'/>
 
         return (
-            <Container style={ style.container }>
+            <Container>
                 <Dimmer active={ this.props.loader.isLoading } inverted page>
                     <Loader size='massive'>Loading...</Loader>
                 </Dimmer>

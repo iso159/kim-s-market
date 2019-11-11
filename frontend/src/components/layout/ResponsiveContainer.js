@@ -191,15 +191,7 @@ class DesktopContainer extends Component {
                                 </Grid.Column>
                                 <Grid.Column width='9'>
                                     <Input
-                                        action={
-                                            <Dropdown 
-                                                options={ searchOptions } 
-                                                defaultValue='allCategories' 
-                                                button
-                                                basic
-                                            />
-                                        }
-                                        actionPosition='left'
+                                        style={ { border: '3px solid orange' } }
                                         type='text'
                                         placeholder='검색 ...'
                                         icon={ {name: 'search', link: true} }
