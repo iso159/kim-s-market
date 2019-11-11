@@ -3,6 +3,8 @@ package com.market.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,9 +31,10 @@ public class CategoryController {
 	
 	// 카테고리 추가
 	@PostMapping("/categories")
-	public Category addCategory(@RequestBody Category category) {
+	public ResponseEntity<?> addCategory(@RequestBody Category category) {
+		categoryService.addCategory(category);
 		
-		return categoryService.save(category);
+		return new ResponseEntity<String>("카테고리 추가에 성공하였습니다.", HttpStatus.OK);
 	}
 	
 	// 카테고리 삭제

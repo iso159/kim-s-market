@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
     Container,
     Header,
@@ -14,7 +14,7 @@ import {
     Table,
     Pagination
 } from 'semantic-ui-react'
-import fcbar from 'image/fcbar.jpg';
+import fcbar from '../../../image/fcbar.jpg';
 import SimpleReactValidator from 'simple-react-validator';
 
 const style = {

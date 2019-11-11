@@ -3,6 +3,7 @@ plugins {
 	id 'java'
 }
 
+apply plugin: 'war'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.market'
@@ -44,9 +45,16 @@ dependencies {
 	// Maria DB Connector
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.4.3'
 	
+	implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+	
 	// Spring boot Dev tools
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	
 	// Spring boot Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+war {
+	baseName = 'kim-s-market'
+	enabled = true
 }

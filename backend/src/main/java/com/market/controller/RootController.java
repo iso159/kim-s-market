@@ -8,6 +8,9 @@ public class RootController {
 	
 	@RequestMapping("/")
 	public String root() {
+		
+		System.out.println("hello");
+		
 		return "index.html";
 	}
 }

@@ -1,20 +1,30 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react'
-import { formatDate } from '../../customLibrary';
+import { formatDate } from '../../customLibrary'
+import { connect } from 'react-redux'
 import BanModal from './BanModal'
+import CancelBannedModal from './CancelBannedModal'
 
 // 멤버 리스트 한 행 컴포넌트
 const MemberRow = (props) => {
     let interactionButton;
 
-    const member = props.member;
-    const tabIndex = props.tabIndex;
-    const handleBanMember = props.handleBanMember;
-    const handleApproveMember = props.handleApproveMember;
+    // redux store의 member state를 전달받은 객체
+    const reduxMember = props.reduxMember;
 
-    if(tabIndex === 0) {
-        interactionButton = <BanModal memberId={ member.memberId } handleBanMember={ handleBanMember } />
-    } else if(tabIndex === 1) {
+    // member table에서 속성으로 전달받은 member 객체
+    const member = props.member;
+
+    const status = reduxMember.status;
+
+    if(status === 'Y') {
+        // 정상 회원 조회 시
+        interactionButton = <BanModal memberId={ member.memberId } />
+    } else if(status === 'N') {
+        // 가입신청 대기 회원 조회 시
+    } else {
+        // 밴 회원 조회 시
+        interactionButton = <CancelBannedModal memberId={ member.memberId } />
     }
 
     return (
@@ -30,4 +40,10 @@ const MemberRow = (props) => {
     );
 }
 
-export default MemberRow;
+const mapStateToProps = (state) => {
+    return {
+        reduxMember: state.member
+    }
+}
+
+export default connect(mapStateToProps)(MemberRow);

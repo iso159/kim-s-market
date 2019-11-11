@@ -14,10 +14,12 @@ import {
     Visibility,
     Dropdown,
     Input,
-    Label
+    Label,
+    Image,
+    Select
 } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
-import logo from 'image/logo.png'
+import { Link, Redirect } from 'react-router-dom'
+import logo from '../../image/logo.png'
 import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 import { connect } from 'react-redux'
@@ -168,69 +170,55 @@ class DesktopContainer extends Component {
     }
 
     render() {
-        const {intl} = this.props;
-
         const links = this.props.auth.authority ? <SignedInLinks /> : <SignedOutLinks/>;
-        
-        const categories = this.props.category.categories;
-        const mainCategories = categories.filter(category => (category.categoryParents === 0));
-        const subCategories = categories.filter(category => (category.categoryParents !== 0));
+
+        const searchOptions = [
+            { key: 'allCategories', text: '전체 카테고리', value: 'allCategories' }
+        ]
 
         return (
-            <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
+            <Responsive getWidth={getWidth}>
                 <Visibility
                     once={false}
                     onBottomPassed={this.showFixedMenu}
                     onBottomPassedReverse={this.hideFixedMenu}
                 >
-                    <Segment size='mini' style={{backgroundColor: '#2f4f6f'}} inverted basic>
+                    <Segment style={ {marginBottom: '0px'} } basic>
                         <Container>
-                            <Menu size='large' style={{backgroundColor: '#2f4f6f'}} inverted borderless>
-                                <Menu.Item as={ Link } to='/'>
-                                    <img src={ logo } alt='logo'/>
-                                </Menu.Item>
-
-                                <Dropdown text='전체 카테고리' pointing item>
-                                    <Dropdown.Menu>
-                                        <MainCategories mainCategories={ mainCategories } subCategories = { subCategories }/>
-                                    </Dropdown.Menu>
-                                </Dropdown>
-
-                                <Menu.Item>
-                                    <Input 
-                                        style={{width: '800px', height: '35px'}}
-                                        id='keyWord'
-                                        value={this.state.keyWord}
-                                        placeholder={intl.formatMessage({ 
-                                            id: 'item.search' 
-                                        })}
-                                        label={
-                                            <SearchButton 
-                                                searchOnClick={this.searchOnClick} 
-                                                alertFlag={this.state.alertFlag}
+                            <Grid columns='3' verticalAlign='middle'>
+                                <Grid.Column width='3' style={ {marginRight: '3%'} }>
+                                    <Image src={ logo } />
+                                </Grid.Column>
+                                <Grid.Column width='9'>
+                                    <Input
+                                        action={
+                                            <Dropdown 
+                                                options={ searchOptions } 
+                                                defaultValue='allCategories' 
+                                                button
+                                                basic
                                             />
                                         }
-                                        labelPosition='right'
-                                        onChange={this.handleOnChange}
-                                        onKeyPress={event => {
-                                            if (event.key === 'Enter') {
-                                              this.searchOnClick()
-                                            }
-                                        }}
+                                        actionPosition='left'
+                                        type='text'
+                                        placeholder='검색 ...'
+                                        icon={ {name: 'search', link: true} }
+                                        size='huge'
+                                        fluid
                                     >
                                     </Input>
-                                </Menu.Item>
-                                
-                                { links }
-
-                            </Menu>
+                                </Grid.Column>
+                                <Grid.Column width='3'>
+                                </Grid.Column>
+                            </Grid>
                         </Container>
                     </Segment>
+                    { links }
                 </Visibility>
-                
+            
                 { this.props.children }
 
-                <Segment inverted vertical style={{ padding: '5em 0em', backgroundColor: '#2f4f6f'}}>
+                <Segment color='grey' inverted vertical style={ { padding: '5em 0em' } }>
                     <Container>
                         <Grid divided inverted stackable>
                             <Grid.Row>

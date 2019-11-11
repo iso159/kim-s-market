@@ -28,8 +28,6 @@ public class BackendApplicationTests {
 		category.setCategoryName("Mouse");
 		category.setCategoryParents(1);
 		category.setCreatorId("Jiwan");
-		
-		cs.save(category);
 	}
 	
 	@Test

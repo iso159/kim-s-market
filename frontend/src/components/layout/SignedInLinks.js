@@ -1,10 +1,29 @@
 import React from 'react'
-import { Menu, Image } from 'semantic-ui-react'
+import { Menu, Image, Container } from 'semantic-ui-react'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { signOut } from '../../store/actions/authActions'
 import { Link } from 'react-router-dom'
-import testAvatar from '../../image/logo.png'
+import adminLogo from '../../image/adminLogo.jpg'
+import sellerLogo from '../../image/sellerLogo.png'
+import userLogo from '../../image/userLogo.png'
+
+// 메뉴 우측 프로필 아바타
+const Avatar = (props) => {
+    const { authority } = props;
+
+    let avatar;
+    
+    if(authority === 'ADMIN') {
+        avatar = <Image src={ adminLogo } avatar />
+    } else if(authority === 'SELLER') {
+        avatar = <Image src={ sellerLogo } avatar />
+    } else {
+        avatar = <Image src={ userLogo } avatar />
+    }
+
+    return avatar;
+}
 
 // 회원 관리 (관리자)
 const ManageMembers = (props) => {
@@ -50,19 +69,26 @@ const ManageItem = (props) => {
 
 const SignedInLinks = (props) => {
     return (
-        <Menu.Menu position='right'>
-            <ManageMembers authority={ props.auth.authority } />
-            <ManageCaregories authority={ props.auth.authority }/>
-            <ManageItem authority={ props.auth.authority} />
-            <ItemInput authority={ props.auth.authority }/>
-            <Menu.Item as={ Link } to='/'>
-                <Image src={ testAvatar } avatar />
-                <span>{ props.auth.memberId }</span>
-            </Menu.Item>
-            <Menu.Item as='a' onClick={ props.signOut }>
-                <FormattedMessage id="button.logout"/>
-            </Menu.Item>
-        </Menu.Menu>
+        <Menu size='large' color='orange' inverted>
+            <Container>
+                <Menu.Item
+                    name='홈'
+                    as={ Link }
+                    to='/'
+                />
+                <ManageMembers authority={ props.auth.authority } />
+                <ManageCaregories authority={ props.auth.authority } />
+                <Menu.Menu position='right'>
+                    <Menu.Item as={ Link } to='/'>
+                        <Avatar authority={ props.auth.authority }/>
+                        <span>{ props.auth.memberId }</span>
+                    </Menu.Item>
+                    <Menu.Item as='a' onClick={ props.signOut }>
+                        <FormattedMessage id="button.logout"/>
+                    </Menu.Item>
+                </Menu.Menu>
+            </Container>
+        </Menu>
     );
 };
 

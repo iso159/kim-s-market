@@ -2,10 +2,17 @@ package com.market.vo;
 
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -63,7 +70,10 @@ public class Member {
 	@Column(name = "UPDATED_AT", nullable = true, columnDefinition = "DATETIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	Date updatedAt;
-
+	
+	@OneToOne
+	Ban ban;
+	
 	public String getMemberId() {
 		return memberId;
 	}
@@ -158,13 +168,5 @@ public class Member {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-
-	@Override
-	public String toString() {
-		return "Member [memberId=" + memberId + ", password=" + password + ", name=" + name + ", phone=" + phone
-				+ ", mail=" + mail + ", zipCode=" + zipCode + ", address=" + address + ", authority=" + authority
-				+ ", status=" + status + ", grantor=" + grantor + ", createdAt=" + createdAt + ", updatedAt="
-				+ updatedAt + "]";
 	}
 }

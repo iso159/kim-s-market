@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import userLogo from 'image/userLogo.png';
-import adminLogo from 'image/adminLogo.jpg';
-import sellerLogo from 'image/sellerLogo.png';
+import userLogo from '../../image/userLogo.png';
+import adminLogo from '../../image/adminLogo.jpg';
+import sellerLogo from '../../image/sellerLogo.png';
 import { Link, Redirect } from 'react-router-dom';
 import { Button, Form, Grid, Header, Image, Message, Segment, Dimmer, Loader } from 'semantic-ui-react';
 import { signIn, signInFailed } from '../../store/actions/authActions'

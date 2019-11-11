@@ -63,6 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			 	// 권한별 URL 설정
 		 		.antMatchers("/login").permitAll()
 			 	.antMatchers("/member").hasAuthority("USER")
+			 	.antMatchers(HttpMethod.GET, "/members").hasAuthority("ADMIN")
+			 	.antMatchers(HttpMethod.PUT, "/members/ban/**").hasAuthority("ADMIN")
 			 	.antMatchers(HttpMethod.POST, "/items").hasAuthority("SELLER")
 			 	.antMatchers(HttpMethod.GET, "/items/**").hasAuthority("SELLER")
 			 	.antMatchers(HttpMethod.DELETE, "/items/**").hasAuthority("SELLER")

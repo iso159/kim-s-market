@@ -35,6 +35,9 @@ public class Category {
 	
 	@Column(name = "CATEGORY_PARENTS", nullable = true)
 	int categoryParents;
+	
+	@Column(name = "HAS_CATEGORIES", nullable = false)
+	String hasSubCategories;
 
 	public int getCategoryNo() {
 		return categoryNo;
@@ -82,6 +85,14 @@ public class Category {
 
 	public void setCategoryParents(int categoryParents) {
 		this.categoryParents = categoryParents;
+	}
+	
+	public String getHasSubCategories() {
+		return hasSubCategories;
+	}
+
+	public void setHasSubCategories(String hasSubCategories) {
+		this.hasSubCategories = hasSubCategories;
 	}
 
 	@Override

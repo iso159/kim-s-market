@@ -1,6 +1,5 @@
 package com.market.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.market.constant.RoleType;
 import com.market.repository.MemberRepository;
 import com.market.util.HashUtil;
+import com.market.vo.Ban;
 import com.market.vo.Member;
 import com.market.vo.PageWrapper;
 import com.market.vo.Pagination;
@@ -51,10 +52,20 @@ public class MemberService {
 		}
 	}
 	
-	// 회원 밴 메서드
-	public void banMember(Member member) {
+	// 회원 밴 해제 메서드
+	public void cancelBannedMember(Member member) {
 		String id = member.getMemberId();
 		Member resultMember = memberRepository.findById(id).orElse(null);
+		
+		if(resultMember != null) {
+			resultMember.setStatus("Y");
+			memberRepository.save(resultMember);
+		}
+	}
+	
+	// 회원 밴 메서드
+	public void banMember(String memberId) {
+		Member resultMember = memberRepository.findById(memberId).orElse(null);
 		
 		if(resultMember != null) {
 			resultMember.setStatus("B");
@@ -75,31 +86,26 @@ public class MemberService {
 		
 		Pageable pageable = PageRequest.of(currentPage - 1, rowPerPage);
 		
-		// 검색 조건 별 회원 조회 분기
-		if(searchKey == null) {
-			// 계정 상태 별
-			memberList = memberRepository.findByStatus(status, pageable);
-			memberCount = memberRepository.countByStatus(status);
-		} else if(searchKey.equals("memberId")) {
-			// 회원 아이디, 계정 상태 별
-			memberList = memberRepository.findByStatusAndMemberIdContainingIgnoreCase(status, searchValue, pageable);
-			memberCount = memberRepository.countByStatusAndMemberIdContainingIgnoreCase(status, searchValue);
+		if(searchKey.equals("phone")) {
+			// 회원 휴대폰 번호, 계정 상태 별
+			memberList = memberRepository.findByStatusAndPhoneContainingIgnoreCaseOrderByCreatedAtDesc(status, searchValue, pageable);
+			memberCount = memberRepository.countByStatusAndPhoneContainingIgnoreCase(status, searchValue);
 		} else if(searchKey.equals("address")) {
 			// 회원 주소, 계정 상태 별
-			memberList = memberRepository.findByStatusAndAddressContainingIgnoreCase(status, searchValue, pageable);
+			memberList = memberRepository.findByStatusAndAddressContainingIgnoreCaseOrderByCreatedAtDesc(status, searchValue, pageable);
 			memberCount = memberRepository.countByStatusAndAddressContainingIgnoreCase(status, searchValue);
 		} else if(searchKey.equals("authority")) {
 			// 회원 권한, 계정 상태 별
-			memberList = memberRepository.findByStatusAndAuthorityContainingIgnoreCase(status, searchValue, pageable);
+			memberList = memberRepository.findByStatusAndAuthorityContainingIgnoreCaseOrderByCreatedAtDesc(status, searchValue, pageable);
 			memberCount = memberRepository.countByStatusAndAuthorityContainingIgnoreCase(status, searchValue);
 		} else if(searchKey.equals("name")) {
 			// 회원 이름, 계정 상태 별
-			memberList = memberRepository.findByStatusAndNameContainingIgnoreCase(status, searchValue, pageable);
+			memberList = memberRepository.findByStatusAndNameContainingIgnoreCaseOrderByCreatedAtDesc(status, searchValue, pageable);
 			memberCount = memberRepository.countByStatusAndNameContainingIgnoreCase(status, searchValue);
 		} else {
-			// 회원 휴대폰 번호, 계정 상태 별
-			memberList = memberRepository.findByStatusAndPhoneContainingIgnoreCase(status, searchValue, pageable);
-			memberCount = memberRepository.countByStatusAndPhoneContainingIgnoreCase(status, searchValue);
+			// 회원 아이디, 계정 상태 별
+			memberList = memberRepository.findByStatusAndMemberIdContainingIgnoreCaseOrderByCreatedAtDesc(status, searchValue, pageable);
+			memberCount = memberRepository.countByStatusAndMemberIdContainingIgnoreCase(status, searchValue);
 		}
 		
 		int totalPages = memberCount / rowPerPage;

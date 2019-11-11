@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.market.repository.CategoryRepository;
 import com.market.vo.Category;
@@ -19,8 +20,20 @@ public class CategoryService {
 		return findCategory;
 	}
 	
-	public Category save(Category category) {
-		return categoryRepository.save(category);
+	// 카테고리 추가 서비스
+	@Transactional
+	public void addCategory(Category category) {
+		int categoryParents = category.getCategoryParents();
+		
+		// 상위 카테고리가 존재할 경우 상위 카테고리의 hasSubCategories 컬럼의 값을 Y로 설정
+		if(categoryParents != 0) {
+			Category mainCategory = categoryRepository.findById(categoryParents).orElse(null);
+			mainCategory.setHasSubCategories("Y");
+			
+			categoryRepository.save(mainCategory);
+		}
+		
+		categoryRepository.save(category);
 	}
 	
 	public void removeById(int id) {

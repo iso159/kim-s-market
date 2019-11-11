@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.market.repository.MemberRepository;
+import com.market.service.BanService;
 import com.market.service.MemberService;
+import com.market.vo.Ban;
 import com.market.vo.Member;
 import com.market.vo.PageWrapper;
 
@@ -23,6 +27,9 @@ public class MemberController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	BanService banService;
 	
 	@PostMapping("/member/join")
 	public void create(@RequestBody PageWrapper<Member> request) {
@@ -38,10 +45,21 @@ public class MemberController {
 		return new ResponseEntity<String>("Successfully approved !", HttpStatus.OK);
 	}
 	
+	// 회원 밴 해제
+	@PutMapping("/members/cancel-banned/{memberId}")
+	public ResponseEntity<String> cancelBannedMember(@RequestBody Member member, @PathVariable String memberId) {
+		memberService.cancelBannedMember(member);
+		
+		return new ResponseEntity<String>("Successfully Cancel Banned Member !", HttpStatus.OK);
+	}
+	
 	// 회원 밴
+	@Transactional
 	@PutMapping("/members/ban/{memberId}")
-	public ResponseEntity<String> banMember(@RequestBody Member member, @PathVariable String memberId) {
-		memberService.banMember(member);
+	public ResponseEntity<String> banMember(@RequestBody Ban ban, @PathVariable String memberId) {
+		
+		memberService.banMember(memberId);
+		banService.banMember(ban);
 		
 		return new ResponseEntity<String>("Successfully Banned !", HttpStatus.OK);
 	}

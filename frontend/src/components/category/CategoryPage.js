@@ -322,7 +322,8 @@ class CategoryPage extends Component {
         axios.post('/categories', {
             categoryName: this.state.categoryName,
             categoryParents: this.state.categoryParents,
-            creatorId: this.props.auth.memberId
+            creatorId: this.props.auth.memberId,
+            hasSubCategories: 'N'
         })
         .then(() => {
             this.axiosGetCategories();
