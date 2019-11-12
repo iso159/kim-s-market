@@ -26,52 +26,55 @@ public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ITEM_NO", nullable = false, updatable = false)
-	int itemNo;
+	private int itemNo;
+	
+	@Column(name = "CATEGORY_NO", nullable = false)
+	private int categoryNo;
 	
 	@Column(name = "ITEM_NAME", nullable = false, length = 45)
 	@NotBlank(message = "itemName Field is empty")
-	String itemName;
+	private String itemName;
 	
 	@Column(name = "ITEM_PRICE", nullable = false)
-	int itemPrice;
+	private int itemPrice;
 	
 	@Column(name = "ITEM_INFORMATION", nullable = false, length = 500)
 	@NotBlank(message = "itemInformation Field is empty")
-	String itemInformation;
+	private String itemInformation;
 	
 	@Column(name = "STOCK", nullable = false)
-	int stock;
+	private int stock;
 	
 	@Column(name = "IMAGE_PATH", nullable = true, length = 500)
-	String imagePath;
+	private String imagePath;
 	
 	@Column(name = "IS_CANCELED", nullable = false, columnDefinition = "CHAR DEFAULT 'N'", insertable = false)
-	String isCanceled;
+	private String isCanceled;
 	
 	@Column(name = "REGISTRAR", nullable = false, length = 20)
 	@NotBlank(message = "registrar Field is empty")
-	String registrar;
+	private String registrar;
 	
 	@Column(name = "CREATED_AT", nullable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", insertable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	Date createdAt;
 	
 	@Column(name = "ITEM_UPDATOR", nullable = true, length = 20)
-	String itemUpdator;
+	private String itemUpdator;
 	
 	@Column(name = "UPDATED_AT", nullable = true, columnDefinition = "DATETIME")
-	String updatedAt;
+	private String updatedAt;
 	
 	@Column(name = "ITEM_DELETOR", nullable = true, length = 20)
-	String itemDeletor;
+	private String itemDeletor;
 	
 	@Column(name = "DELETED_AT", nullable = true, columnDefinition = "DATETIME")
-	String deletedAt;
+	private String deletedAt;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "CATEGORY_NO")
-	Category category;
-	
+	@ManyToOne(targetEntity = Category.class, fetch = FetchType.LAZY)
+	@JoinColumn(name="CATEGORY_NO", referencedColumnName = "CATEGORY_NO", insertable = false, updatable = false)
+	private Category category;
+
 	public int getItemNo() {
 		return itemNo;
 	}

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.market.vo.Category;
 import com.market.vo.Item;
 
 @Repository
@@ -39,8 +40,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
 	
 	long countByRegistrar(String registrar);
 	
-	@Query(value = "SELECT * FROM tb_item ti LEFT JOIN tb_category tc ON ti.category_no = tc.category_no",
-			nativeQuery = true)
-	List<Item> testJoinQuery();
+	List<Item> findAllByCategory_categoryNo(int categoryNo);
 	
 }

@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Example;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.market.repository.ItemRepository;
 import com.market.repository.MemberRepository;
 import com.market.util.HashUtil;
+import com.market.vo.Category;
+import com.market.vo.Item;
 import com.market.vo.Member;
 
 @SpringBootTest
@@ -23,6 +27,9 @@ public class HibernateTest {
 	
 	@Autowired
 	MemberRepository memberRepository;
+	
+	@Autowired
+	ItemRepository itemRepository;
 	
 	
 	@Test
@@ -91,5 +98,16 @@ public class HibernateTest {
 	public void hibernateDelete() {
 		String id = "test";
 		memberRepository.deleteById(id);
+	}
+	
+	@Test
+	@Transactional
+	public void hibernateJoinQuery() {
+		Category category = new Category();
+		category.setCategoryNo(95);
+		List<Item> item = itemRepository.findAllByCategory_categoryNo(95);
+		for( Item i : item) {
+			System.out.println(i.getCategory());
+		}
 	}
 }
