@@ -33,6 +33,7 @@ public class ItemController {
 	ItemService itemService;
 	
 	@GetMapping("/items")
+	@Transactional
 	public ResponseEntity<PageWrapper<Item>> getItems(@RequestParam int categoryNo, @RequestParam int pageNum, 
 													  @RequestParam int pageSize) {
 		Pagination pagination = new Pagination();

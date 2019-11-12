@@ -82,6 +82,14 @@ public class Item {
 	public void setItemNo(int itemNo) {
 		this.itemNo = itemNo;
 	}
+	
+	public int getCategoryNo() {
+		return categoryNo;
+	}
+
+	public void setCategoryNo(int categoryNo) {
+		this.categoryNo = categoryNo;
+	}
 
 	public String getItemName() {
 		return itemName;

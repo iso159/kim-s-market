@@ -13,7 +13,7 @@ import com.market.vo.Item;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer>{
-	// List<Item> findAllByCategoryNo(int categoryNo, Pageable pageable);
+	List<Item> findAllByCategoryNo(int categoryNo, Pageable pageable);
 	
 	@Query("SELECT i FROM Item i WHERE isCanceled = 'N' and"
 			+ "(:itemName1 is null OR i.itemName LIKE %:itemName1%) and"
@@ -26,9 +26,9 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
 	
 	List<Item> findAllByRegistrar(String registrar, Pageable pageable);
 	
-	// List<Item> findAllByCategoryNoAndIsCanceled(int categoryNo, String isCanceled, Pageable pageable);
+	List<Item> findAllByCategoryNoAndIsCanceled(int categoryNo, String isCanceled, Pageable pageable);
 	
-	// long countByCategoryNoAndIsCanceled(int categoryNo, String isCanceled);
+	long countByCategoryNoAndIsCanceled(int categoryNo, String isCanceled);
 	
 	@Query("SELECT count(i) FROM Item i WHERE isCanceled = 'N' and"
 			+ "(:itemName1 is null OR i.itemName LIKE %:itemName1%) and"
