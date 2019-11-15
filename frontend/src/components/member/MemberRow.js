@@ -3,6 +3,7 @@ import { Table } from 'semantic-ui-react'
 import { formatDate } from '../../customLibrary'
 import { connect } from 'react-redux'
 import BanModal from './BanModal'
+import ApproveModal from './ApproveModal'
 import CancelBannedModal from './CancelBannedModal'
 
 // 멤버 리스트 한 행 컴포넌트
@@ -21,6 +22,7 @@ const MemberRow = (props) => {
         interactionButton = <BanModal memberId={ member.memberId } />
     } else if(status === 'N') {
         // 가입신청 대기 회원 조회 시
+        interactionButton = <ApproveModal memberId={ member.memberId } />
     } else {
         // 밴 회원 조회 시
         interactionButton = <CancelBannedModal memberId={ member.memberId } />

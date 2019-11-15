@@ -16,9 +16,8 @@ import {
     Input,
     Label,
     Image,
-    Select
 } from 'semantic-ui-react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import logo from '../../image/logo.png'
 import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
@@ -170,11 +169,8 @@ class DesktopContainer extends Component {
     }
 
     render() {
+        const { intl } = this.props;
         const links = this.props.auth.authority ? <SignedInLinks /> : <SignedOutLinks/>;
-
-        const searchOptions = [
-            { key: 'allCategories', text: '전체 카테고리', value: 'allCategories' }
-        ]
 
         return (
             <Responsive getWidth={getWidth}>
@@ -187,18 +183,26 @@ class DesktopContainer extends Component {
                         <Container>
                             <Grid columns='3' verticalAlign='middle'>
                                 <Grid.Column width='3' style={ {marginRight: '3%'} }>
-                                    <Image src={ logo } />
+                                    <Image src={ logo } as={ Link } to='/' />
                                 </Grid.Column>
                                 <Grid.Column width='9'>
                                     <Input
+                                        id='keyWord'
                                         style={ { border: '3px solid orange' } }
-                                        type='text'
-                                        placeholder='검색 ...'
-                                        icon={ {name: 'search', link: true} }
+                                        icon={ {name: 'search', link: true, onClick: this.searchOnClick } }
+                                        value={ this.state.keyword }
+                                        placeholder={ intl.formatMessage({
+                                            id: 'item.search'
+                                        }) }
+                                        onChange={ this.handleOnChange }
+                                        onKeyPress={ event => {
+                                            if(event.key === 'Enter') {
+                                                this.searchOnClick()
+                                            }
+                                        } }
                                         size='huge'
                                         fluid
-                                    >
-                                    </Input>
+                                    />
                                 </Grid.Column>
                                 <Grid.Column width='3'>
                                 </Grid.Column>

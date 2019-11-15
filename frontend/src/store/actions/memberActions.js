@@ -29,7 +29,7 @@ export const getMembers = () => {
         })
         .catch((err) => {
             console.log(err);
-
+            
             dispatch({
                 type: 'GET_MEMBERS_FAILED',
                 members: []

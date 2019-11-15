@@ -41,13 +41,27 @@ public class CategoryService {
 	public void removeCategory(int id) {
 		List<Category> categories = categoryRepository.findAllByCategoryParents(id);
 		
-		categoryRepository.deleteAll(categories);
-		categoryRepository.deleteById(id);
+		// 부모 카테고리일 경우
+		if(categories != null) {
+			categoryRepository.deleteAll(categories);
+			categoryRepository.deleteById(id);
+		} else {
+			// 자식 카테고리가 없는 부모 카테고리가 될 경우 hasSubCategory 컬럼 수정
+			Category category = categoryRepository.findById(id).orElse(null);
+			
+			if(category != null) {
+				List<Category> subCategories = categoryRepository
+						.findAllByCategoryParents(category.getCategoryParents());
+				
+				if(subCategories.size() == 0) {
+					category.setHasSubCategories("N");
+					categoryRepository.save(category);
+				}
+			}
+		}
 	}
 	
-	public void modify(Category category) {
-	}
-	
+	// 카테고리 조회 서비스
 	public List<Category> getAllCategories(){
 		List<Category> categoryList = categoryRepository.findAllByOrderByCreatedAtDesc();
 		
