@@ -46,6 +46,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						 "/**.json",
 						 "/static/**",
 						 "/resources/**",
+						 "/**.ico",
+						 "/**.png",
+						 "/product/**",
 						 "/member/join",
 						 "/categories")
 			.antMatchers(HttpMethod.GET, "/items")
