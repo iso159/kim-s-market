@@ -7,8 +7,6 @@ import { getMembers, changeTab, changeRowPerPage, changeCurrentPage } from '../.
 
 // 멤버 탭 컴포넌트
 const TabByMemberStatus = (props) => {
-    console.log(props);
-
     const totalMembers = props.member.totalMembers;
     const rowPerPage = props.member.rowPerPage;
 

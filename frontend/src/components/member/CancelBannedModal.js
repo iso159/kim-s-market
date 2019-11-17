@@ -23,8 +23,6 @@ class CancelBanned extends Component {
             memberId: cancelTargetMemberId
         })
         .then((res) => {
-            console.log(res.data);
-
             this.props.getMembers();
         })
 

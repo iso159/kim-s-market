@@ -10,8 +10,6 @@ const MemberTableFooter = (props) => {
 
     // 멤버 목록 - 페이지 체인지 이벤트
     const handlePageChange = (e, data) => {
-        console.log(data);
-
         props.changeCurrentPage(data.activePage);
         props.getMembers();
     }

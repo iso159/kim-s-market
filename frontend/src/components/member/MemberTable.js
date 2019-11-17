@@ -7,8 +7,6 @@ import MemberRow from './MemberRow'
 
 // 멤버 테이블 컴포넌트
 const MemberTable = (props) => {
-    console.log(props)
-
     const members = props.member.members;
 
     const memberRows = members.length !== 0 ? (members.map((member) => {

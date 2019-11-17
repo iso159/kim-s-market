@@ -24,7 +24,6 @@ class MemberPage extends Component {
             memberId: memberId
         })
         .then((res) => {
-            console.log(res.data);
         })
         .catch((err) => {
             console.log(err);

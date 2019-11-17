@@ -23,8 +23,6 @@ class ApproveModal extends Component {
                 memberId: approveTargetId
         })
         .then((res) => {
-            console.log(res.data);
-
             this.props.getMembers();
         })
         .finally(() => {

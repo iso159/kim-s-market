@@ -25,8 +25,6 @@ class BanModal extends Component {
                 reasonToBan: this.state.reasonsToBan
         })
         .then((res) => {
-            console.log(res.data);
-
             this.props.getMembers();
         })
         .finally(() => {

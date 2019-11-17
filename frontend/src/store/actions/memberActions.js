@@ -16,8 +16,6 @@ export const getMembers = () => {
             + '&searchValue=' + memberState.searchObject.searchValue
         )
         .then((res) => {
-            console.log(res.data);
-
             const members = res.data.result;
             const pagination = res.data.pagination;
 

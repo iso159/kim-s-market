@@ -287,7 +287,6 @@ class CategoryPage extends Component {
     axiosGetCategories = () => {
         axios.get('/categories')
         .then((res) => {
-            console.log(res.data);
             const categories = res.data;
             
             this.props.getCategories(categories);
