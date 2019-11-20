@@ -78,6 +78,12 @@ public class MemberService {
 		}
 	}
 	
+	// 회원 전체 조회
+	public List<Member> getAllMember(){
+		List<Member> getAllMember = memberRepository.findAll();
+		return getAllMember;
+	}
+	
 	// 검색조건, 페이징에 따라 회원 리스트를 조회하는 메서드
 	public PageWrapper<Member> getMembers(Map<String, Object> conditions) {
 		int memberCount;

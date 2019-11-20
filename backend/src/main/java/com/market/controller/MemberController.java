@@ -1,6 +1,7 @@
 package com.market.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,13 @@ public class MemberController {
 		memberService.banMember(member);
 		
 		return new ResponseEntity<String>("Successfully Banned !", HttpStatus.OK);
+	}
+	
+	//회원 전체 조회
+	@GetMapping("/membersId")
+	public List<Member> getMember(){
+		List<Member> getAllMember = memberService.getAllMember();
+		return getAllMember;
 	}
 	
 	// 회원 조회

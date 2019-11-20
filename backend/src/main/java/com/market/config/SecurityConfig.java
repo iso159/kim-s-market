@@ -50,7 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						 "/**.png",
 						 "/product/**",
 						 "/member/join",
-						 "/categories")
+						 "/categories",
+						 "/membersId")
 			.antMatchers(HttpMethod.GET, "/items")
 			.antMatchers(HttpMethod.GET, "/items/search")
 			.antMatchers(HttpMethod.GET, "/members");

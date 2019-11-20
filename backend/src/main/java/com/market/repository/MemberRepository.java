@@ -11,6 +11,9 @@ import com.market.vo.Member;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, String> {
 	
+	//회원 전체 조회
+	List<Member> findAll();
+	
 	// 회원 아이디, 계정상태 값 그리고 페이징에 따른 회원 목록 및 총 회원 수 조회
 	List<Member> findByStatusAndMemberIdContainingIgnoreCaseOrderByCreatedAtDesc(String status, String memberId, Pageable pageable);
 	int countByStatusAndMemberIdContainingIgnoreCase(String status, String memberId);
