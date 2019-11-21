@@ -72,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			 	.antMatchers(HttpMethod.POST, "/items").hasAuthority("SELLER")
 			 	.antMatchers(HttpMethod.GET, "/items/**").hasAuthority("SELLER")
 			 	.antMatchers(HttpMethod.DELETE, "/items/**").hasAuthority("SELLER")
+			 	.antMatchers(HttpMethod.POST, "/carts/**").hasAuthority("USER")
 			 	.antMatchers("/admin").hasAuthority("ADMIN")
 			 	.anyRequest().authenticated()
 		 .and()

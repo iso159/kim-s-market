@@ -20,20 +20,16 @@ import org.springframework.stereotype.Component;
 public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "CART_NO", nullable = false)
-	@NotBlank(message = "cartNo Field is empty")
+	@Column(name = "CART_NO", nullable = false, updatable = false)
 	int cartNo;
 	
-	@Column(name = "CART_ID", nullable = false, length = 200)
-	@NotBlank(message = "cartId Field is empty")
+	@Column(name = "CART_ID", nullable = true, length = 200)
 	String cartId;
 	
 	@Column(name = "ITEM_NO", nullable = false)
-	@NotBlank(message = "itemNo Field is empty")
 	int itemNo;
 	
 	@Column(name = "COUNT", nullable = false)
-	@NotBlank(message = "count Field is empty")
 	int count;
 	
 	@Column(name = "MEMBER_ID", nullable = true, length = 20)
@@ -42,9 +38,6 @@ public class Cart {
 	
 	@Column(name = "IS_USING", nullable = false, columnDefinition = "CHAR DEFAULT 'N'", insertable = false)
 	String isUsing;
-	
-	@Column(name = "IS_RETURN", nullable = false, columnDefinition = "CHAR DEFAULT 'N'", insertable = false)
-	String isReturn;
 
 	@Column(name = "CREATED_AT", nullable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", insertable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -98,14 +91,6 @@ public class Cart {
 		this.isUsing = isUsing;
 	}
 
-	public String getIsReturn() {
-		return isReturn;
-	}
-
-	public void setIsReturn(String isReturn) {
-		this.isReturn = isReturn;
-	}
-
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -117,7 +102,7 @@ public class Cart {
 	@Override
 	public String toString() {
 		return "Cart [cartNo=" + cartNo + ", cartId=" + cartId + ", itemNo=" + itemNo + ", count=" + count
-				+ ", memberId=" + memberId + ", isUsing=" + isUsing + ", isReturn=" + isReturn + ", createdAt="
+				+ ", memberId=" + memberId + ", isUsing=" + isUsing + ", createdAt="
 				+ createdAt + "]";
 	}
 

@@ -17,6 +17,7 @@
     "button.update" : "수정",
     "button.remove" : "삭제",
     "button.reRegistration" : "재등록",
+    "button.cart" : "장바구니",
 
     "item.name" : "상품 명",
     "item.info" : "상품 정보",
