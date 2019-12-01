@@ -31,6 +31,19 @@ const style = {
     }
 }
 
+const Checkmessage = (props) =>{
+    if(props.message === undefined){
+    }else{
+        return(
+            <div className="ui red pointing basic label">{props.message}</div>
+        );
+    }
+    return(
+        <div></div>
+    );
+}
+
+
 // 상품 상태에 따른 버튼 컴포넌트
 const DeleteButton = (props) => {
     const { item, handleConfirm } = props;

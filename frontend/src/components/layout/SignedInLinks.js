@@ -67,6 +67,16 @@ const ManageItem = (props) => {
     ) : null;
 }
 
+const ManageCart = (props) => {
+    const { authority } = props;
+
+    return authority === 'USER' ? (
+        <Menu.Item as={ Link } to='/cart'>
+            <FormattedMessage id="button.cart"/>
+        </Menu.Item>
+    ) : null;
+}
+
 const SignedInLinks = (props) => {
     return (
         <Menu size='large' color='orange' inverted>
@@ -80,6 +90,7 @@ const SignedInLinks = (props) => {
                 <ManageItem authority={ props.auth.authority } />
                 <ManageMembers authority={ props.auth.authority } />
                 <ManageCaregories authority={ props.auth.authority } />
+                <ManageCart authority={ props.auth.authority } />
                 <Menu.Menu position='right'>
                     <Menu.Item as={ Link } to='/'>
                         <Avatar authority={ props.auth.authority }/>

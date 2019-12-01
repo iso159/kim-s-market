@@ -4,9 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,27 +24,34 @@ public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CART_NO", nullable = false, updatable = false)
-	int cartNo;
+	private int cartNo;
 	
 	@Column(name = "CART_ID", nullable = true, length = 200)
-	String cartId;
+	private String cartId;
 	
 	@Column(name = "ITEM_NO", nullable = false)
-	int itemNo;
+	private int itemNo;
 	
 	@Column(name = "COUNT", nullable = false)
-	int count;
+	private int count;
 	
 	@Column(name = "MEMBER_ID", nullable = true, length = 20)
 	@NotBlank(message = "memberId Field is empty")
-	String memberId;
+	private String memberId;
 	
 	@Column(name = "IS_USING", nullable = false, columnDefinition = "CHAR DEFAULT 'N'", insertable = false)
-	String isUsing;
+	private String isUsing;
 
 	@Column(name = "CREATED_AT", nullable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", insertable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	Date createdAt;
+	private Date createdAt;
+	
+	@Column(name = "UPDATED_AT", nullable = true, columnDefinition = "DATETIME")
+	private String updatedAt;
+	
+	@ManyToOne(targetEntity = Item.class, fetch = FetchType.EAGER)
+	@JoinColumn(name="ITEM_NO", referencedColumnName = "ITEM_NO", insertable = false, updatable = false)
+	private Item item;
 
 	public int getCartNo() {
 		return cartNo;
@@ -99,12 +109,26 @@ public class Cart {
 		this.createdAt = createdAt;
 	}
 
+	public String getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(String updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
 	@Override
 	public String toString() {
 		return "Cart [cartNo=" + cartNo + ", cartId=" + cartId + ", itemNo=" + itemNo + ", count=" + count
-				+ ", memberId=" + memberId + ", isUsing=" + isUsing + ", createdAt="
-				+ createdAt + "]";
+				+ ", memberId=" + memberId + ", isUsing=" + isUsing + ", createdAt=" + createdAt + ", updatedAt="
+				+ updatedAt + ", item=" + item + "]";
 	}
-
-	
 }

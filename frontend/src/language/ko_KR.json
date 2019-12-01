@@ -15,17 +15,22 @@
     "button.item.input" : "상품 등록",
     "button.manage.item" : "상품 관리",
     "button.update" : "수정",
+    "button.change" : "변경",
     "button.remove" : "삭제",
     "button.reRegistration" : "재등록",
     "button.cart" : "장바구니",
+    "button.select" : "선택",
+    "button.order" : "주문하기",
 
     "item.name" : "상품 명",
     "item.info" : "상품 정보",
     "item.price" : "상품 가격",
     "item.stock" : "상품 재고량",
+    "item.count" : "상품 수량",
     "item.main.categories" : "1차 카테고리",
     "item.sub.categories" : "2차 카테고리",
     "item.search" : "상품 검색",
+    "item.total.price" : "상품 총 가격",
 
     "message.login.fail" : "아이디 또는 비밀번호가 올바르지 않습니다.",
 

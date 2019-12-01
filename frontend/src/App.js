@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react'
 import { Grid, Menu, Icon, Dropdown, Ref, Sticky, Rail } from 'semantic-ui-react'
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
+import { HashRouter, Route, Switch, Link } from 'react-router-dom'
 import MainPage from './components/main/MainPage'
 import ResponsiveContainer from './components/layout/ResponsiveContainer'
 import SignIn from './components/auth/SignIn'
@@ -12,6 +12,7 @@ import ItemInput from './components/item/ItemInput'
 import CategoryPage from './components/category/CategoryPage'
 import MemberPage from './components/member/MemberPage'
 import ItemManage from './components/item/ItemManage'
+import CartPage from './components/cart/CartPage'
 
 const style = {
   container: {
@@ -71,7 +72,7 @@ class App extends Component {
     }
 
     return (
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           <ResponsiveContainer>
             <Grid style={ style.container } columns={3}>
@@ -103,12 +104,13 @@ class App extends Component {
                 </Switch>
                 <Route exact path='/manage-categories' component={ CategoryPage } />
                 <Route exact path='/manage-members' component={ MemberPage } />
+                <Route exact path='/cart' component={ CartPage } />
               </Grid.Column>
               <Grid.Column width={1}></Grid.Column>
             </Grid>
           </ResponsiveContainer>
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }

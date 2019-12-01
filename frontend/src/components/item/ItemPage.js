@@ -8,10 +8,7 @@ import {
     Image,
     Pagination,
     Input,
-    Modal,
-    Dimmer,
-    Loader,
-    Segment
+    Modal
   } from 'semantic-ui-react';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -287,7 +284,7 @@ class ItemPage extends Component {
                     modalOption: 'authority'
                 })
             } else {
-                axios.post('/carts', {
+                axios.put('/carts', {
                     requestData: {
                         itemNo : item.itemNo,
                         count : cartCount,

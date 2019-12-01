@@ -1,7 +1,13 @@
 package com.market.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +21,15 @@ public class CartController {
 	@Autowired
 	CartService cartService;
 	
-	@PostMapping("/carts")
+	@GetMapping("/carts/{memberId}")
+	public ResponseEntity<PageWrapper<Cart>> getCarts(@PathVariable String memberId) {
+		PageWrapper<Cart> response = new PageWrapper<Cart>();
+		List<Cart> cartList = cartService.getByMemberId(memberId);
+		response.setResult(cartList);
+		return new ResponseEntity<PageWrapper<Cart>>(response, HttpStatus.OK);		
+	}
+	
+	@PutMapping("/carts")
 	public void create(@RequestBody PageWrapper<Cart> pageWrapper) {
 		Cart cart = pageWrapper.getRequestData();
 		cartService.save(cart);
