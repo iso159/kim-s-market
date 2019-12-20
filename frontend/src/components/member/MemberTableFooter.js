@@ -6,7 +6,7 @@ import { Table, Pagination } from 'semantic-ui-react'
 // 멤버 테이블 푸터 컴포넌트
 const MemberTableFooter = (props) => {
     const totalPages = props.member.totalPages;
-    const currnetPage = props.member.currentPage;
+    const currentPage = props.member.currentPage;
 
     // 멤버 목록 - 페이지 체인지 이벤트
     const handlePageChange = (e, data) => {
@@ -18,7 +18,7 @@ const MemberTableFooter = (props) => {
         <Table.Footer>
             <Table.Row>
                 <Table.HeaderCell colSpan='8'>
-                    <Pagination activePage={ currnetPage } totalPages={ totalPages } onPageChange={ handlePageChange }/>
+                    <Pagination activePage={ currentPage } totalPages={ totalPages } onPageChange={ handlePageChange }/>
                 </Table.HeaderCell>
             </Table.Row>
         </Table.Footer>

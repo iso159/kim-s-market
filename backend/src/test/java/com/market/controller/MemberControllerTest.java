@@ -19,8 +19,5 @@ public class MemberControllerTest {
 	public void banMemberTransactionTest() {
 		Ban ban = new Ban();
 		String memberId = "seller";
-		
-		// 트랜잭션 실패상황 테스트
-		memberController.banMember(ban, memberId);
 	}
 }

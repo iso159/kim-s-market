@@ -8,14 +8,6 @@ import PageHeader from './PageHeader'
 import TabByMemberStatus from './TabByMemberStatus'
 import axios from 'axios'
 
-const style = {
-    container: {
-        marginTop: '3em',
-        marginBottom: '2em',
-        minHeight: '800px'
-    }
-}
-
 class MemberPage extends Component {
     
     // 회원가입 승인 이벤트

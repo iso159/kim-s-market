@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Container, Grid, Image, Divider } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import macAds from '../../image/main/mac_ads.png'

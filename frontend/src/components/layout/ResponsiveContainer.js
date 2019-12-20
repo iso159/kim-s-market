@@ -7,14 +7,10 @@ import {
     Header,
     Icon,
     List,
-    Menu,
     Responsive,
     Segment,
-    Sidebar,
     Visibility,
-    Dropdown,
     Input,
-    Label,
     Image,
 } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
@@ -24,7 +20,7 @@ import SignedOutLinks from './SignedOutLinks'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { getCategories } from '../../store/actions/categoryActions'
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 
 const getWidth = () => {
@@ -65,60 +61,6 @@ const HomepageHeading = ({ mobile }) => (
 
 HomepageHeading.propTypes = {
     mobile: PropTypes.bool,
-}
-
-
-const SubCategories = ({ mainCategory, subCategories }) => {
-    return subCategories.map((subCategory, index) => {
-        return subCategory.categoryParents === mainCategory.categoryNo ? (
-            <Dropdown.Item as = { Link } to={ '/items/' + subCategory.categoryNo } key={ subCategory.categoryNo }>
-                { subCategory.categoryName }
-            </Dropdown.Item>
-        ) : null;
-    });
-}
-
-const MainCategories = ({ mainCategories, subCategories }) => {
-    return mainCategories.length !== 0 ? (
-        mainCategories.map((mainCategory) => {
-            return (
-                <Dropdown.Item key={ mainCategory.categoryNo }>
-                    <Dropdown text={ mainCategory.categoryName } key={ mainCategory.categoryNo } fluid>
-                        <Dropdown.Menu>
-                            <SubCategories mainCategory={ mainCategory } subCategories={ subCategories }/>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Dropdown.Item>
-            );
-        })
-    ) : null;
-}
-
-const SearchButton = (props) => {
-    const {searchOnClick} = props;
-    const {alertFlag} = props;
-
-    if(alertFlag) {
-        return (
-            <Label 
-                style={{height: '36px', textAlign: 'center'}} 
-                color='red'
-                pointing='left'
-            >
-                <FormattedMessage id='message.item.search.blank'></FormattedMessage>
-            </Label>
-        )
-    } else {
-        return (
-            <Button 
-                style={{height: '36px', textAlign: 'center'}} 
-                color='orange'
-                onClick={searchOnClick}
-            >
-                Search
-            </Button>
-        )
-    }
 }
 
 class DesktopContainer extends Component {
@@ -258,116 +200,10 @@ DesktopContainer.propTypes = {
     children: PropTypes.node,
 }
 
-class MobileContainer extends Component {
-    state = {
-        sidebarOpened: false
-    }
-
-    handleSidebarHide = () => this.setState({ sidebarOpened: false })
-
-    handleToggle = () => this.setState({ sidebarOpened: true })
-
-    render() {
-        const { children } = this.props
-        const { sidebarOpened } = this.state
-
-        return (
-            <Responsive
-                as={Sidebar.Pushable}
-                getWidth={getWidth}
-                maxWidth={Responsive.onlyMobile.maxWidth}
-            >
-                <Sidebar
-                    as={Menu}
-                    animation='push'
-                    inverted
-                    onHide={this.handleSidebarHide}
-                    vertical
-                    visible={sidebarOpened}
-                >
-                    <Menu.Item as='a' active>
-                        Home
-                    </Menu.Item>
-                    <Menu.Item as='a'>Work</Menu.Item>
-                    <Menu.Item as='a'>Log in</Menu.Item>
-                    <Menu.Item as='a'>Sign Up</Menu.Item>
-                </Sidebar>
-
-                <Sidebar.Pusher dimmed={sidebarOpened}>
-                    <Segment
-                        inverted
-                        textAlign='center'
-                        style={{ minHeight: 350, padding: '1em 0em' }}
-                        vertical
-                    >
-                        <Container>
-                            <Menu inverted pointing secondary size='large'>
-                                <Menu.Item onClick={this.handleToggle}>
-                                    <Icon name='sidebar' />
-                                </Menu.Item>
-                                <Menu.Item position='right'>
-                                    <Button as='a' inverted>
-                                        Log in
-                                    </Button>
-                                    <Button as='a' inverted style={{ marginLeft: '0.5em' }}>
-                                        Sign Up
-                                    </Button>
-                                </Menu.Item>
-                            </Menu>
-                        </Container>
-                        <HomepageHeading mobile />
-                    </Segment>
-
-                    { children }
-                    <Segment inverted vertical style={{ padding: '5em 0em' }}>
-                        <Container>
-                            <Grid divided inverted stackable>
-                                <Grid.Row>
-                                    <Grid.Column width={3}>
-                                        <Header inverted as='h4' content='About' />
-                                        <List link inverted>
-                                            <List.Item as='a'>Sitemap</List.Item>
-                                            <List.Item as='a'>Contact Us</List.Item>
-                                            <List.Item as='a'>Religious Ceremonies</List.Item>
-                                            <List.Item as='a'>Gazebo Plans</List.Item>
-                                        </List>
-                                    </Grid.Column>
-                                    <Grid.Column width={3}>
-                                        <Header inverted as='h4' content='Services' />
-                                        <List link inverted>
-                                            <List.Item as='a'>Banana Pre-Order</List.Item>
-                                            <List.Item as='a'>DNA FAQ</List.Item>
-                                            <List.Item as='a'>How To Access</List.Item>
-                                            <List.Item as='a'>Favorite X-Men</List.Item>
-                                        </List>
-                                    </Grid.Column>
-                                    <Grid.Column width={7}>
-                                        <Header as='h4' inverted>
-                                            Footer Header
-                                        </Header>
-                                        <p>
-                                            Extra space for a call to action inside the footer that could help re-engage users.
-                                        </p>
-                                    </Grid.Column>
-                                </Grid.Row>
-                            </Grid>
-                        </Container>
-                    </Segment>
-                </Sidebar.Pusher>
-            </Responsive>
-        )
-    }
-}
-
-MobileContainer.propTypes = {
-    children: PropTypes.node,
-}
-
 const ResponsiveContainer = (props) => {
     return (
         <div>
             <DesktopContainer {...props}/>
-            <MobileContainer {...props}/>
         </div>
     );
 }

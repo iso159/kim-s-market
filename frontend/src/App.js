@@ -1,18 +1,19 @@
-import React, { Component, createRef } from 'react'
-import { Grid, Menu, Icon, Dropdown, Ref, Sticky, Rail } from 'semantic-ui-react'
-import { HashRouter, Route, Switch, Link } from 'react-router-dom'
-import MainPage from './components/main/MainPage'
-import ResponsiveContainer from './components/layout/ResponsiveContainer'
-import SignIn from './components/auth/SignIn'
-import SignUp from './components/auth/SignUp'
-import { connect } from 'react-redux'
-import { signInCheck } from './store/actions/authActions'
-import ItemPage from './components/item/ItemPage'
-import ItemInput from './components/item/ItemInput'
-import CategoryPage from './components/category/CategoryPage'
-import MemberPage from './components/member/MemberPage'
-import ItemManage from './components/item/ItemManage'
-import CartPage from './components/cart/CartPage'
+import React, { Component, createRef } from 'react';
+import { Grid, Menu, Icon, Dropdown, Ref, Sticky, Rail } from 'semantic-ui-react';
+import { HashRouter, Route, Switch, Link } from 'react-router-dom';
+import ResponsiveContainer from './components/layout/ResponsiveContainer';
+import SignIn from './components/auth/SignIn';
+import SignUp from './components/auth/SignUp';
+import { connect } from 'react-redux';
+import { signInCheck } from './store/actions/authActions';
+import ItemInput from './components/item/ItemInput';
+import CartPage from './components/cart/CartPage';
+import MainPage from './components/main/MainPage';
+import ItemPage from './components/item/ItemPage';
+import CategoryPage from './components/category/CategoryPage';
+import OrderPage from './components/order/OrderPage';
+import MemberPage from './components/member/MemberPage';
+import ItemManage from './components/item/ItemManage';
 
 const style = {
   container: {
@@ -105,6 +106,7 @@ class App extends Component {
                 <Route exact path='/manage-categories' component={ CategoryPage } />
                 <Route exact path='/manage-members' component={ MemberPage } />
                 <Route exact path='/cart' component={ CartPage } />
+                <Route exact path='/order' component={ OrderPage } />
               </Grid.Column>
               <Grid.Column width={1}></Grid.Column>
             </Grid>

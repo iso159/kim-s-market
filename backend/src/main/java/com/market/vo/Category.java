@@ -17,27 +17,27 @@ public class Category {
 	@Id
 	@Column(name = "CATEGORY_NO")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int categoryNo;
+	private int categoryNo;
 	
 	@Column(name = "CREATOR_ID", nullable = false, length = 20)
-	String creatorId;
+	private String creatorId;
 	
 	@Column(name = "CATEGORY_NAME", nullable = false, length = 45)
-	String categoryName;
+	private String categoryName;
 	
 	@Column(name = "CREATED_AT", nullable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", insertable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	Date createdAt;
+	private Date createdAt;
 	
 	@Column(name = "UPDATED_AT", nullable = true, columnDefinition = "DATETIME")
 	@Temporal(TemporalType.TIMESTAMP)
-	Date updatedAt;
+	private Date updatedAt;
 	
 	@Column(name = "CATEGORY_PARENTS", nullable = true)
-	int categoryParents;
+	private int categoryParents;
 	
 	@Column(name = "HAS_CATEGORIES", nullable = false)
-	String hasSubCategories;
+	private String hasSubCategories;
 
 	public int getCategoryNo() {
 		return categoryNo;
