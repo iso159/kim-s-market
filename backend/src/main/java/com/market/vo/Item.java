@@ -18,6 +18,11 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.stereotype.Component;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 @Entity
 @Component
 @Table(name = "tb_item", indexes = {@Index(columnList = "CATEGORY_NO")})
@@ -74,126 +79,6 @@ public class Item {
 	@ManyToOne(targetEntity = Category.class, fetch = FetchType.LAZY)
 	@JoinColumn(name="CATEGORY_NO", referencedColumnName = "CATEGORY_NO", insertable = false, updatable = false)
 	private Category category;
-
-	public int getItemNo() {
-		return itemNo;
-	}
-
-	public void setItemNo(int itemNo) {
-		this.itemNo = itemNo;
-	}
-	
-	public int getCategoryNo() {
-		return categoryNo;
-	}
-
-	public void setCategoryNo(int categoryNo) {
-		this.categoryNo = categoryNo;
-	}
-
-	public String getItemName() {
-		return itemName;
-	}
-
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
-	}
-
-	public int getItemPrice() {
-		return itemPrice;
-	}
-
-	public void setItemPrice(int itemPrice) {
-		this.itemPrice = itemPrice;
-	}
-
-	public String getItemInformation() {
-		return itemInformation;
-	}
-
-	public void setItemInformation(String itemInformation) {
-		this.itemInformation = itemInformation;
-	}
-
-	public int getStock() {
-		return stock;
-	}
-
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
-
-	public String getImagePath() {
-		return imagePath;
-	}
-
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-
-	public String getIsCanceled() {
-		return isCanceled;
-	}
-
-	public void setIsCanceled(String isCanceled) {
-		this.isCanceled = isCanceled;
-	}
-
-	public String getRegistrar() {
-		return registrar;
-	}
-
-	public void setRegistrar(String registrar) {
-		this.registrar = registrar;
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public String getItemUpdator() {
-		return itemUpdator;
-	}
-
-	public void setItemUpdator(String itemUpdator) {
-		this.itemUpdator = itemUpdator;
-	}
-
-	public String getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public String getItemDeletor() {
-		return itemDeletor;
-	}
-
-	public void setItemDeletor(String itemDeletor) {
-		this.itemDeletor = itemDeletor;
-	}
-
-	public void setUpdatedAt(String updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-	public String getDeletedAt() {
-		return deletedAt;
-	}
-
-	public void setDeletedAt(String deletedAt) {
-		this.deletedAt = deletedAt;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
 
 	@Override
 	public String toString() {
