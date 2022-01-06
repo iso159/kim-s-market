@@ -87,7 +87,7 @@
     "smooth-scrollbar": "^8.2.5",
     "styled-components": "^4.1.3",
     "styled-theme": "^0.3.3",
-    "uppy": "0.18.0"
+    "uppy": "2.3.3"
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
